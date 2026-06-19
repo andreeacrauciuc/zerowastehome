@@ -15,7 +15,7 @@ import IngredientSelector from "./IngredientSelector";
 import RecipeList, { RecipeCard } from "./RecipeList";
 import RecipeModal from "./RecipeModal";
 import CookConfirmModal from "./CookConfirmModal";
-import RecipeIllustration from "../../../assets/recipe.svg";
+import RecipeIllustration from "../../../assets/recipe.png";
 import "../Recipes.scss";
 
 const RecipesContent = () => {
