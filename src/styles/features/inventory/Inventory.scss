@@ -670,19 +670,25 @@
   }
 }
 
-.est-price-hint {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 14px;
-  height: 14px;
+/* Estimated-price info tooltip sits on the dark navy price badge, so the
+   shared trigger is restyled for contrast against that background. */
+.badge.price .info-tooltip {
   margin-left: 4px;
-  border-radius: 50%;
+}
+
+.badge.price .info-tooltip-trigger {
+  width: 15px;
+  height: 15px;
+  border-color: rgba(255, 255, 255, 0.55);
   background: rgba(255, 255, 255, 0.22);
-  font-size: 10px;
-  font-weight: 800;
-  line-height: 1;
-  cursor: help;
+  color: #ffffff;
+  font-size: 0.6rem;
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(255, 255, 255, 0.34);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+  }
 }
 
 .expiry-container {

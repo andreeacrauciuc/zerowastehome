@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useAuthCardTilt } from "../hooks/useAuthCardTilt";
 import { toUserFacingErrorMessage } from "../../../utils/errorMessages";
-import InfoTooltip from "./InfoTooltip";
+import InfoTooltip from "../../../components/InfoTooltip";
 import "../../../styles/features/auth/Auth.scss";
 
 const formVariants = {

@@ -3,6 +3,7 @@ import Tilt from "react-parallax-tilt";
 import { Check, PencilLine, Trash2, Loader2 } from "lucide-react";
 import { formatCurrency } from "../../../utils/currency";
 import { getCategoryName, getExpiryInfo, getConvertedWeightLabel } from "../utils/itemUtils";
+import InfoTooltip from "../../../components/InfoTooltip";
 import OtherImg from "../../../assets/Other.png";
 import FruitsImg from "../../../assets/Fruits.png";
 import VeggiesImg from "../../../assets/Vegetables.png";
@@ -60,7 +61,10 @@ const FoodCard = ({ item, currencyConfig, consumingIds = new Set(), onMarkEaten,
                       {item.isPriceEstimated ? (
                         <>
                           {' '}(est.)
-                          <span className="est-price-hint" title="Estimated price based on category average. Add a real price to improve savings accuracy" aria-label="Estimated price based on category average">i</span>
+                          <InfoTooltip
+                            label="What does estimated price mean?"
+                            text="Estimated price based on category average. Add a real price to improve savings accuracy."
+                          />
                         </>
                       ) : null}
                     </>
