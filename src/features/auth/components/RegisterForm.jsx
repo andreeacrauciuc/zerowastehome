@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useAuthCardTilt } from "../hooks/useAuthCardTilt";
 import { toUserFacingErrorMessage } from "../../../utils/errorMessages";
+import InfoTooltip from "./InfoTooltip";
 import "../../../styles/features/auth/Auth.scss";
 
 const formVariants = {
@@ -238,28 +239,10 @@ function RegisterForm() {
                     errors.householdInviteCode ? "invite-code-error" : undefined
                   }
                 />
-                <span
-                  role="img"
-                  aria-label="What is a household invite code? Ask your household admin for this code. You can also join a household from Settings after registration"
-                  title="Ask your household admin for this code. You can also join a household from Settings after registration"
-                  style={{
-                    border: "1px solid #5f7d6c",
-                    borderRadius: "50%",
-                    width: "18px",
-                    height: "18px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "help",
-                    color: "#152b1e",
-                    fontSize: "0.65rem",
-                    fontWeight: 700,
-                    lineHeight: 1,
-                    flexShrink: 0,
-                  }}
-                >
-                  i
-                </span>
+                <InfoTooltip
+                  label="What is a household invite code?"
+                  text="Ask your household admin for this code. You can also join a household from Settings after registration."
+                />
               </div>
               {errors.householdInviteCode && (
                 <p id="invite-code-error" className="auth-error">{errors.householdInviteCode}</p>
