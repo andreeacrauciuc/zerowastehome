@@ -1,0 +1,292 @@
+.notification-drawer-overlay {
+  --brand-green: #2e8b57;
+  --brand-green-soft: #8ed9ad;
+}
+
+.notification-drawer-overlay.modal-shell-overlay {
+  justify-content: flex-end;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+.notification-drawer-overlay.modal-shell-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.notification-drawer-card.modal-shell-card {
+  width: min(520px, 100%);
+  height: 100%;
+  max-height: 100%;
+  border-radius: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.7);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.18s ease;
+  overflow: hidden;
+}
+
+.notification-drawer-card.modal-shell-card.is-open {
+  transform: translateX(0);
+}
+
+.notification-drawer-body {
+  display: grid;
+  gap: 0.65rem;
+  overflow-y: auto;
+  padding-right: 0.2rem;
+}
+
+.notification-toolbar-group {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 0.25rem;
+}
+
+.notification-toolbar {
+   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 0.9rem;
+  backdrop-filter: blur(10px);
+}
+
+.notification-mixed-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.45rem 0.7rem;
+  background: rgba(234, 179, 8, 0.1);
+  border: 1px solid rgba(234, 179, 8, 0.35);
+  border-radius: 0.7rem;
+  color: var(--ink-700, #334155);
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.notification-mixed-hint svg {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: #b45309;
+}
+
+.notification-select-all,
+.notification-select-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #334155;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+
+.notification-select-all input,
+.notification-select-item input {
+  accent-color: var(--brand-green);
+}
+
+.notification-bulk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 48px;
+  padding: 0 14px;
+  font-size: 0.95rem;
+}
+
+/* Make notification action buttons more compact while keeping inventory-action-btn visuals */
+.notification-actions .inventory-action-btn,
+.notification-toolbar .inventory-action-btn,
+.notification-bulk-btn.inventory-action-btn {
+  height: 40px;
+  padding: 0 12px;
+  font-size: 0.92rem;
+  border-radius: 32px;
+  gap: 8px;
+  box-shadow: 0 8px 18px rgba(40, 90, 72, 0.16);
+}
+
+.notification-actions .inventory-action-btn span,
+.notification-bulk-btn.inventory-action-btn span {
+  margin-left: 8px;
+}
+
+.notification-actions .inventory-action-btn svg,
+.notification-bulk-btn.inventory-action-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+
+.notification-card {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem;
+  border-radius: 0.82rem;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.66);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.notification-card.is-exiting {
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.notification-card.is-selected {
+  border-color: rgba(46, 139, 87, 0.65);
+  box-shadow: 0 0 0 2px rgba(142, 217, 173, 0.35);
+}
+
+.notification-card.critical {
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.notification-card.warning {
+  border-color: rgba(234, 179, 8, 0.35);
+}
+
+.notification-icon-wrap {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.66);
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-content {
+  min-width: 0;
+}
+
+.notification-content strong {
+  display: block;
+  margin: 0;
+  color: var(--ink-900, #0f172a);
+  font-size: 0.86rem;
+}
+
+.notification-content strong,
+.notification-content p {
+  /* Long product names must wrap instead of forcing horizontal overflow. */
+  overflow-wrap: anywhere;
+}
+
+.notification-content p {
+  margin: 0.12rem 0 0;
+  color: var(--ink-700, #334155);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.notification-actions.modal-shell-actions {
+  margin-top: 0;
+}
+
+.notification-empty-state {
+  grid-template-columns: 1fr;
+}
+
+.inventory-bell-btn-wrap {
+  position: relative;
+}
+
+.inventory-bell-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  background: #ef4444;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.modal-shell-actions .primary {
+  background: var(--brand-green);
+  box-shadow: 0 10px 25px -5px rgba(46, 139, 87, 0.4);
+}
+
+@media (max-width: 768px) {
+  .notification-drawer-card.modal-shell-card {
+    width: 100%;
+  }
+}
+
+/* Small phones (down to 320px): the cramped 4-column row (checkbox · icon ·
+   text · button) is reflowed into two rows — header content on top, a
+   full-width tappable CTA beneath — preventing text/button collisions and
+   keeping a comfortable 44px+ tap target for the action. */
+@media (max-width: 480px) {
+  .notification-card:not(.notification-empty-state) {
+    grid-template-columns: auto auto 1fr;
+    column-gap: 0.55rem;
+    row-gap: 0.55rem;
+    padding: 0.7rem;
+  }
+
+  /* Checkbox + icon + content keep their cells on the first row; the action
+     button (4th child) drops to a new full-width row spanning all columns. */
+  .notification-card .notification-actions {
+    grid-column: 1 / -1;
+  }
+
+  .notification-actions .inventory-action-btn {
+    width: 100%;
+    min-height: 44px;
+    height: auto;
+    justify-content: center;
+  }
+
+  /* Comfortable touch area for the per-card and select-all checkboxes. */
+  .notification-select-item,
+  .notification-select-all {
+    min-height: 44px;
+  }
+
+  .notification-select-item input,
+  .notification-select-all input {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Stack the toolbar so "Select all" and the bulk button never collide; the
+     bulk button becomes a full-width 44px+ target. */
+  .notification-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.55rem;
+  }
+
+  .notification-toolbar .notification-bulk-btn.inventory-action-btn {
+    width: 100%;
+    min-height: 44px;
+    height: auto;
+    justify-content: center;
+  }
+}

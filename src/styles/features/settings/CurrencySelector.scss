@@ -1,0 +1,41 @@
+.currency-selector-wrapper {
+  display: grid;
+  gap: 6px;
+  margin: 1rem 0;
+}
+
+.currency-selector-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #4f7066;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.currency-selector-select {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 6px;
+  background: white;
+  color: #4f7066;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover:not(:disabled) {
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.08);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

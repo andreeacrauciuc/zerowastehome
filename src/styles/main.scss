@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Inria+Serif:wght@300;400;700&display=swap");
+@import "./variables";
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    min-width: 0;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    background-color: #FDFBF7;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    font-family: $font-primary-serif;
+    color: #333;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #FDFBF7;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}
+
+img,
+svg,
+video,
+canvas {
+    max-width: 100%;
+}
+
+/* Shared page title used across the app (matches recipe page typography) */
+.page-title {
+    font-family: $font-primary-serif;
+    font-size: clamp(1.78rem, 3.2vw, 2.55rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: inherit;
+
+    span {
+        color: #408a71; /* recipe accent color */
+        font-weight: 700;
+        text-decoration: underline;
+        text-decoration-thickness: 4px;
+        text-underline-offset: 0.32rem;
+    }
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   AUTH CONTAINER (Login / Register)
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.app-container {
+    background-color: #355B3E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    padding: 20px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

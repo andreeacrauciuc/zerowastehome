@@ -1,0 +1,182 @@
+.dock-root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: visible;
+}
+
+.dock-panel {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  overflow: visible;
+}
+
+.dock-item {
+  border: 1px solid #6f7970;
+  border-radius: 16px;
+  background: #fffafa;
+  box-shadow: 0 10px 16px -12px rgba(15, 23, 42, 0.55);
+  color: #2b3a31;
+  width: 74px;
+  height: 74px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  overflow: visible;
+
+  &:hover,
+  &:focus-visible {
+    border-color: #557a65;
+    background: #f4fbf7;
+    outline: none;
+  }
+
+  &.active {
+    background: #72937f;
+    border-color: #5f7f6b;
+    color: #ffffff;
+  }
+
+  .dock-item-icon {
+    width: auto;
+    height: auto;
+    font-size: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .dock-item-label {
+    position: absolute;
+    left: calc(100% + 14px);
+    top: 50%;
+    transform: translateY(-50%) translateX(-10px);
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+    background: rgba(18, 33, 28, 0.82);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: #f4fff8;
+    border-radius: 999px;
+    border: 1px solid rgba(160, 196, 175, 0.28);
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: left;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    z-index: 5;
+  }
+
+  &:hover .dock-item-label,
+  &:focus-visible .dock-item-label {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   MOBILE DOCK â€” fixed horizontal bottom navigation bar.
+   Only rendered visually at â‰¤768px (where the sidebar hides). The
+   z-index sits below the Shopping page mobile checkout bar (z-index: 100)
+   so it never overlaps it.
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.dock-root.mobile-dock {
+  /* Hidden by default (desktop / tablet keeps the sidebar). */
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .dock-root.mobile-dock {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 90;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: rgba(255, 250, 250, 0.92);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border-top: 1px solid rgba(36, 90, 57, 0.12);
+    box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+
+    .dock-panel {
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: stretch;
+      width: 100%;
+      min-height: 0 !important;
+      gap: 2px;
+      padding: 6px 4px;
+    }
+
+    .dock-item {
+      flex: 1 1 0;
+      width: auto;
+      height: auto;
+      min-height: 52px;
+      flex-direction: column;
+      gap: 3px;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 14px;
+      color: #51605a;
+      padding: 6px 2px;
+
+      &:hover,
+      &:focus-visible {
+        background: rgba(114, 147, 127, 0.12);
+        border: none;
+      }
+
+      &.active {
+        background: rgba(114, 147, 127, 0.18);
+        border: none;
+        color: #1f4835;
+      }
+
+      &.dock-item-logout {
+        color: #8a1c13;
+      }
+
+      .dock-item-icon {
+        font-size: 22px;
+      }
+
+      /* Turn the desktop hover-tooltip label into a static caption beneath
+         the icon, so the dock reads as a normal mobile tab bar. */
+      .dock-item-label {
+        position: static;
+        transform: none;
+        opacity: 1;
+        pointer-events: auto;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border: none;
+        color: inherit;
+        padding: 0;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        transition: none;
+      }
+    }
+  }
+}

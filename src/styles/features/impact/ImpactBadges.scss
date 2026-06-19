@@ -1,0 +1,96 @@
+/* Badge tiles, unified with the Impact page glass-card design system.
+   No SCSS variables import: the Impact design tokens are CSS custom properties
+   defined on .impact-hub-shell (see Impact.scss), consumed here with fallbacks. */
+
+.badges-section {
+  grid-column: 1 / -1;
+  padding: 24px;
+}
+
+/* Lay the trophy icon beside the heading/subtitle. Scoped to this section so the
+   global .section-head (used elsewhere with its accent bar) is untouched. */
+.badges-section .section-head {
+  display: flex;
+  align-items: center;
+}
+
+.section-head-icon {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  margin-right: 14px;
+  flex-shrink: 0;
+}
+
+.badges-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.badge-tile {
+  --badge-border: #4f8061;
+  --badge-bg-from: #ffffff;
+  --badge-bg-to: #eef3ee;
+  --badge-title-color: #1f4d2e;
+  --badge-shadow-color: rgba(31, 77, 46, 0.32);
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1.5px solid var(--badge-border);
+  background: linear-gradient(145deg, var(--badge-bg-from), var(--badge-bg-to));
+  box-shadow: 0 6px 18px -6px var(--badge-shadow-color);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 10px 24px -8px var(--badge-shadow-color);
+  }
+}
+
+.badge-icon-wrap {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+}
+
+.badge-icon-img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.badge-tile svg {
+  color: var(--badge-title-color);
+}
+
+.badge-text {
+  min-width: 0;
+
+  strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--badge-title-color);
+    margin-bottom: 3px;
+  }
+
+  span {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--slate-soft, #64748b);
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 640px) {
+  .badges-grid {
+    grid-template-columns: 1fr;
+  }
+}
