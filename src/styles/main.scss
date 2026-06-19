@@ -107,13 +107,13 @@ textarea {
     }
 }
 
+/* Rendered in a portal on document.body and positioned via inline top/left,
+   so it can never be clipped by an ancestor's `overflow: hidden`. */
 .info-tooltip-bubble {
-    position: absolute;
-    bottom: calc(100% + 10px);
-    right: -4px;
-    z-index: 40;
+    position: fixed;
+    z-index: 1000;
     width: max-content;
-    max-width: min(240px, 70vw);
+    max-width: min(260px, calc(100vw - 24px));
     padding: 10px 12px;
     border-radius: 12px;
     background: #232d27;
@@ -125,28 +125,19 @@ textarea {
     text-transform: none;
     letter-spacing: normal;
     box-shadow: 0 10px 26px rgba(20, 43, 30, 0.32);
-
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(4px);
-    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
-    pointer-events: none;
-
-    &::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        right: 10px;
-        border: 6px solid transparent;
-        border-top-color: #232d27;
-    }
+    pointer-events: auto;
+    animation: info-tooltip-in 0.16s ease;
 }
 
-.info-tooltip.is-open .info-tooltip-bubble {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    pointer-events: auto;
+@keyframes info-tooltip-in {
+    from {
+        opacity: 0;
+        transform: translateY(3px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•

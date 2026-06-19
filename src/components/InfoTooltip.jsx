@@ -1,16 +1,65 @@
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 
+/**
+ * Accessible info tooltip that works on hover, keyboard focus, AND tap.
+ *
+ * The native `title` attribute it replaces never appears on touch devices and
+ * is unreliable on hover. The bubble is rendered in a portal on document.body
+ * so it can never be clipped by an ancestor with `overflow: hidden` (e.g. the
+ * inventory card frame). Position is computed from the trigger's rect and the
+ * bubble flips above/below depending on available space.
+ */
 function InfoTooltip({ label, text }) {
   const [open, setOpen] = useState(false);
-  const wrapRef = useRef(null);
+  const [coords, setCoords] = useState({ top: 0, left: 0, placement: "top" });
+  const triggerRef = useRef(null);
+  const bubbleRef = useRef(null);
   const tooltipId = useId();
+
+  const updatePosition = useCallback(() => {
+    const trigger = triggerRef.current;
+    const bubble = bubbleRef.current;
+    if (!trigger || !bubble) return;
+
+    const t = trigger.getBoundingClientRect();
+    const b = bubble.getBoundingClientRect();
+    const margin = 8;
+    const gap = 10;
+
+    // Flip below the trigger when there isn't room above.
+    const placement = t.top - b.height - gap < margin ? "bottom" : "top";
+    const top =
+      placement === "top" ? t.top - b.height - gap : t.bottom + gap;
+
+    // Center horizontally on the trigger, then clamp inside the viewport.
+    let left = t.left + t.width / 2 - b.width / 2;
+    left = Math.max(margin, Math.min(left, window.innerWidth - b.width - margin));
+
+    setCoords({ top, left, placement });
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!open) return undefined;
+    updatePosition();
+
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [open, updatePosition]);
 
   useEffect(() => {
     if (!open) return undefined;
 
     const handlePointerDown = (event) => {
-      if (wrapRef.current && !wrapRef.current.contains(event.target)) {
+      if (
+        !triggerRef.current?.contains(event.target) &&
+        !bubbleRef.current?.contains(event.target)
+      ) {
         setOpen(false);
       }
     };
@@ -28,13 +77,13 @@ function InfoTooltip({ label, text }) {
 
   return (
     <span
-      className={`info-tooltip ${open ? "is-open" : ""}`}
-      ref={wrapRef}
+      className="info-tooltip"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
       <button
         type="button"
+        ref={triggerRef}
         className="info-tooltip-trigger"
         aria-label={label}
         aria-expanded={open}
@@ -45,9 +94,19 @@ function InfoTooltip({ label, text }) {
       >
         i
       </button>
-      <span className="info-tooltip-bubble" id={tooltipId} role="tooltip">
-        {text}
-      </span>
+      {open &&
+        createPortal(
+          <span
+            ref={bubbleRef}
+            id={tooltipId}
+            role="tooltip"
+            className={`info-tooltip-bubble is-open placement-${coords.placement}`}
+            style={{ top: coords.top, left: coords.left }}
+          >
+            {text}
+          </span>,
+          document.body,
+        )}
     </span>
   );
 }
