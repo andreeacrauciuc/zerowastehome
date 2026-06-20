@@ -14,9 +14,9 @@ function ShoppingHeader({ items, marketPriceTotal, estimatedCo2Kg, safeSwapSavin
 
       <div className="shop-stats">
         {items.length === 0 ? (
-          <div className="stat-pill" style={{ gridColumn: "1 / -1", opacity: 0.6 }}>
+          <div className="stat-pill is-empty">
             <span className="label">Your list is empty</span>
-            <strong style={{ fontSize: "0.88rem", fontWeight: 600 }}>
+            <strong className="stat-empty-copy">
               Add items to see cost estimates
             </strong>
           </div>

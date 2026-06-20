@@ -34,7 +34,7 @@ function InventoryHeader({
           disabled={isScanning}
         >
           {isScanning ? (
-            <Loader2 size={20} style={{ animation: "spin 0.8s linear infinite" }} />
+            <Loader2 size={20} className="inventory-spin" />
           ) : (
             <FileText size={20} />
           )}

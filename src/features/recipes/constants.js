@@ -1,0 +1,2 @@
+export const AVERAGE_MISSING_INGREDIENT_COST = 3.5;
+export const CO2_DRIVING_KM_FACTOR = 5;

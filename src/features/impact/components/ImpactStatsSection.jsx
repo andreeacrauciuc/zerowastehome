@@ -30,7 +30,7 @@ const ImpactStatsSection = ({ analytics }) => {
         variants={cardMotion}
       >
         <div className="stat-tile-header">
-          <img src={moneySavedImg} alt="Saved" style={{ width: "40px", height: "30px", objectFit: "contain", marginRight: "8px" }} />
+          <img src={moneySavedImg} alt="Saved" className="stat-tile-icon-img" />
           <span className="tile-period-label">this period</span>
         </div>
         <p className="tile-label">
@@ -57,7 +57,7 @@ const ImpactStatsSection = ({ analytics }) => {
         variants={cardMotion}
       >
         <div className="stat-tile-header">
-          <img src={moneyWastedImg} alt="Wasted" style={{ width: "40px", height: "30px", objectFit: "contain", marginRight: "8px" }} />
+          <img src={moneyWastedImg} alt="Wasted" className="stat-tile-icon-img" />
           <span className="tile-period-label">this period</span>
         </div>
         <p className="tile-label">
@@ -82,7 +82,7 @@ const ImpactStatsSection = ({ analytics }) => {
         variants={cardMotion}
       >
         <div className="stat-tile-header">
-          <img src={periodResultImg} alt="Period" style={{ width: "40px", height: "30px", objectFit: "contain", marginRight: "8px" }} />
+          <img src={periodResultImg} alt="Period" className="stat-tile-icon-img" />
           <span className="tile-period-label">net balance</span>
         </div>
         <p className="tile-label">Period result</p>

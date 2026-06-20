@@ -67,7 +67,7 @@ function App() {
             position="top-center"
             richColors
             closeButton
-            style={{ zIndex: 9999 }}
+            className="app-toaster"
             toastOptions={{ style: { zIndex: 9999 } }}
           />
           <InstallPWA />

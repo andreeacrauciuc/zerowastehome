@@ -54,7 +54,7 @@ const FoodCard = ({ item, currencyConfig, consumingIds = new Set(), onMarkEaten,
               <span className="badge category">{categoryName}</span>
               <span className="badge price">
                 {(item?.price === null || item?.price === undefined)
-                  ? <span style={{ opacity: 0.45, fontStyle: "italic" }}>No price</span>
+                  ? <span className="no-price">No price</span>
                   : (
                     <>
                       {formatCurrency(item?.price, currencyConfig)}
@@ -82,7 +82,7 @@ const FoodCard = ({ item, currencyConfig, consumingIds = new Set(), onMarkEaten,
           <div className="card-actions-fixed">
             <button type="button" onClick={() => onMarkEaten?.(item.id)} className="act-btn check" aria-label="Mark eaten" disabled={consumingIds.has(item.id)}>
               {consumingIds.has(item.id)
-                ? <Loader2 size={16} style={{ animation: "spin 0.8s linear infinite" }} />
+                ? <Loader2 size={16} className="inventory-spin" />
                 : <Check />}
             </button>
             <button type="button" onClick={() => onEdit?.(item)} className="act-btn edit" aria-label="Edit item">

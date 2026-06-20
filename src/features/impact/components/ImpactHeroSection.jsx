@@ -71,23 +71,10 @@ const ImpactHeroSection = ({ analytics, handleRecoveryAction }) => {
         whileHover="hover"
         variants={cardMotion}
       >
-        <div
-          className="health-score-top"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <img
-              src={healthScoreImg}
-              alt="Health"
-              style={{ width: "54px", height: "54px" }}
-            />
-            <p className="eyebrow" style={{ margin: 0 }}>
-              Kitchen health score
-            </p>
+        <div className="health-score-top">
+          <div className="health-score-title">
+            <img src={healthScoreImg} alt="Health" className="health-score-icon" />
+            <p className="eyebrow">Kitchen health score</p>
           </div>
           <div
             className="health-score-badge"
@@ -185,16 +172,7 @@ const ImpactHeroSection = ({ analytics, handleRecoveryAction }) => {
         variants={cardMotion}
       >
         <div className="risk-head">
-          <img
-            src={moneyRiskImg}
-            alt="Money at risk"
-            style={{
-              width: "45px",
-              height: "45px",
-              objectFit: "contain",
-              marginRight: "8px",
-            }}
-          />
+          <img src={moneyRiskImg} alt="Money at risk" className="risk-icon" />
           <p>Money at risk</p>
         </div>
 

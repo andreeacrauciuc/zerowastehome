@@ -14,6 +14,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import {
   arrayRemove,
@@ -246,6 +247,13 @@ export function AuthProvider({ children }) {
 
         createdUser = credential.user;
 
+        const trimmedName = fullName.trim();
+        try {
+          await updateProfile(createdUser, { displayName: trimmedName });
+        } catch {
+          // Non-fatal: the Firestore doc remains the primary source of truth.
+        }
+
         if (normalizedCode) {
           householdDoc = await resolveHouseholdByJoinCode(normalizedCode);
           if (!householdDoc) {
@@ -259,7 +267,7 @@ export function AuthProvider({ children }) {
         const profile = {
           uid: createdUser.uid,
           ownerId: createdUser.uid,
-          fullName: fullName.trim(),
+          fullName: trimmedName,
           email: normalizedEmail,
           photoDataUrl: "",
           householdId: null,

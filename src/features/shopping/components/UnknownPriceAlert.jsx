@@ -20,22 +20,8 @@ function UnknownPriceAlert({ pricedItems, unknownPriceCount, onReveal }) {
   return (
     <button
       type="button"
+      className="unknown-price-cta"
       onClick={handleClick}
-      style={{
-        display: "block",
-        width: "100%",
-        marginTop: "0.65rem",
-        padding: "0.6rem 0.85rem",
-        borderRadius: "10px",
-        border: "1px solid rgba(245,158,11,0.28)",
-        background: "rgba(245,158,11,0.07)",
-        color: "#92400e",
-        fontSize: "0.78rem",
-        fontWeight: 600,
-        textAlign: "left",
-        cursor: "pointer",
-        lineHeight: 1.4,
-      }}
     >
       {unknownPriceCount} item{unknownPriceCount > 1 ? "s" : ""} without price — tap to see which
     </button>

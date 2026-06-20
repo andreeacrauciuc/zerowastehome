@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckSquare, Plus, Search, ShoppingBag, Square } from "lucide-react";
-import "../../../styles/features/shopping/Shopping.scss";
+import "./Shopping.scss";
 import { useDataStore } from "../../../hooks/useDataStore";
 import { useAuth } from "../../auth/context/AuthContext";
 import { formatCurrency } from "../../../utils/currency";
@@ -416,7 +416,7 @@ const Shopping = () => {
         onCancel={cancelBulkRemove}
       >
         {confirmBulkRemoveRecipe && (
-          <p style={{ padding: "0 1.25rem 1rem", fontSize: "0.9rem", color: "var(--slate-soft)" }}>
+          <p className="shopping-confirm-message">
             This will remove {confirmBulkRemoveRecipe.count} item{confirmBulkRemoveRecipe.count > 1 ? "s" : ""} for{" "}
             <strong>{confirmBulkRemoveRecipe.recipeTitle}</strong> from your shopping list.
           </p>

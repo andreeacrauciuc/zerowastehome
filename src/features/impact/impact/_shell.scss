@@ -1,0 +1,97 @@
+.impact-hub-shell {
+  --emerald: #10b981;
+  --emerald-deep: #047857;
+  --emerald-mid: #059669;
+  --amber: #f59e0b;
+  --rose: #8b1a1a;
+  --slate-ink: #0f172a;
+  --slate-body: #334155;
+  --slate-soft: rgba(15, 23, 42, 0.58);
+  --panel: rgba(255, 255, 255, 0.22);
+  --panel-strong: rgba(255, 255, 255, 0.38);
+  --panel-border: rgba(255, 255, 255, 0.44);
+  --shadow-sm: 0 6px 18px rgba(15, 23, 42, 0.09);
+  --shadow-md: 0 14px 34px rgba(15, 23, 42, 0.12);
+  --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.16);
+
+  min-height: 100%;
+  padding: clamp(14px, 2.4vw, 30px);
+  position: relative;
+  background: transparent;
+}
+
+.glass-card {
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.58) 0%,
+    rgba(255, 255, 255, 0.34) 100%
+  );
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(22px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 22px;
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.1),
+    0 2px 6px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 18px 44px rgba(15, 23, 42, 0.14),
+    0 4px 10px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.impact-hub-grid {
+  margin-top: 14px;
+  display: grid;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.impact-word {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.impact-word--saved,
+.impact-value--saved {
+  color: #00A308;
+}
+
+.impact-word--wasted,
+.impact-value--wasted {
+  color: #791515;
+}
+
+.impact-value {
+  font-weight: 800;
+}
+
+.impact-muted-note {
+  color: var(--slate-soft);
+}
+
+.impact-countup {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.impact-empty-dash {
+  color: var(--slate-soft);
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.82rem;
+  color: var(--slate-ink);
+  font-weight: 800;
+}
+

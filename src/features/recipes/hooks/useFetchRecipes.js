@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { generateRecipes, resetRecipeImagePool } from "../../../services/recipeService";
+import { generateRecipes, resetRecipeImagePool } from "../services/recipeService";
 import { showError } from "../../../utils/toast";
 import { t } from "../../../locales";
 import { getRecipeKey } from "../utils/recipesUtils";

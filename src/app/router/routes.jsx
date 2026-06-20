@@ -3,7 +3,7 @@ import Inventory from "../../features/inventory";
 import Recipes from "../../features/recipes";
 import Shopping from "../../features/shopping";
 import Impact from "../../features/impact/Impact";
-import Settings from "../../pages/SettingsPage";
+import Settings from "../../features/settings/components/SettingsPage";
 
 export const appRoutes = [
   { path: "/home", Component: Inventory },

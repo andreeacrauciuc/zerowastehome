@@ -28,12 +28,10 @@ function InfoTooltip({ label, text }) {
     const margin = 8;
     const gap = 10;
 
-    // Flip below the trigger when there isn't room above.
     const placement = t.top - b.height - gap < margin ? "bottom" : "top";
     const top =
       placement === "top" ? t.top - b.height - gap : t.bottom + gap;
 
-    // Center horizontally on the trigger, then clamp inside the viewport.
     let left = t.left + t.width / 2 - b.width / 2;
     left = Math.max(margin, Math.min(left, window.innerWidth - b.width - margin));
 

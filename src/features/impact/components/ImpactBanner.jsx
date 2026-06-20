@@ -36,7 +36,7 @@ const ImpactBanner = ({
               formatter={(num) => formatCurrency(num, currencyConfig)}
             />
           ) : (
-            <span style={{ color: "var(--slate-soft)" }}>—</span>
+            <span className="impact-empty-dash">—</span>
           )}
         </h1>
         {hasHistory ? (
@@ -54,7 +54,7 @@ const ImpactBanner = ({
                   formatter={(num) => `${num.toFixed(1)} kg`}
                 />
               ) : (
-                <span style={{ color: "var(--slate-soft)" }}>—</span>
+                <span className="impact-empty-dash">—</span>
               )}
             </span>
             <span className="impact-hero-substat-label">food saved</span>
@@ -67,7 +67,7 @@ const ImpactBanner = ({
                   formatter={(num) => `${num.toFixed(1)} kg`}
                 />
               ) : (
-                <span style={{ color: "var(--slate-soft)" }}>—</span>
+                <span className="impact-empty-dash">—</span>
               )}
             </span>
             <span className="impact-hero-substat-label">CO₂ prevented</span>
@@ -80,19 +80,12 @@ const ImpactBanner = ({
                   formatter={(num) => `~${num.toFixed(1)}`}
                 />
               ) : (
-                <span style={{ color: "var(--slate-soft)" }}>—</span>
+                <span className="impact-empty-dash">—</span>
               )}
             </span>
             <span className="impact-hero-substat-label">
               trees equivalent
-              <span
-                style={{
-                  display: "block",
-                  fontSize: "0.65rem",
-                  opacity: 0.55,
-                  marginTop: 2,
-                }}
-              >
+              <span className="impact-hero-trees-note">
                 {analytics.treesPlantedNote}
               </span>
             </span>

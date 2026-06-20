@@ -43,7 +43,7 @@ const CountUp = ({
   }, [duration, value, animateOnMount, prefersReducedMotion]);
 
   return (
-    <span style={{ fontVariantNumeric: "tabular-nums", fontFeatureSettings: '"tnum"' }}>
+    <span className="impact-countup">
       {formatter(display)}
     </span>
   );

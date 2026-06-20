@@ -1,155 +1,32 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useCurrency } from "../../../hooks/useCurrency";
+import React, { useCallback } from "react";
 import { X } from "lucide-react";
-import "../../../styles/features/inventory/AddFoodModal.scss";
-import { validateInventoryItem } from "../../../utils/validation";
-import { showError } from "../../../utils/toast";
+import { useCurrency } from "../../../hooks/useCurrency";
+import { useAddFoodForm } from "../hooks/useAddFoodForm";
+import { getFormKey } from "../utils/addFoodForm";
+import { FOOD_CATEGORIES, UNIT_OPTIONS } from "../constants";
 import AddFoodImg from "../../../assets/inventory.png";
-import BakeryImg from "../../../assets/Bakery.png";
-import FruitsImg from "../../../assets/Fruits.png";
-import VeggiesImg from "../../../assets/Vegetables.png";
-import MeatImg from "../../../assets/Meat.png";
-import DairyImg from "../../../assets/Dairy.png";
-import GrainsImg from "../../../assets/Grains.png";
-import OtherImg from "../../../assets/Other.png";
-
-const categories = [
-  { id: "Fruits", label: "FRUITS", icon: FruitsImg },
-  { id: "Vegetables", label: "VEGETABLES", icon: VeggiesImg },
-  { id: "Meat", label: "MEAT", icon: MeatImg },
-  { id: "Dairy", label: "DAIRY", icon: DairyImg },
-  { id: "Bakery", label: "BAKERY", icon: BakeryImg },
-  { id: "Grains", label: "GRAINS", icon: GrainsImg },
-  { id: "Other", label: "Other", icon: OtherImg },
-];
-
-const getLocalDateString = (date = new Date()) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
-
-const getEmptyState = () => {
-  const today = getLocalDateString();
-  return {
-    name: "",
-    price: "",
-    expiry: today,
-    addedAt: today,
-    category: "Other",
-    quantity: "1",
-    unit: "pcs",
-  };
-};
-
-const getFormKey = (initialData) =>
-  initialData
-    ? JSON.stringify({
-        id: initialData.id || null,
-        name: initialData.name || "",
-        price: initialData.price ?? "",
-        expiry: initialData.expiry || "",
-        category: initialData.category || "Other",
-        quantity: initialData.quantity ?? "1",
-        unit: initialData.unit || "pcs",
-      })
-    : "create-item";
+import "./AddFoodModal.scss";
 
 const AddFoodForm = ({ initialData, onClose, onSave, onRequestClose }) => {
-  const [formData, setFormData] = useState(() => initialData || getEmptyState());
-  const [validationError, setValidationError] = useState("");
-  const [isSaving, setIsSaving] = useState(false);
-  const [showCloseConfirm, setShowCloseConfirm] = useState(false);
   const { currencyConfig } = useCurrency();
   const currencySymbol = currencyConfig?.currency === "RON" ? "RON" : "€";
-  const isDirty = useMemo(() => {
-    const empty = getEmptyState();
-    return (
-      formData.name.trim() !== "" ||
-      String(formData.price ?? "").trim() !== "" ||
-      formData.expiry !== empty.expiry ||
-      formData.category !== "Other" ||
-      String(formData.quantity) !== "1"
-    );
-  }, [formData]);
 
-  const expiryMinDate = new Date();
-  expiryMinDate.setDate(expiryMinDate.getDate() - 14);
-  const expiryMin = getLocalDateString(expiryMinDate);
-  const fractionalUnits = new Set(["kg", "l"]);
-  const quantityStep = fractionalUnits.has(String(formData.unit).toLowerCase())
-    ? "0.1"
-    : "1";
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (isSaving) return;
-
-    const rawQuantity = String(formData.quantity ?? "").trim();
-    const parsedQuantity = Number(rawQuantity);
-    if (rawQuantity === "" || !Number.isFinite(parsedQuantity) || parsedQuantity <= 0) {
-      const message = "Quantity must be a number greater than 0.";
-      setValidationError(message);
-      showError(message);
-      return;
-    }
-
-    const cleaned = {
-      ...formData,
-      price: String(formData.price ?? "").trim() === "" ? null : Number(formData.price),
-      quantity: parsedQuantity,
-    };
-
-    const validation = validateInventoryItem(cleaned);
-    if (!validation.isValid) {
-      setValidationError(validation.error);
-      showError(validation.error);
-      return;
-    }
-
-    setIsSaving(true);
-    try {
-      await onSave(cleaned);
-      setValidationError("");
-      onClose();
-    } catch {
-      showError("Could not save item. Please try again.");
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const updateField = (field, value) => {
-    if (validationError) {
-      setValidationError("");
-    }
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleClose = useCallback(() => {
-    if (isDirty && !initialData) {
-      setShowCloseConfirm(true);
-      return;
-    }
-    setValidationError("");
-    setFormData(initialData || getEmptyState());
-    onClose();
-  }, [isDirty, initialData, onClose]);
-
-  const confirmClose = () => {
-    setShowCloseConfirm(false);
-    setValidationError("");
-    setFormData(initialData || getEmptyState());
-    onClose();
-  };
-
-  useEffect(() => {
-    if (onRequestClose) onRequestClose(handleClose);
-  }, [onRequestClose, handleClose]);
+  const {
+    formData,
+    validationError,
+    isSaving,
+    showCloseConfirm,
+    expiryMin,
+    quantityStep,
+    updateField,
+    handleSubmit,
+    handleClose,
+    cancelClose,
+    confirmClose,
+  } = useAddFoodForm({ initialData, onClose, onSave, onRequestClose });
 
   return (
-    <form className="add-food-form" onSubmit={handleSubmit} style={{ position: "relative" }}>
+    <form className="add-food-form" onSubmit={handleSubmit}>
       <div className="input-group">
         <label>Item name</label>
         <input
@@ -161,7 +38,7 @@ const AddFoodForm = ({ initialData, onClose, onSave, onRequestClose }) => {
       </div>
 
       <div className="input-row">
-        <div className="input-group" style={{ flex: 2 }}>
+        <div className="input-group input-group--quantity">
           <label>Quantity</label>
           <input
             type="number"
@@ -172,19 +49,18 @@ const AddFoodForm = ({ initialData, onClose, onSave, onRequestClose }) => {
             min={quantityStep}
           />
         </div>
-        <div className="input-group" style={{ flex: 1 }}>
+        <div className="input-group input-group--unit">
           <label>Unit</label>
           <select
             className="unit-select"
             value={formData.unit}
             onChange={(e) => updateField("unit", e.target.value)}
           >
-            <option value="pcs">pcs</option>
-            <option value="kg">kg</option>
-            <option value="g">g</option>
-            <option value="l">l</option>
-            <option value="ml">ml</option>
-            <option value="pack">pack</option>
+            {UNIT_OPTIONS.map((unit) => (
+              <option key={unit} value={unit}>
+                {unit}
+              </option>
+            ))}
           </select>
         </div>
       </div>
@@ -221,7 +97,7 @@ const AddFoodForm = ({ initialData, onClose, onSave, onRequestClose }) => {
       <div className="category-section">
         <label className="section-label">Category</label>
         <div className="category-grid">
-          {categories.map((cat) => (
+          {FOOD_CATEGORIES.map((cat) => (
             <button
               key={cat.id}
               type="button"
@@ -245,72 +121,25 @@ const AddFoodForm = ({ initialData, onClose, onSave, onRequestClose }) => {
           {isSaving ? "Saving..." : initialData ? "Update item" : "Add item"}
         </button>
       </div>
+
       {validationError ? (
-        <p role="alert" style={{ color: "#b91c1c", marginTop: "0.5rem" }}>
+        <p role="alert" className="form-error">
           {validationError}
         </p>
       ) : null}
+
       {showCloseConfirm && (
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          background: "rgba(15,23,42,0.2)",
-          backdropFilter: "blur(4px)",
-          WebkitBackdropFilter: "blur(4px)",
-          borderRadius: "inherit",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 10,
-          padding: "1.5rem",
-        }}>
-          <div style={{
-            background: "#FDFBF7",
-            borderRadius: "14px",
-            padding: "1.5rem",
-            maxWidth: "320px",
-            width: "100%",
-            border: "1px solid rgba(40,90,72,0.12)",
-            boxShadow: "0 16px 40px rgba(40,90,72,0.12)",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.75rem",
-          }}>
-            <strong style={{ fontSize: "1rem", color: "#0f172a" }}>Discard changes?</strong>
-            <p style={{ margin: 0, fontSize: "0.88rem", color: "#475569", lineHeight: 1.5 }}>
+        <div className="close-confirm-overlay">
+          <div className="close-confirm-dialog">
+            <strong className="close-confirm-title">Discard changes?</strong>
+            <p className="close-confirm-text">
               You have unsaved changes. Are you sure you want to close?
             </p>
-            <div style={{ display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
-              <button
-                type="button"
-                onClick={() => setShowCloseConfirm(false)}
-                style={{
-                  padding: "0.5rem 1rem",
-                  borderRadius: "9999px",
-                  border: "1px solid rgba(15,23,42,0.15)",
-                  background: "transparent",
-                  color: "#334155",
-                  fontWeight: 600,
-                  fontSize: "0.84rem",
-                  cursor: "pointer",
-                }}
-              >
+            <div className="close-confirm-actions">
+              <button type="button" className="close-confirm-keep" onClick={cancelClose}>
                 Keep editing
               </button>
-              <button
-                type="button"
-                onClick={confirmClose}
-                style={{
-                  padding: "0.5rem 1rem",
-                  borderRadius: "9999px",
-                  border: "none",
-                  background: "linear-gradient(135deg, #7f1d1d 0%, #b91c1c 100%)",
-                  color: "#fff",
-                  fontWeight: 700,
-                  fontSize: "0.84rem",
-                  cursor: "pointer",
-                }}
-              >
+              <button type="button" className="close-confirm-discard" onClick={confirmClose}>
                 Discard
               </button>
             </div>
@@ -351,7 +180,7 @@ const AddFoodModal = ({ isOpen, onClose, onSave, initialData }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <header className="modal-header">
-          <h2>{initialData ? "Edit Item" : "Add to fridge"}</h2>
+          <h2>{initialData ? "Edit item" : "Add to fridge"}</h2>
           <button type="button" className="close-btn" onClick={handleHeaderClose}>
             <X />
           </button>

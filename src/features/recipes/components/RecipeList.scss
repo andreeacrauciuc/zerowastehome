@@ -403,3 +403,22 @@
 .recipe-card .recipe-card-image {
   position: relative;
 }
+
+.recipe-missing-badge {
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 0.25rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: rgba(239, 68, 68, 0.08);
+  color: #991b1b;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+
+  &.is-one {
+    background: rgba(245, 158, 11, 0.12);
+    color: #92400e;
+    border-color: rgba(245, 158, 11, 0.25);
+  }
+}

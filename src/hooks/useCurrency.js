@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useSettings } from "../context/SettingsContext";
+import { useSettings } from "../features/settings/context/SettingsContext";
 
 export const useCurrency = () => {
   const { userPreferences } = useSettings();

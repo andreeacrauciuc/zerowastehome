@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import "../../styles/components/common/UI/InstallPWA.scss";
 
 const DISMISS_KEY = "zw-pwa-install-dismissed";
 const PROMPT_DELAY_MS = 60_000;
@@ -89,54 +90,23 @@ const InstallPWA = () => {
     <div
       role="dialog"
       aria-label="Install ZeroWasteHome"
-      style={{
-        position: "fixed",
-        left: "12px",
-        right: "12px",
-        bottom: "calc(5.5rem + env(safe-area-inset-bottom, 0px))",
-        zIndex: 10000,
-        display: "flex",
-        alignItems: "center",
-        gap: "12px",
-        flexWrap: "wrap",
-        padding: "14px 16px",
-        borderRadius: "16px",
-        background: "#ffffff",
-        border: "1px solid rgba(15, 23, 42, 0.1)",
-        boxShadow: "0 12px 34px rgba(15, 23, 42, 0.18)",
-      }}
+      className="install-pwa-banner"
     >
-      <span style={{ flex: "1 1 180px", fontSize: "0.92rem", fontWeight: 600, color: "#0f172a" }}>
+      <span className="install-pwa-text">
         Install ZeroWasteHome on your device
       </span>
-      <div style={{ display: "flex", gap: "8px", marginLeft: "auto" }}>
+      <div className="install-pwa-actions">
         <button
           type="button"
           onClick={handleDismiss}
-          style={{
-            padding: "0.5rem 0.9rem",
-            borderRadius: "10px",
-            border: "1px solid rgba(15, 23, 42, 0.15)",
-            background: "transparent",
-            color: "#334155",
-            fontWeight: 600,
-            cursor: "pointer",
-          }}
+          className="install-pwa-btn install-pwa-btn--dismiss"
         >
           Not now
         </button>
         <button
           type="button"
           onClick={handleInstall}
-          style={{
-            padding: "0.5rem 1.1rem",
-            borderRadius: "10px",
-            border: "none",
-            background: "linear-gradient(135deg, #10b981, #047857)",
-            color: "#ffffff",
-            fontWeight: 700,
-            cursor: "pointer",
-          }}
+          className="install-pwa-btn install-pwa-btn--install"
         >
           Install
         </button>

@@ -1,0 +1,116 @@
+.muted {
+    color: #75958b;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="time"],
+select {
+    min-height: 42px;
+    border-radius: 12px;
+    border: 1px solid rgba(141, 169, 162, 0.32);
+    background: rgba(255, 255, 255, 0.68);
+    padding: 0 12px;
+    color: #36554d;
+    outline: none;
+
+    &:focus {
+        border-color: rgba(122, 173, 157, 0.8);
+        box-shadow: 0 0 0 3px rgba(136, 186, 170, 0.2);
+    }
+}
+
+select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2336554d' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+input:disabled,
+select:disabled {
+    color: #7a978e;
+    background: rgba(248, 251, 250, 0.8);
+}
+
+.toggle-btn,
+.primary-btn,
+.secondary-btn,
+.warn-btn,
+.danger-btn {
+    min-height: 40px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 18px rgba(66, 94, 87, 0.18);
+    }
+
+    &:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+}
+
+.settings-save-btn {
+    height: 58px;
+    border: 1px solid transparent;
+    border-radius: 40px;
+    background: linear-gradient(135deg, #285a48 0%, #408a71 58%, #b0e4cc 100%);
+    color: #f7fff9;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 0 20px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 22px rgba(40, 90, 72, 0.14);
+    backdrop-filter: blur(18px) saturate(160%);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 22px rgba(40, 90, 72, 0.18);
+    }
+
+    &:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+}
+
+.toggle-btn.on,
+.primary-btn {
+    background: linear-gradient(125deg, var(--brand-green), #55a974);
+}
+
+.toggle-btn.off,
+.secondary-btn {
+    background: linear-gradient(125deg, #27806c, #95a5b7);
+}
+
+.warn-btn {
+    background: linear-gradient(125deg, #b3a389, #bfaa90);
+}
+
+.danger-btn {
+    background: linear-gradient(125deg, #9e2531, #c9838d);
+}
+
+.danger-btn:hover,
+.warn-btn:hover {
+    box-shadow: 0 10px 18px rgba(66, 94, 87, 0.18);
+}

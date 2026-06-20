@@ -23,7 +23,7 @@ const ImpactInsightsSection = ({ analytics }) => {
           variants={cardMotion}
         >
           <div className="section-head section-head--compact">
-            <img src={smartTipsImg} alt="Smart Tips" style={{ width: "35px", height: "35px", objectFit: "contain", marginRight: "12px" }} />
+            <img src={smartTipsImg} alt="Smart Tips" className="section-head-icon-img" />
             <div>
               <h3>Smart tips</h3>
               <p>Personalised suggestions for this period</p>
@@ -46,7 +46,7 @@ const ImpactInsightsSection = ({ analytics }) => {
           variants={cardMotion}
         >
           <div className="section-head section-head--compact">
-            <img src={topCategoriesImg} alt="Top Categories" style={{ width: "35px", height: "35px", objectFit: "contain", marginRight: "12px" }} />
+            <img src={topCategoriesImg} alt="Top Categories" className="section-head-icon-img" />
             <div>
               <h3>
                 Top <span className="impact-word impact-word--wasted">wasted</span> categories

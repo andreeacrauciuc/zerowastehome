@@ -1,0 +1,125 @@
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.stat-tile {
+  padding: clamp(14px, 1.8vw, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg), 0 0 36px rgba(16, 185, 129, 0.14);
+  }
+}
+
+.stat-tile--saved {
+  border-color: rgba(16, 185, 129, 0.22);
+  background:
+    linear-gradient(150deg, rgba(236, 253, 245, 0.3), rgba(255, 255, 255, 0.18)),
+    var(--panel);
+}
+
+.stat-tile--lost {
+  border-color: rgba(251, 113, 133, 0.22);
+  background:
+    linear-gradient(150deg, rgba(255, 241, 242, 0.3), rgba(255, 255, 255, 0.16)),
+    var(--panel);
+
+  .impact-word--wasted,
+  .impact-value--wasted {
+    color: #791515;
+  }
+}
+
+.stat-tile--net-pos {
+  border-color: rgba(16, 185, 129, 0.22);
+  background:
+    linear-gradient(150deg, rgba(236, 253, 245, 0.24), rgba(255, 255, 255, 0.16)),
+    var(--panel);
+}
+
+.stat-tile--net-neg {
+  border-color: rgba(251, 113, 133, 0.2);
+  background:
+    linear-gradient(150deg, rgba(255, 241, 242, 0.24), rgba(255, 255, 255, 0.16)),
+    var(--panel);
+}
+
+.stat-tile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.tile-period-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--slate-soft);
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+}
+
+.tile-label {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--slate-ink);
+  letter-spacing: -0.01em;
+
+  .impact-word--saved {
+    color: var(--emerald-deep);
+    font-weight: 800;
+  }
+
+  .impact-word--wasted {
+    color: #791515;
+    font-weight: 800;
+  }
+}
+
+.tile-value {
+  margin: 8px 0 0;
+  color: var(--slate-ink);
+  font-size: clamp(1.7rem, 3.2vw, 2.5rem);
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  line-height: 1.04;
+  font-variant-numeric: tabular-nums;
+}
+
+.tile-subrow {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  small {
+    color: var(--slate-soft);
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+}
+
+.tile-sub-icon {
+  flex-shrink: 0;
+  opacity: 0.55;
+}
+
+.tile-sub-icon--up {
+  color: #0b7a50;
+}
+
+.tile-sub-icon--down {
+  color: #c0440a;
+}
+

@@ -1,0 +1,181 @@
+.inventory-header-glass {
+  position: sticky;
+  top: 18px;
+  z-index: 5;
+  width: 100%;
+  min-height: 122px;
+  border-radius: 61.5px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.64) 0%,
+    rgba(241, 247, 242, 0.4) 42%,
+    rgba(211, 229, 218, 0.34) 100%
+  );
+  backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid rgba(187, 187, 187, 0.72);
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  box-shadow:
+    0 14px 28px rgba(25, 67, 46, 0.15),
+    0 4px 10px rgba(40, 90, 72, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -12px 18px rgba(40, 90, 72, 0.055),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+}
+
+.inventory-search-wrap {
+  width: 35%;
+  max-width: 470px;
+  min-width: 370px;
+  height: 60px;
+  border-radius: 50px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  color: #595757;
+  box-shadow: none;
+  transition: none;
+
+
+  &:focus-within {
+    box-shadow: none;
+  }
+
+  .inventory-search-icon {
+    color: #111;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+  }
+
+  .search-input {
+    width: 100%;
+    border: none;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent;
+    font-size: 16px;
+    color: #033108;
+
+    &::placeholder {
+      color: #626262;
+    }
+  }
+}
+
+.inventory-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.inventory-action-btn {
+  height: 58px;
+  border: 1px solid transparent;
+  border-radius: 40px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.46) 0%, rgba(176, 228, 204, 0.34) 100%);
+  color: var(--inv-deep);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 20px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow:
+    0 9px 18px rgba(40, 90, 72, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    inset 0 -8px 14px rgba(40, 90, 72, 0.045);
+  backdrop-filter: blur(18px) saturate(160%);
+  transition: box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    box-shadow:
+      0 10px 20px rgba(40, 90, 72, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.68),
+      inset 0 -8px 14px rgba(40, 90, 72, 0.05);
+  }
+
+  &.primary {
+    background: linear-gradient(135deg, var(--inv-deep) 0%, var(--inv-mid) 58%, var(--inv-soft) 100%);
+    color: #f7fff9;
+    border-color: rgba(64, 138, 113, 0.65);
+    box-shadow:
+      0 10px 20px rgba(40, 90, 72, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.24),
+      inset 0 -9px 16px rgba(27, 48, 34, 0.12);
+  }
+
+  &.secondary {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.42) 0%, rgba(176, 228, 204, 0.24) 100%);
+    color: var(--inv-deep);
+    border-color: rgba(176, 228, 204, 0.72);
+  }
+}
+
+.inventory-bell-btn-wrap {
+  position: relative;
+}
+
+.inventory-bell-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1px solid rgba(176, 228, 204, 0.8);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.38) 0%, rgba(176, 228, 204, 0.34) 100%);
+  color: var(--inv-deep);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(18px) saturate(160%);
+  box-shadow:
+    0 8px 16px rgba(40, 90, 72, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68),
+    inset 0 -7px 12px rgba(40, 90, 72, 0.05);
+  transition: box-shadow 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    box-shadow:
+      0 9px 18px rgba(40, 90, 72, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      inset 0 -7px 12px rgba(40, 90, 72, 0.055);
+  }
+}
+
+.inventory-bell-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #f04e37;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  border: 2px solid #FDFBF7;
+}
+
+.inventory-profile-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 50px;
+  object-fit: cover;
+  border: 1px solid var(--inv-deep);
+  cursor: pointer;
+  box-shadow:
+    0 7px 14px rgba(40, 90, 72, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}

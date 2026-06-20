@@ -1,4 +1,5 @@
 import React from "react";
+import { User } from "lucide-react";
 import "../../styles/components/common/UI/UserAvatar.scss";
 
 function UserAvatar({ user, size = 40, className = "", onClick, title, ariaLabel }) {
@@ -43,21 +44,11 @@ function UserAvatar({ user, size = 40, className = "", onClick, title, ariaLabel
           {initial}
         </div>
       ) : (
-        <svg
+        <User
           className="user-avatar-icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+          strokeWidth={1.8}
           aria-hidden="true"
-        >
-          <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.8" />
-          <path
-            d="M4.5 19.5C5.4 16.8 8.1 15 12 15C15.9 15 18.6 16.8 19.5 19.5"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-          />
-        </svg>
+        />
       )}
     </div>
   );

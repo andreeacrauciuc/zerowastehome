@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../styles/features/inventory/ConfirmationModal.scss";
+import "./ConfirmationModal.scss";
 
 const overlayStyle = {
   position: "fixed",

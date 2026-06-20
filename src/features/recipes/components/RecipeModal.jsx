@@ -14,11 +14,24 @@ import {
 } from "lucide-react";
 import { formatCurrency } from "../../../utils/currency";
 import { useCurrency } from "../../../hooks/useCurrency";
-import { getEffectivePrice } from "../utils/pricing";
+import {
+  computeRecipeValueEur,
+  getIngredientExpiryMeta,
+} from "../utils/recipeModalUtils";
+import {
+  AVERAGE_MISSING_INGREDIENT_COST,
+  CO2_DRIVING_KM_FACTOR,
+} from "../constants";
 import "./RecipeModal.scss";
 
 const nutritionKeys = ["calories", "protein", "carbs", "fat"];
 const normalizeName = (value) => String(value || "").trim().toLowerCase();
+
+const getEcoScoreTier = (score) => {
+  if (score >= 70) return "high";
+  if (score >= 40) return "mid";
+  return "low";
+};
 
 const RecipeModal = ({
   recipe,
@@ -67,63 +80,11 @@ const RecipeModal = ({
     [inventory]
   );
 
-  const findInventoryItem = (ingredientName) => {
-    const target = normalizeName(ingredientName);
-    if (!target) return undefined;
-
-    return (inventory || []).find((item) => {
-      const itemName = normalizeName(item?.name);
-      if (!itemName) return false;
-      if (itemName === target) return true;
-
-      const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-      const targetWords = target.split(/\s+/).filter((w) => w.length >= 3);
-      const itemWords = itemName.split(/\s+/).filter((w) => w.length >= 3);
-
-      if (targetWords.length === 0 || itemWords.length === 0) return false;
-
-      const allTargetWordsInItem = targetWords.every((word) =>
-        new RegExp(`(^|\\s)${escapeRegex(word)}(\\s|$)`).test(itemName)
-      );
-      if (allTargetWordsInItem) return true;
-
-      const allItemWordsInTarget = itemWords.every((word) =>
-        new RegExp(`(^|\\s)${escapeRegex(word)}(\\s|$)`).test(target)
-      );
-      return allItemWordsInTarget;
-    });
-  };
-
   if (!recipe) return null;
 
   const usedInventory = Array.isArray(recipe.usedInventory) ? recipe.usedInventory : [];
 
-  const recipeValueEur = (() => {
-    try {
-      const total = usedInventory.reduce((sum, used) => {
-        try {
-          const matched = (used?.id ? inventoryById.get(used.id) : null) || findInventoryItem(used?.name);
-          if (!matched) return sum;
-
-          const itemPrice = getEffectivePrice(matched);
-          const currentQty = Number(matched?.quantity);
-          const safeCurrentQty = Number.isFinite(currentQty) && currentQty > 0 ? currentQty : 1;
-          const usedQty = Number(used?.quantity);
-          const safeUsedQty = Number.isFinite(usedQty) && usedQty > 0 ? usedQty : 1;
-          const usedRatio = Math.min(1, safeUsedQty / safeCurrentQty);
-
-          return sum + itemPrice * usedRatio;
-        } catch {
-          return sum;
-        }
-      }, 0);
-
-      return Number(total.toFixed(2));
-    } catch {
-      return 0;
-    }
-  })();
+  const recipeValueEur = computeRecipeValueEur(usedInventory, inventoryById, inventory);
 
   const swaps = Array.isArray(recipe.pantrySwaps)
     ? recipe.pantrySwaps
@@ -135,35 +96,13 @@ const RecipeModal = ({
   const unresolvedMissingCount = (recipe.ingredients || []).filter(
     (ingredient) => ingredient?.isMissing && !swapMissingNames.has(normalizeName(ingredient?.name))
   ).length;
-  const AVERAGE_MISSING_INGREDIENT_COST = 3.5;
   const spendEur = unresolvedMissingCount > 0
     ? Number((unresolvedMissingCount * AVERAGE_MISSING_INGREDIENT_COST).toFixed(2))
     : 0;
 
   const co2SavedKg = Number(recipe.co2SavedKg) || 0;
-  const drivingKmEquivalent = Math.round(co2SavedKg * 5);
-
-  const getIngredientExpiryMeta = (ingredient) => {
-    if (ingredient?.isMissing) return { status: null, label: null };
-
-    const usedMatch = usedInventory.find(
-      (used) => normalizeName(used?.name) === normalizeName(ingredient?.name)
-    );
-
-    const matchedInventory =
-      (usedMatch?.id && inventoryById.get(usedMatch.id)) || findInventoryItem(ingredient?.name);
-
-    if (!matchedInventory) return { status: null, label: null };
-
-    const status = getExpiryStatus(matchedInventory);
-    if (!status || status === "fresh" || status === "na") {
-      return { status: null, label: null };
-    }
-
-    if (status === "expired") return { status, label: "expired - use now" };
-    if (status === "today") return { status, label: "expires today" };
-    return { status, label: "near expiry" };
-  };
+  const drivingKmEquivalent = Math.round(co2SavedKg * CO2_DRIVING_KM_FACTOR);
+  const ecoScoreTier = getEcoScoreTier(recipe.sustainabilityScore);
 
   return (
     <div className="recipe-modal-overlay" role="dialog" aria-modal="true" aria-label={recipe.title} onClick={onClose}>
@@ -182,7 +121,7 @@ const RecipeModal = ({
             <p>
               Recipe value: <strong>{formatCurrency(recipeValueEur, currencyConfig)}</strong>
               {unresolvedMissingCount > 0 && (
-                <span style={{ color: "var(--slate-soft)", fontSize: "0.85rem" }}>
+                <span className="recipe-modal-spend-note">
                   {" "} ~{formatCurrency(spendEur, currencyConfig)} estimated for {unresolvedMissingCount} missing ingredient{unresolvedMissingCount > 1 ? "s" : ""}
                 </span>
               )}
@@ -202,27 +141,7 @@ const RecipeModal = ({
               {Number.isFinite(recipe.sustainabilityScore) && recipe.sustainabilityScore > 0 && (
                 <span
                   title="Sustainability score based on how many ingredients you already have and CO₂ saved"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.3rem",
-                    background: recipe.sustainabilityScore >= 70
-                      ? "rgba(16,185,129,0.12)"
-                      : recipe.sustainabilityScore >= 40
-                        ? "rgba(245,158,11,0.12)"
-                        : "rgba(239,68,68,0.12)",
-                    color: recipe.sustainabilityScore >= 70
-                      ? "#10b981"
-                      : recipe.sustainabilityScore >= 40
-                        ? "#f59e0b"
-                        : "#ef4444",
-                    borderRadius: "999px",
-                    padding: "0.2rem 0.6rem",
-                    fontSize: "0.8rem",
-                    fontWeight: 600,
-                    border: "1px solid currentColor",
-                    opacity: 0.9,
-                  }}
+                  className={`recipe-eco-badge ${ecoScoreTier}`}
                 >
                   {recipe.sustainabilityScore}/100 eco score
                 </span>
@@ -251,7 +170,12 @@ const RecipeModal = ({
 
             <div className="recipe-modal-list">
               {(recipe.ingredients || []).map((ingredient, index) => {
-                const expiryMeta = getIngredientExpiryMeta(ingredient);
+                const expiryMeta = getIngredientExpiryMeta(ingredient, {
+                  usedInventory,
+                  inventoryById,
+                  inventory,
+                  getExpiryStatus,
+                });
 
                 return (
                   <div

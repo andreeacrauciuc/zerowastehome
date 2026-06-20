@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import { useAuthCardTilt } from "../hooks/useAuthCardTilt";
 import { toUserFacingErrorMessage } from "../../../utils/errorMessages";
 import InfoTooltip from "../../../components/InfoTooltip";
-import "../../../styles/features/auth/Auth.scss";
+import "./Auth.scss";
 
 const formVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -227,13 +227,12 @@ function RegisterForm() {
                   name="householdInviteCode"
                   value={formData.householdInviteCode}
                   onChange={handleChange}
-                  className="auth-input"
+                  className="auth-input auth-input--uppercase"
                   placeholder="6-character code (e.g. K7P2QM)"
                   maxLength={6}
                   autoCapitalize="characters"
                   autoCorrect="off"
                   spellCheck={false}
-                  style={{ textTransform: "uppercase" }}
                   inputMode="text"
                   aria-describedby={
                     errors.householdInviteCode ? "invite-code-error" : undefined

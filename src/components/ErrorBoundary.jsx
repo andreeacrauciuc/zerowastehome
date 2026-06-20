@@ -1,5 +1,6 @@
 import React from "react";
 import { showError } from "../utils/toast";
+import "../styles/components/common/ErrorBoundary.scss";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -64,106 +65,46 @@ class ErrorBoundary extends React.Component {
       const isDev = env.DEV === true && env.PROD !== true;
 
       return (
-        <section
-          style={{
-            minHeight: "100vh",
-            display: "grid",
-            placeItems: "center",
-            padding: "24px",
-            background: "rgba(239, 236, 228, 0.95)",
-          }}
-        >
-          <div
-            style={{
-              maxWidth: "520px",
-              width: "100%",
-              borderRadius: "24px",
-              background: "rgba(255, 255, 255, 0.72)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-              boxShadow: "0 12px 36px rgba(0, 0, 0, 0.14)",
-              padding: "28px",
-              textAlign: "center",
-            }}
-          >
+        <section className="error-boundary-screen">
+          <div className="error-boundary-card">
             <img
               src="/pwa-192x192.png"
               alt="ZeroWasteHome"
               width={64}
               height={64}
-              style={{ width: "64px", height: "64px", objectFit: "contain", marginBottom: "12px" }}
+              className="error-boundary-logo"
               onError={(e) => {
                 e.currentTarget.style.display = "none";
               }}
             />
-            <h2 style={{ margin: 0, color: "#1a3d2b" }}>Something went wrong.</h2>
-            <p style={{ marginTop: "10px", color: "#355b3e" }}>
+            <h2 className="error-boundary-title">Something went wrong.</h2>
+            <p className="error-boundary-text">
               An unexpected error occurred. Please reload the page.
             </p>
 
-            <div
-              style={{
-                marginTop: "18px",
-                display: "flex",
-                gap: "10px",
-                justifyContent: "center",
-                flexWrap: "wrap",
-              }}
-            >
+            <div className="error-boundary-actions">
               <button
                 type="button"
                 onClick={this.handleReload}
-                style={{
-                  border: 0,
-                  borderRadius: "999px",
-                  padding: "10px 18px",
-                  background: "#355b3e",
-                  color: "#fff",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                }}
+                className="error-boundary-btn error-boundary-btn--primary"
               >
                 Reload page
               </button>
               <button
                 type="button"
                 onClick={this.handleGoHome}
-                style={{
-                  border: "1px solid #355b3e",
-                  borderRadius: "999px",
-                  padding: "10px 18px",
-                  background: "transparent",
-                  color: "#355b3e",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                }}
+                className="error-boundary-btn error-boundary-btn--ghost"
               >
                 Go to home
               </button>
             </div>
 
             {isDev && error && (
-              <details
-                style={{
-                  marginTop: "18px",
-                  textAlign: "left",
-                  background: "rgba(15, 23, 42, 0.04)",
-                  borderRadius: "12px",
-                  padding: "12px 14px",
-                }}
-              >
-                <summary style={{ cursor: "pointer", fontWeight: 700, color: "#1a3d2b" }}>
+              <details className="error-boundary-details">
+                <summary className="error-boundary-summary">
                   Error details (development only)
                 </summary>
-                <pre
-                  style={{
-                    marginTop: "10px",
-                    whiteSpace: "pre-wrap",
-                    wordBreak: "break-word",
-                    fontSize: "0.78rem",
-                    color: "#7f1d1d",
-                  }}
-                >
+                <pre className="error-boundary-stack">
                   {String(error.message || error)}
                   {errorInfo?.componentStack ? `\n${errorInfo.componentStack}` : ""}
                 </pre>

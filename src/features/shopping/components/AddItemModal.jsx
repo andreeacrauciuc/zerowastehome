@@ -10,22 +10,22 @@ const UNITS = ["pcs", "kg", "g", "l", "ml"];
 
 function InventoryWarningBanner({ warning, onCancel, onConfirm }) {
   return (
-    <div style={{ margin: "0.75rem 0", padding: "0.75rem 1rem", borderRadius: "12px", background: "rgba(239, 68, 68, 0.07)", border: "1px solid rgba(239, 68, 68, 0.22)", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-      <p style={{ margin: 0, color: "#7f1d1d", fontSize: "0.84rem", fontWeight: 600, lineHeight: 1.45 }}>
+    <div className="inventory-warning-banner">
+      <p className="inventory-warning-text">
         {warning}
       </p>
-      <div style={{ display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
+      <div className="inventory-warning-actions">
         <button
           type="button"
+          className="inventory-warning-cancel"
           onClick={onCancel}
-          style={{ padding: "0.38rem 0.85rem", borderRadius: "9999px", border: "1px solid rgba(239,68,68,0.22)", background: "transparent", color: "#7f1d1d", fontWeight: 700, fontSize: "0.78rem", cursor: "pointer" }}
         >
           Cancel
         </button>
         <button
           type="button"
+          className="inventory-warning-confirm"
           onClick={onConfirm}
-          style={{ padding: "0.38rem 0.85rem", borderRadius: "9999px", border: "none", background: "linear-gradient(135deg, #7f1d1d 0%, #b91c1c 100%)", color: "#fff", fontWeight: 700, fontSize: "0.78rem", cursor: "pointer", boxShadow: "0 6px 16px -4px rgba(185,28,28,0.35)" }}
         >
           Add anyway
         </button>

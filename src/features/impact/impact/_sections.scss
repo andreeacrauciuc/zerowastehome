@@ -1,0 +1,111 @@
+.section-head {
+  h3 {
+    margin: 0;
+    color: var(--slate-ink);
+    font-size: 1.18rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    &::before {
+      content: "";
+      width: 4px;
+      height: 1.05em;
+      border-radius: 4px;
+      background: linear-gradient(180deg, var(--emerald), var(--emerald-deep));
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+    }
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: var(--slate-soft);
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+}
+
+.section-head--compact {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.section-title-icon {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.section-title-icon--tips {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(251, 191, 36, 0.12));
+  color: #b45309;
+}
+
+.section-title-icon--loss {
+  background: linear-gradient(135deg, rgba(251, 113, 133, 0.18), rgba(244, 63, 94, 0.1));
+  color: #be123c;
+}
+
+/* Reusable decorative icon sizing for stat-tile and section-head images,
+   replacing repeated inline style objects on the <img> tags. */
+.stat-tile-icon-img {
+  width: 40px;
+  height: 30px;
+  object-fit: contain;
+  margin-right: 8px;
+}
+
+.section-head-icon-img {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.empty-text {
+  margin: 10px 0 0;
+  color: var(--slate-soft);
+  line-height: 1.45;
+}
+
+.empty-state-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: clamp(16px, 2vw, 24px);
+  border-style: dashed;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.24));
+
+  h4 {
+    margin: 0;
+    color: var(--slate-ink);
+    font-size: 1rem;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: var(--slate-soft);
+    font-size: 0.9rem;
+  }
+}
+
+.empty-state-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.16), rgba(5, 150, 105, 0.1));
+  color: var(--emerald-deep);
+}
+

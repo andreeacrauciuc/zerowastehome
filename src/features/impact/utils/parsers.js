@@ -107,3 +107,32 @@ export const toMonthKey = (date) => {
   const m = String(date.getMonth() + 1).padStart(2, "0");
   return `${y}-${m}`;
 };
+
+const LIFETIME_SAVED_STATUSES = ["eaten", "saved", "consumed", "cooked"];
+
+const isLifetimeSavedEntry = (entry) =>
+  LIFETIME_SAVED_STATUSES.includes(String(entry?.status || "").toLowerCase());
+
+export const sumLifetimeFoodSavedKg = (history) =>
+  (Array.isArray(history) ? history : []).reduce((acc, entry) => {
+    if (!isLifetimeSavedEntry(entry)) return acc;
+    const qty = Number(entry?.quantity || entry?.initialQuantity || 0);
+    const unit = String(entry?.unit || "").toLowerCase();
+    let kg = 0;
+    if (unit === "kg" || unit === "l") kg = qty;
+    else if (unit === "g" || unit === "ml") kg = qty / 1000;
+    else kg = qty * 0.3;
+    return acc + kg;
+  }, 0);
+
+export const sumLifetimeSavings = (history) =>
+  (Array.isArray(history) ? history : []).reduce((acc, entry) => {
+    if (!isLifetimeSavedEntry(entry)) return acc;
+    const consumedValue = Number(entry?.consumedValue);
+    if (Number.isFinite(consumedValue) && consumedValue > 0) return acc + consumedValue;
+    const price = Number(entry?.price);
+    if (Number.isFinite(price) && price > 0) return acc + price;
+    const investment = Number(entry?.initialInvestment);
+    if (Number.isFinite(investment) && investment > 0) return acc + investment;
+    return acc;
+  }, 0);

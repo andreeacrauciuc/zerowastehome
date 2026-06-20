@@ -1,0 +1,48 @@
+.visually-hidden-input {
+  display: none;
+}
+
+.inventory-fixed-layout {
+  --inv-deep: #285a48;
+  --inv-mid: #408a71;
+  --inv-soft: #b0e4cc;
+  --inv-soft-rgba: rgba(176, 228, 204, 0.42);
+  --inv-deep-rgba: rgba(40, 90, 72, 0.18);
+  --inv-mid-rgba: rgba(64, 138, 113, 0.2);
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 22px 32px 80px;
+}
+
+.inventory-main-content {
+  position: relative;
+  z-index: 1;
+  margin-top: 65px;
+}
+
+.inventory-title {
+  margin: 0;
+  color: #111;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.inventory-stock-copy {
+  margin: 14px 0 34px;
+  font-size: 32px;
+  line-height: 1.2;
+  color: #2a322d;
+}
+
+.inventory-stock-highlight {
+  color: #5e7a69;
+  font-weight: 700;
+}

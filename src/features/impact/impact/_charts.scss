@@ -1,0 +1,132 @@
+.trend-card {
+  padding: clamp(16px, 2vw, 24px);
+}
+
+.trend-chart-wrap {
+  width: 100%;
+  height: 300px;
+  margin-top: 14px;
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06));
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* Empty state rendered in place of the AreaChart when there is no trend data
+   for the selected period. Fills the same 300px .trend-chart-wrap so the card
+   height is identical to the populated state (no layout shift). Centered both
+   axes, theme-aware, and responsive. */
+.trend-empty-state {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: clamp(1rem, 4vw, 2rem);
+  color: var(--slate-soft, #64748b);
+}
+
+.trend-empty-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(79, 159, 130, 0.12);
+  border: 1px solid rgba(79, 159, 130, 0.22);
+  color: var(--emerald-deep, #245a39);
+  margin-bottom: 0.15rem;
+}
+
+.trend-empty-title {
+  margin: 0;
+  font-size: clamp(0.98rem, 2.4vw, 1.1rem);
+  font-weight: 800;
+  color: var(--ink-900, #10231f);
+}
+
+.trend-empty-desc {
+  margin: 0;
+  max-width: 32ch;
+  font-size: clamp(0.8rem, 2vw, 0.88rem);
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--slate-soft, #64748b);
+}
+
+.chart-legend {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.legend-pill {
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  border: 1px solid rgba(255, 255, 255, 0.66);
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.legend-pill--saved {
+  color: #0b7a50;
+}
+
+.legend-pill--wasted {
+  color: #c0440a;
+}
+
+.impact-tooltip-info {
+  position: relative;
+  display: inline-flex;
+  margin-left: 6px;
+}
+
+.impact-tooltip-trigger {
+  overflow: visible;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(79, 159, 130, 0.14);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  cursor: default;
+  user-select: none;
+  font-weight: 600;
+  color: #21483f;
+}
+
+.impact-tooltip-bubble {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(16, 35, 31, 0.92);
+  color: #f7f4ee;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  white-space: normal;
+  z-index: 100;
+  pointer-events: none;
+  max-width: 260px;
+  line-height: 1.4;
+  text-align: center;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+}
+

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import "../../../styles/features/settings/CurrencySelector.scss";
+import "./CurrencySelector.scss";
 
 function CurrencySelector({ currency, onCurrencyChange, disabled }) {
   return (

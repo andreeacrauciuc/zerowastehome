@@ -21,55 +21,14 @@ function TooltipInfo({ text }) {
   const [visible, setVisible] = useState(false);
   return (
     <span
-      style={{ position: "relative", display: "inline-flex", marginLeft: 6 }}
+      className="impact-tooltip-info"
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
     >
-      <span
-        style={{
-          overflow: "visible",
-          width: 16,
-          height: 16,
-          borderRadius: "50%",
-          background: "rgba(79, 159, 130, 0.14)",
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: 11,
-          cursor: "default",
-          userSelect: "none",
-          fontWeight: 600,
-          color: "#21483f",
-        }}
-        aria-label={text}
-        role="img"
-      >
+      <span className="impact-tooltip-trigger" aria-label={text} role="img">
         ?
       </span>
-      {visible && (
-        <span
-          style={{
-            position: "absolute",
-            bottom: "calc(100% + 6px)",
-            left: "50%",
-            transform: "translateX(-50%)",
-            background: "rgba(16,35,31,0.92)",
-            color: "#f7f4ee",
-            fontSize: 12,
-            padding: "8px 12px",
-            borderRadius: 8,
-            whiteSpace: "normal",
-            zIndex: 100,
-            pointerEvents: "none",
-            maxWidth: 260,
-            lineHeight: 1.4,
-            textAlign: "center",
-            boxShadow: "0 12px 24px rgba(0,0,0,0.18)",
-          }}
-        >
-          {text}
-        </span>
-      )}
+      {visible && <span className="impact-tooltip-bubble">{text}</span>}
     </span>
   );
 }

@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Heart } from "lucide-react";
 import { useDataStore } from "../../../hooks/useDataStore";
 import { showSuccess } from "../../../utils/toast";
 import { RecipeSelectionProvider, useRecipeSelection } from "../context/RecipeSelectionContext";
@@ -12,9 +11,10 @@ import { useIngredientPagination } from "../hooks/useIngredientPagination";
 import { calculateSavings } from "../utils/pricing";
 import { getExpiryStatus, getMatchScore, getRecipeImageUrl, getRecipeKey, handleRecipeImageError } from "../utils/recipesUtils";
 import IngredientSelector from "./IngredientSelector";
-import RecipeList, { RecipeCard } from "./RecipeList";
+import RecipeList from "./RecipeList";
 import RecipeModal from "./RecipeModal";
 import CookConfirmModal from "./CookConfirmModal";
+import SavedRecipesDrawer from "./SavedRecipesDrawer";
 import RecipeIllustration from "../../../assets/recipe.png";
 import "../Recipes.scss";
 
@@ -231,78 +231,14 @@ const RecipesContent = () => {
       )}
 
       {showLiked && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 200,
-            background: "rgba(17,24,20,0.35)",
-            backdropFilter: "blur(18px)",
-            WebkitBackdropFilter: "blur(18px)",
-            overflowY: "auto",
-            padding: "clamp(1rem, 3vw, 2rem)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-          onClick={() => setShowLiked(false)}
-        >
-          <div
-            style={{
-              width: "min(1080px, 100%)",
-              background: "rgba(255,255,255,0.78)",
-              borderRadius: "24px",
-              border: "1px solid rgba(255,255,255,0.5)",
-              boxShadow: "0 24px 58px rgba(9,20,14,0.22)",
-              padding: "clamp(1rem, 2.5vw, 1.75rem)",
-              marginTop: "auto",
-              marginBottom: "auto",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
-                <Heart size={22} fill="#e53935" stroke="#e53935" strokeWidth={2} aria-hidden="true" />
-                <h2 style={{ margin: 0, fontFamily: "var(--font-serif, serif)", fontSize: "clamp(1.3rem, 2.2vw, 1.75rem)", color: "#214336" }}>
-                  Saved recipes
-                </h2>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowLiked(false)}
-                style={{ width: 34, height: 34, borderRadius: "50%", border: "none", background: "#245a39", color: "#fff", display: "grid", placeItems: "center", cursor: "pointer" }}
-                aria-label="Close saved recipes"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" width="16" height="16" aria-hidden="true">
-                  <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
-            </div>
-
-            {likedRecipes.length === 0 ? (
-              <div style={{ textAlign: "center", padding: "3rem 1rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}>
-                <Heart size={52} fill="none" stroke="rgba(40,90,72,0.3)" strokeWidth={1.5} aria-hidden="true" />
-                <p style={{ margin: 0, color: "#214336", fontWeight: 700, fontSize: "1rem" }}>No saved recipes yet</p>
-                <p style={{ margin: 0, color: "#5a7d6e", fontSize: "0.88rem" }}>Tap the heart on any recipe card to save it here</p>
-              </div>
-            ) : (
-              <div className="recipe-grid" role="list" aria-label="Saved recipes" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap: "1rem" }}>
-                {likedRecipes.map((recipe) => (
-                  <RecipeCard
-                    key={recipe.id}
-                    recipe={recipe}
-                    isSelected={false}
-                    onViewRecipe={(r) => { setShowLiked(false); setSelectedRecipe(r); }}
-                    getRecipeImageUrl={getRecipeImageUrl}
-                    onRecipeImageError={handleRecipeImageError}
-                    isLiked={true}
-                    onToggleLike={toggleLike}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
+        <SavedRecipesDrawer
+          likedRecipes={likedRecipes}
+          onClose={() => setShowLiked(false)}
+          onViewRecipe={(recipe) => { setShowLiked(false); setSelectedRecipe(recipe); }}
+          onToggleLike={toggleLike}
+          getRecipeImageUrl={getRecipeImageUrl}
+          onRecipeImageError={handleRecipeImageError}
+        />
       )}
 
       <RecipeModal

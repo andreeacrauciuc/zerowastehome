@@ -1,0 +1,89 @@
+@media (max-width: 920px) {
+    .settings-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .settings-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .settings-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-row,
+    .settings-card__actions,
+    .modal-actions {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 620px) {
+    .settings-page.settings-shell {
+        padding: 14px;
+    }
+
+    .settings-tabs {
+        grid-template-columns: 1fr;
+    }
+
+    .action-row,
+    .settings-card__actions,
+    .modal-actions {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: stretch;
+    }
+
+    .join-code-section,
+    .silent-hours-range,
+    .activity-history-item {
+        align-items: stretch;
+        flex-direction: column;
+        grid-template-columns: 1fr;
+    }
+
+    .activity-history-item {
+        gap: 0.25rem;
+    }
+
+    .toggle-btn,
+    .primary-btn,
+    .settings-save-btn,
+    .secondary-btn,
+    .warn-btn,
+    .danger-btn,
+    .code-chip,
+    .upload-btn {
+        width: 100%;
+        /* Comfortable >= 44px touch target on phones. */
+        min-height: 44px;
+    }
+
+    .settings-panel,
+    .modal-card {
+        padding: 14px;
+    }
+
+    .settings-title {
+        font-size: clamp(28px, 8vw, 38px);
+    }
+
+    .settings-subtitle {
+        font-size: 16px;
+    }
+
+    .settings-tabs {
+        gap: 6px;
+    }
+
+    .tab-btn,
+    .settings-save-btn,
+    .primary-btn,
+    .secondary-btn,
+    .warn-btn,
+    .danger-btn {
+        min-height: 50px;
+    }
+}

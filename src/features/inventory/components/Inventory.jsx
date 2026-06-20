@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/context/AuthContext";
 import { useHousehold } from "../../household/HouseholdContext";
-import { useSettings } from "../../../context/SettingsContext";
+import { useSettings } from "../../settings/context/SettingsContext";
 import { useNotifications } from "../../../hooks/useNotifications";
 import { useCurrency } from "../../../hooks/useCurrency";
 import { useFilteredInventory } from "../hooks/useFilteredInventory";
@@ -20,7 +20,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import NotificationDrawer from "./NotificationDrawer";
 import ScannerResultModal from "./ScannerResultModal";
 import CustomModal from "../../../components/ui/CustomModal";
-import "../../../styles/features/inventory/Inventory.scss";
+import "./Inventory.scss";
 
 function Inventory() {
   const navigate = useNavigate();
@@ -183,7 +183,7 @@ function Inventory() {
       <input
         type="file"
         ref={scannerFileRef}
-        style={{ display: "none" }}
+        className="visually-hidden-input"
         accept="image/*"
         capture="environment"
         onChange={handleBarcodeFile}

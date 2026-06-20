@@ -316,3 +316,7 @@ $sidebar-glass: rgba(226, 226, 226, 0.5);
   align-items: center;
   gap: 10px;
 }
+
+.app-toaster {
+  z-index: 9999;
+}

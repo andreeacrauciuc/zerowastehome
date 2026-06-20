@@ -1,0 +1,31 @@
+@mixin glass-panel {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.04);
+  border-radius: 2rem;
+}
+
+@import "shopping/base";
+@import "shopping/toolbar";
+@import "shopping/list";
+@import "shopping/weekly";
+@import "shopping/summary";
+@import "shopping/modals";
+@import "shopping/responsive";
+
+.checkout-disabled-hint {
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--slate-soft, #64748b);
+  opacity: 0.8;
+}
+
+.shopping-mobile-checkout .checkout-disabled-hint {
+  margin: 0;
+  color: var(--forest-700);
+  opacity: 0.85;
+}

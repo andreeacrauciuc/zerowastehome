@@ -20,59 +20,88 @@ function HouseholdPanel({
 
   if (!isInHousehold) {
     return (
-      <div className="settings-panel-content household-mode-card">
-        <h2>Household - Get Started</h2>
-        <p className="panel-subtitle">
-          Join an existing household or create a new one to collaborate
-        </p>
+      <div className="settings-panel-content household-panel">
+        <header className="household-panel__header">
+          <h2>Household</h2>
+          <p className="panel-subtitle">
+            Join an existing household or create a new one to collaborate
+          </p>
+        </header>
 
-        <div className="get-started-card">
-          <label>
-            Join an existing household using a code
-            <input
-              type="text"
-              value={joinIdInput}
-              onChange={(event) => setJoinIdInput(event.target.value)}
-              placeholder="Enter household join code"
-            />
-          </label>
-          <button
-            type="button"
-            className="primary-btn"
-            disabled={settingsBusy}
-            onClick={handleJoinHousehold}
-          >
-            Join household
-          </button>
-        </div>
+        <section className="settings-card">
+          <div className="settings-card__head">
+            <h3 className="settings-card__title">Join a household</h3>
+            <p className="settings-card__subtitle">
+              Enter a code shared by an existing member
+            </p>
+          </div>
 
-        <div className="get-started-card">
-          <h3>Create your own household</h3>
-          <p className="muted">You will become the household admin</p>
-          <button
-            type="button"
-            className="secondary-btn"
-            disabled={settingsBusy}
-            onClick={handleGenerateNewCode}
-          >
-            Create a new household
-          </button>
-        </div>
+          <div className="settings-card__body">
+            <label className="settings-field">
+              <span className="settings-field__label">Household join code</span>
+              <input
+                type="text"
+                value={joinIdInput}
+                onChange={(event) => setJoinIdInput(event.target.value)}
+                placeholder="Enter household join code"
+              />
+            </label>
+            <div className="settings-card__actions">
+              <button
+                type="button"
+                className="primary-btn"
+                disabled={settingsBusy}
+                onClick={handleJoinHousehold}
+              >
+                Join household
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="settings-card">
+          <div className="settings-card__head">
+            <h3 className="settings-card__title">Create your own household</h3>
+            <p className="settings-card__subtitle">
+              You will become the household admin
+            </p>
+          </div>
+
+          <div className="settings-card__body">
+            <div className="settings-card__actions">
+              <button
+                type="button"
+                className="secondary-btn"
+                disabled={settingsBusy}
+                onClick={handleGenerateNewCode}
+              >
+                Create a new household
+              </button>
+            </div>
+          </div>
+        </section>
       </div>
     );
   }
 
   return (
-    <div className="settings-panel-content household-mode-card">
-      <h2>Household management</h2>
-      <p className="panel-subtitle">
-        Manage your current household settings and membership
-      </p>
+    <div className="settings-panel-content household-panel">
+      <header className="household-panel__header">
+        <h2>Household management</h2>
+        <p className="panel-subtitle">
+          Manage your current household settings and membership
+        </p>
+      </header>
 
-      <div className="household-management-card">
-        <h3>{household?.name || "My household"}</h3>
-        <div className="members-section">
-          <h3>Members</h3>
+      <section className="settings-card">
+        <div className="settings-card__head">
+          <h3 className="settings-card__title">
+            {household?.name || "My household"}
+          </h3>
+          <p className="settings-card__subtitle">Members</p>
+        </div>
+
+        <div className="settings-card__body">
           {!household?.members?.length ? (
             <div className="empty-state">
               <div className="empty-icon" aria-hidden="true">
@@ -109,7 +138,7 @@ function HouseholdPanel({
                       </strong>
                       <small>
                         {member.email || "No email"}
-                        {member.role ? ` \u2022 ${member.role}` : ""}
+                        {member.role ? ` • ${member.role}` : ""}
                       </small>
                     </div>
                   </div>
@@ -118,97 +147,81 @@ function HouseholdPanel({
             </ul>
           )}
         </div>
-      </div>
+      </section>
 
-      <div className="household-management-card">
-        <div className="join-code-section">
-          <span>Join code</span>
-          {household?.joinCode ? (
+      <section className="settings-card">
+        <div className="settings-card__head">
+          <h3 className="settings-card__title">Invite & membership</h3>
+          <p className="settings-card__subtitle">
+            Share your code or manage your place in this household
+          </p>
+        </div>
+
+        <div className="settings-card__body">
+          <div className="join-code-section">
+            <span>Join code</span>
+            {household?.joinCode ? (
+              <button
+                type="button"
+                className="code-chip"
+                onClick={handleCopyId}
+              >
+                {household.joinCode}
+              </button>
+            ) : (
+              <span className="muted">No household join code yet</span>
+            )}
+          </div>
+
+          <hr className="settings-divider" />
+
+          <div className="action-row">
             <button
               type="button"
-              className="code-chip"
-              onClick={handleCopyId}
+              className="secondary-btn"
+              disabled={settingsBusy || !canManageHousehold}
+              onClick={() => setShowRegenerateConfirm(true)}
             >
-              {household.joinCode}
+              Generate new code
             </button>
-          ) : (
-            <span className="muted">No household join code yet</span>
+            <button
+              type="button"
+              className="danger-btn"
+              disabled={settingsBusy}
+              onClick={() => setLeaveConfirmOpen(true)}
+            >
+              Leave household
+            </button>
+          </div>
+
+          {showRegenerateConfirm && (
+            <div className="regenerate-confirm">
+              <p className="regenerate-confirm-text">
+                This will invalidate the current join code. Anyone trying to join with the old code will no longer be able to. Generate a new one?
+              </p>
+              <div className="regenerate-confirm-actions">
+                <button
+                  type="button"
+                  className="regenerate-confirm-cancel"
+                  onClick={() => setShowRegenerateConfirm(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="regenerate-confirm-submit"
+                  onClick={() => {
+                    setShowRegenerateConfirm(false);
+                    handleGenerateNewCode();
+                  }}
+                >
+                  Generate new code
+                </button>
+              </div>
+            </div>
           )}
         </div>
-
-        <div className="action-row">
-          <button
-            type="button"
-            className="secondary-btn"
-            disabled={settingsBusy || !canManageHousehold}
-            onClick={() => setShowRegenerateConfirm(true)}
-          >
-            Generate new code
-          </button>
-          <button
-            type="button"
-            className="danger-btn"
-            disabled={settingsBusy}
-            onClick={() => setLeaveConfirmOpen(true)}
-          >
-            Leave household
-          </button>
-        </div>
-
-        {showRegenerateConfirm && (
-          <div style={{
-            marginTop: "0.75rem",
-            padding: "0.75rem 1rem",
-            borderRadius: "12px",
-            background: "rgba(239,68,68,0.07)",
-            border: "1px solid rgba(239,68,68,0.22)",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.6rem",
-          }}>
-            <p style={{ margin: 0, fontSize: "0.84rem", color: "#7f1d1d", fontWeight: 600, lineHeight: 1.45 }}>
-              This will invalidate the current join code. Anyone trying to join with the old code will no longer be able to. Generate a new one?
-            </p>
-            <div style={{ display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
-              <button
-                type="button"
-                onClick={() => setShowRegenerateConfirm(false)}
-                style={{
-                  padding: "0.38rem 0.85rem",
-                  borderRadius: "9999px",
-                  border: "1px solid rgba(239,68,68,0.22)",
-                  background: "transparent",
-                  color: "#7f1d1d",
-                  fontWeight: 700,
-                  fontSize: "0.78rem",
-                  cursor: "pointer",
-                }}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowRegenerateConfirm(false);
-                  handleGenerateNewCode();
-                }}
-                style={{
-                  padding: "0.38rem 0.85rem",
-                  borderRadius: "9999px",
-                  border: "none",
-                  background: "linear-gradient(135deg, #7f1d1d 0%, #b91c1c 100%)",
-                  color: "#fff",
-                  fontWeight: 700,
-                  fontSize: "0.78rem",
-                  cursor: "pointer",
-                }}
-              >
-                Generate new code
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
+      </section>
     </div>
   );
 }

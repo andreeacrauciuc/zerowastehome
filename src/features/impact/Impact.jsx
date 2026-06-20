@@ -5,7 +5,12 @@ import { useDataStore } from "../../hooks/useDataStore";
 import { useAuth } from "../auth/context/AuthContext";
 import { useHousehold } from "../household/HouseholdContext";
 import { useCurrency } from "../../hooks/useCurrency";
-import { parseDate, parseMoney } from "./utils/parsers";
+import {
+  parseDate,
+  parseMoney,
+  sumLifetimeFoodSavedKg,
+  sumLifetimeSavings,
+} from "./utils/parsers";
 import { SAVED_STATUSES, WASTED_STATUSES, DATE_FILTERS } from "./utils/constants";
 import { useImpactMotion } from "./hooks/useImpactMotion";
 import { useSwapSavings } from "./hooks/useSwapSavings";
@@ -18,7 +23,7 @@ import ImpactChartsSection from "./components/ImpactChartsSection";
 import ImpactInsightsSection from "./components/ImpactInsightsSection";
 import ImpactBadgesSection from "./components/ImpactBadgesSection";
 import ImpactTimeline from "./components/ImpactTimeline";
-import "../../styles/features/impact/Impact.scss";
+import "./Impact.scss";
 
 const MotionDiv = motion.div;
 
@@ -39,34 +44,12 @@ const Impact = () => {
   const swapSavingsToday = useSwapSavings({ currentUser, household });
 
   const safeTotalFoodSaved = useMemo(
-    () =>
-      history.reduce((acc, entry) => {
-        const status = String(entry?.status || "").toLowerCase();
-        if (!["eaten", "saved", "consumed", "cooked"].includes(status)) return acc;
-        const qty = Number(entry?.quantity || entry?.initialQuantity || 0);
-        const unit = String(entry?.unit || "").toLowerCase();
-        let kg = 0;
-        if (unit === "kg" || unit === "l") kg = qty;
-        else if (unit === "g" || unit === "ml") kg = qty / 1000;
-        else kg = qty * 0.3;
-        return acc + kg;
-      }, 0),
+    () => sumLifetimeFoodSavedKg(history),
     [history],
   );
 
   const safeLifetimeSavings = useMemo(
-    () =>
-      history.reduce((acc, entry) => {
-        const status = String(entry?.status || "").toLowerCase();
-        if (!["eaten", "saved", "consumed", "cooked"].includes(status)) return acc;
-        const consumedValue = Number(entry?.consumedValue);
-        if (Number.isFinite(consumedValue) && consumedValue > 0) return acc + consumedValue;
-        const price = Number(entry?.price);
-        if (Number.isFinite(price) && price > 0) return acc + price;
-        const investment = Number(entry?.initialInvestment);
-        if (Number.isFinite(investment) && investment > 0) return acc + investment;
-        return acc;
-      }, 0),
+    () => sumLifetimeSavings(history),
     [history],
   );
 

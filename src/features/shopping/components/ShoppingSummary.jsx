@@ -57,8 +57,8 @@ function ShoppingSummary({ totalItems, marketPrice, swapSavings, estimatedTotal,
         </p>
 
         {marketPrice === 0 && totalItems > 0 && (
-          <p style={{ fontSize: "0.72rem", color: "var(--slate-soft, #64748b)", textAlign: "center", marginTop: "0.5rem", lineHeight: 1.45, opacity: 0.8 }}>
-            Prices show 0 because no price history exists yet. Add prices to items or complete a purchase first.
+          <p className="summary-zero-price-note">
+            Prices show 0 because no price history exists yet. Add prices to items or complete a purchase first
           </p>
         )}
       </section>

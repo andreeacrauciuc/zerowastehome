@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 import { useAuthCardTilt } from "../hooks/useAuthCardTilt";
 import { auth } from "../../../services/firebase";
 import { toUserFacingErrorMessage } from "../../../utils/errorMessages";
-import "../../../styles/features/auth/Auth.scss";
+import "./Auth.scss";
 
 const formVariants = {
   hidden: { opacity: 0, y: 10 },

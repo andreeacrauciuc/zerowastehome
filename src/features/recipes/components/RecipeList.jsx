@@ -13,20 +13,7 @@ const RecipeMissingBadge = ({ ingredients }) => {
 
   const isOne = missing === 1;
   return (
-    <span
-      style={{
-        fontSize: "0.78rem",
-        fontWeight: 600,
-        padding: "0.2rem 0.55rem",
-        borderRadius: "999px",
-        display: "inline-block",
-        alignSelf: "flex-start",
-        marginBottom: "0.25rem",
-        background: isOne ? "rgba(245,158,11,0.12)" : "rgba(239,68,68,0.08)",
-        color: isOne ? "#92400e" : "#991b1b",
-        border: `1px solid ${isOne ? "rgba(245,158,11,0.25)" : "rgba(239,68,68,0.2)"}`,
-      }}
-    >
+    <span className={`recipe-missing-badge ${isOne ? "is-one" : ""}`}>
       {isOne ? "1 missing" : `${missing} missing`}
     </span>
   );
@@ -37,7 +24,7 @@ const RecipeCard = ({ recipe, isSelected, onViewRecipe, getRecipeImageUrl, onRec
 
   return (
     <article className={`recipe-card ${isSelected ? "active" : ""}`} role="listitem">
-      <div className="recipe-card-image" style={{ position: "relative" }}>
+      <div className="recipe-card-image">
         <img src={getRecipeImageUrl(recipe)} alt={recipe.title} onError={onRecipeImageError} />
         <button
           type="button"

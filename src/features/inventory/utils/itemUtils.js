@@ -34,7 +34,7 @@ export const getExpiryInfo = (expiry) => {
 
   if (daysLeft < 0) return { label: "Expired", daysLeft, status: "expired" };
   if (daysLeft === 0) return { label: "Today", daysLeft, status: "today" };
-  if (daysLeft <= 3) return { label: `${daysLeft} day(s) left`, daysLeft, status: "soon" };
+  if (daysLeft <= 3) return { label: `${daysLeft} ${daysLeft === 1 ? "day" : "days"} left`, daysLeft, status: "soon" };
 
   return { label: `${daysLeft} days left`, daysLeft, status: "ok" };
 };

@@ -1,0 +1,100 @@
+.inventory-toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.inventory-chip-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.inventory-chip {
+  border: 1px solid rgba(64, 138, 113, 0.22);
+  border-radius: 40px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.76) 0%, rgba(176, 228, 204, 0.28) 100%);
+  color: #244b3d;
+  font-size: 18px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(40, 90, 72, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  &.active {
+    border-color: rgba(40, 90, 72, 0.34);
+    background: linear-gradient(135deg, var(--inv-deep) 0%, var(--inv-mid) 60%, rgba(176, 228, 204, 0.88) 100%);
+    color: #f7fff9;
+    font-weight: 700;
+    box-shadow: 0 10px 22px rgba(40, 90, 72, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+}
+
+.inventory-sort-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inventory-sort-label {
+  color: #2f2f2f;
+  font-size: 18px;
+}
+
+.inventory-sort-combobox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: 9px;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid var(--inv-deep);
+    border-bottom: 2px solid var(--inv-deep);
+    pointer-events: none;
+    transform: translateY(-2px) rotate(45deg);
+    transform-origin: 65% 65%;
+    transition: transform 0.18s ease;
+  }
+
+  &.is-open::after {
+    transform: translateY(2px) rotate(225deg);
+  }
+}
+
+.inventory-sort-select {
+  height: 42px;
+  border: 1px solid rgba(64, 138, 113, 0.28);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.72) 0%, rgba(176, 228, 204, 0.26) 100%);
+  padding: 0 25px 0 14px;
+  color: var(--inv-deep);
+  font-size: 16px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &.sort-w-expiry {
+    width: 126px;
+  }
+
+  &.sort-w-price-highest,
+  &.sort-w-recent {
+    width: 146px;
+  }
+}

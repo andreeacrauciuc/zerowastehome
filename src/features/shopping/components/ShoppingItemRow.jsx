@@ -57,9 +57,8 @@ function ShoppingItemRow({ item, resolvePrice, inventoryByName, inventory, onTog
             ) : (
               <button
                 type="button"
-                className="inline-price-readonly price-missing"
+                className="inline-price-readonly price-missing is-clickable"
                 onClick={() => onEdit(item)}
-                style={{ cursor: "pointer" }}
               >
                 {t("shopping.unknownPrice")}
               </button>
@@ -68,9 +67,8 @@ function ShoppingItemRow({ item, resolvePrice, inventoryByName, inventory, onTog
 
           {item.sourceRecipeTitle && (
             <span
-              className="recipe-context"
+              className="recipe-context is-truncated"
               title={item.sourceRecipeTitle}
-              style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "100%" }}
             >
               For: {item.sourceRecipeTitle}
             </span>

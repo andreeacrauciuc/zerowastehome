@@ -84,8 +84,8 @@ export const getExpiryLabel = (itemOrExpiry) => {
   if (status === "expired") return "Expired";
   if (!Number.isFinite(days)) return "N/A";
   if (status === "today") return days <= 0 ? "Today" : "1 day left";
-  if (status === "soon") return `${days} days left`;
-  if (status === "fresh") return `${days} days left`;
+  if (status === "soon") return `${days} ${days === 1 ? "day" : "days"} left`;
+  if (status === "fresh") return `${days} ${days === 1 ? "day" : "days"} left`;
   return "N/A";
 };
 

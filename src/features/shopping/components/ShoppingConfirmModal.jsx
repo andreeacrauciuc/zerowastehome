@@ -31,7 +31,7 @@ function ShoppingConfirmModal({ isOpen, title, message, confirmLabel, confirmDan
             </div>
 
             {children || (
-              <p style={{ padding: "0 1.25rem 1rem", fontSize: "0.9rem", color: "var(--slate-soft)" }}>
+              <p className="shopping-confirm-message">
                 {message}
               </p>
             )}

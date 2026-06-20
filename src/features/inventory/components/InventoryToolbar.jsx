@@ -2,12 +2,6 @@ import React from "react";
 
 const CATEGORIES = ["All", "Fruits", "Vegetables", "Meat", "Dairy", "Bakery", "Grains", "Other"];
 
-const SORT_SELECT_WIDTHS = {
-  expiry: "126px",
-  "price-highest": "146px",
-  recent: "146px",
-};
-
 function InventoryToolbar({ activeCategory, onCategoryChange, sortBy, onSortChange }) {
   const [isSortMenuActive, setIsSortMenuActive] = React.useState(false);
 
@@ -30,8 +24,7 @@ function InventoryToolbar({ activeCategory, onCategoryChange, sortBy, onSortChan
         <span className="inventory-sort-label">Sort by:</span>
         <span className={`inventory-sort-combobox ${isSortMenuActive ? "is-open" : ""}`}>
           <select
-            className="inventory-sort-select"
-            style={{ width: SORT_SELECT_WIDTHS[sortBy] }}
+            className={`inventory-sort-select sort-w-${sortBy}`}
             value={sortBy}
             onMouseDown={() => setIsSortMenuActive(true)}
             onBlur={() => setIsSortMenuActive(false)}

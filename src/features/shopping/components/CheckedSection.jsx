@@ -28,16 +28,15 @@ function CheckedSection({ checkedItems, resolvePrice, onToggle, onDelete }) {
       transition={{ duration: 0.2 }}
     >
       <header
-        className="source-group-header"
-        style={{ cursor: "pointer" }}
+        className="source-group-header is-collapsible"
         onClick={() => setIsExpanded((prev) => !prev)}
       >
         <div className="source-heading-copy">
-          <h3 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <h3 className="checked-section-title">
             <Check size={16} />
             Checked ({checkedItems.length})
           </h3>
-          <p style={{ fontSize: "0.78rem", margin: 0, opacity: 0.7 }}>
+          <p className="checked-section-hint">
             {isExpanded ? "Tap to collapse" : "Tap to expand"}
           </p>
         </div>
@@ -49,12 +48,11 @@ function CheckedSection({ checkedItems, resolvePrice, onToggle, onDelete }) {
       <AnimatePresence>
         {isExpanded && (
           <MotionDiv
-            className="group-list-motion"
+            className="group-list-motion is-clipped"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            style={{ overflow: "hidden" }}
           >
             {checkedItems.map((item) => {
               const displayPrice = resolvePrice(item);
@@ -75,10 +73,7 @@ function CheckedSection({ checkedItems, resolvePrice, onToggle, onDelete }) {
                     </button>
                     <div className="info shopping-item-info">
                       <div className="item-title-line shopping-item-heading">
-                        <span
-                          className="item-title shopping-item-title"
-                          style={{ textDecoration: "line-through", opacity: 0.6 }}
-                        >
+                        <span className="item-title shopping-item-title is-struck">
                           {getItemLabel(item)}
                         </span>
                       </div>

@@ -1,0 +1,76 @@
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 32, 35, 0.4);
+    display: grid;
+    place-items: center;
+    z-index: 100;
+    padding: 16px;
+}
+
+.modal-card {
+    width: min(460px, 100%);
+    padding: 18px;
+    display: grid;
+    gap: 10px;
+
+    h3 {
+        margin: 0;
+        color: #425f56;
+    }
+
+    p {
+        margin: 0;
+        color: #6e8b82;
+    }
+
+    label {
+        display: grid;
+        gap: 5px;
+        color: #506f66;
+        font-weight: 700;
+    }
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.modal-danger-lead {
+    color: #dc2626;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.modal-danger-list {
+    margin-bottom: 1rem;
+    padding-left: 1.2rem;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--slate-soft, #64748b);
+}
+
+.modal-confirm-prompt {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.modal-leave-text {
+    margin: 0;
+    color: #4a6b62;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+.settings-loading {
+    width: min(440px, 100%);
+    margin: 20px auto;
+    padding: 18px;
+    text-align: center;
+    color: #56776d;
+    font-weight: 700;
+}
+

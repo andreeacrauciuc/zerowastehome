@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../services/firebase";
 import { useAuth } from "../features/auth/context/AuthContext";
-import { useSettings } from "../context/SettingsContext";
+import { useSettings } from "../features/settings/context/SettingsContext";
 import { calculateNotifications } from "../services/notificationService";
 
 const getExpiryInfo = (expiry) => {

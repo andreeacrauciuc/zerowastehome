@@ -1,0 +1,172 @@
+.impact-hero-banner {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 28px;
+  padding: clamp(20px, 3.2vw, 40px);
+  color: #f0fdf4;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2.2vw, 26px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: var(--shadow-lg), 0 0 80px rgba(16, 185, 129, 0.2);
+  background: linear-gradient(120deg, #064e3b 0%, #065f46 30%, #0f766e 65%, #0d9488 100%);
+  background-size: 240% 240%;
+  animation: impactHeroGradient 18s ease infinite;
+}
+
+.impact-hero-glowbg {
+  position: absolute;
+  inset: -40% -20% auto -20%;
+  height: 140%;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side at 20% 14%, rgba(110, 231, 183, 0.48), transparent 70%),
+    radial-gradient(closest-side at 84% 6%, rgba(255, 255, 255, 0.24), transparent 58%),
+    radial-gradient(closest-side at 55% 90%, rgba(52, 211, 153, 0.22), transparent 60%);
+  animation: heroGlowPulse 7s ease-in-out infinite;
+}
+
+.impact-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.impact-hero-eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(167, 243, 208, 0.92);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  &::before {
+    content: "";
+    width: 26px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, rgba(110, 231, 183, 0.95), rgba(110, 231, 183, 0));
+  }
+}
+
+.impact-hero-headline {
+  margin: 0;
+  font-size: clamp(3.4rem, 9vw, 7rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 10px 48px rgba(0, 0, 0, 0.24);
+  animation: heroReveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.impact-hero-headline-caption {
+  position: relative;
+  z-index: 1;
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: rgba(167, 243, 208, 0.82);
+}
+
+.impact-hero-substats {
+  position: relative;
+  z-index: 1;
+  margin-top: clamp(10px, 1.8vw, 22px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.impact-hero-substat {
+  padding: 13px 15px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  transition: background 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateY(-2px);
+  }
+}
+
+.impact-hero-substat-value {
+  font-size: clamp(1.1rem, 2.8vw, 1.7rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.05;
+  color: #f0fdf4;
+}
+
+.impact-hero-substat-label {
+  font-size: 0.78rem;
+  color: rgba(167, 243, 208, 0.82);
+  font-weight: 500;
+}
+
+.impact-hero-trees-note {
+  display: block;
+  font-size: 0.65rem;
+  opacity: 0.55;
+  margin-top: 2px;
+}
+
+.impact-hero-filters {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.impact-filter-pills {
+  display: flex;
+  gap: 3px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px;
+  border-radius: 999px;
+  width: fit-content;
+  max-width: 100%;
+  flex-wrap: wrap;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  .filter-pill {
+    padding: 0.42rem 1.1rem;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    color: rgba(167, 243, 208, 0.78);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+
+    &:hover {
+      color: #f0fdf4;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    &.active {
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--emerald-deep);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.8);
+      outline-offset: 2px;
+    }
+  }
+}
+

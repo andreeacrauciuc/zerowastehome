@@ -7,7 +7,7 @@ import ecoHeroIcon from "../../../assets/eco-hero.png";
 import efficientCookIcon from "../../../assets/efficient-cook.png";
 import budgetIcon from "../../../assets/budget-saver.png";
 import zeroWasteIcon from "../../../assets/zero-waste-logo.png";
-import "../../../styles/features/impact/ImpactBadges.scss";
+import "./ImpactBadges.scss";
 
 const MotionSection = motion.section;
 const MotionDiv = motion.div;

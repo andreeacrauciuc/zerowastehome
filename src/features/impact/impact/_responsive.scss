@@ -1,0 +1,59 @@
+@media (max-width: 960px) {
+  .hero-grid,
+  .stats-row,
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .impact-hero-substats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .impact-hero-substats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .impact-hero-filters {
+    flex-direction: column;
+  }
+
+  .impact-filter-pills {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .timeline-name {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 480px) {
+  .impact-hub-shell {
+    padding: 12px;
+  }
+
+  .impact-hero-substats {
+    grid-template-columns: 1fr;
+  }
+
+  .impact-hero-headline {
+    font-size: clamp(2.2rem, 11vw, 3.8rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .impact-hero-banner,
+  .impact-hero-glowbg,
+  .impact-hero-headline,
+  .timeline-item,
+  .impact-hero-substat {
+    animation: none;
+    transition: none;
+  }
+}

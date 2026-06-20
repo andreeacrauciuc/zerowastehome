@@ -1,0 +1,57 @@
+.fixed-items-grid {
+  margin-top: 52px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 24px;
+  padding-bottom: 100px;
+}
+
+.btn-minimalist-add {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--inv-deep) 0%, var(--inv-mid) 50%, var(--inv-soft) 100%);
+  color: white;
+  border: none;
+  padding: 12px 27px;
+  border-radius: 50px;
+  font-size: 19px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(40, 90, 72, 0.22);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.05);
+  }
+}
+
+/* Staggered, transform-free reveal so it never fights the parallax-tilt
+   wrapper's own transform. */
+.fixed-items-grid .tilt-wrapper {
+  animation: cardReveal 0.5s ease both;
+
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.045}s;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fixed-items-grid .tilt-wrapper {
+    animation: none;
+  }
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
