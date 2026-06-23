@@ -34,8 +34,48 @@ import {
 
 const HouseholdContext = createContext(null);
 
+const SCOPED_DATA_COLLECTIONS = ["inventory", "shopping", "impact", "priceHistory"];
+const RESCOPE_BATCH_LIMIT = 450;
+
 const createFlowError = (message, code) =>
   Object.assign(new Error(message), { code });
+
+const isEmptyScope = (value) => value === null || value === undefined || value === "";
+
+/**
+ * Re-scope every data doc owned by `uid` whose current householdId matches
+ * `fromHouseholdId` over to `toHouseholdId`. This keeps the householdId on the
+ * actual data in sync with membership so a member never queries a household
+ * whose docs were stranded under an old id (the stale-householdId bug).
+ *
+ * Querying by ownerId and filtering the householdId in JS is deliberate:
+ * Firestore's `where("householdId","==",null)` matches only docs with an
+ * explicit null, not docs missing the field, so the JS filter is the reliable
+ * way to catch both "null" and "missing" personal docs.
+ */
+const rescopeOwnedData = async ({ uid, fromHouseholdId, toHouseholdId }) => {
+  if (!uid) return;
+  const matchEmpty = isEmptyScope(fromHouseholdId);
+
+  for (const col of SCOPED_DATA_COLLECTIONS) {
+    const snap = await getDocs(
+      queryFirestore(collection(db, col), whereFirestore("ownerId", "==", uid)),
+    );
+    const docsToUpdate = snap.docs.filter((d) => {
+      const hId = d.data()?.householdId;
+      return matchEmpty ? isEmptyScope(hId) : hId === fromHouseholdId;
+    });
+    if (docsToUpdate.length === 0) continue;
+
+    for (let i = 0; i < docsToUpdate.length; i += RESCOPE_BATCH_LIMIT) {
+      const batch = writeBatch(db);
+      docsToUpdate.slice(i, i + RESCOPE_BATCH_LIMIT).forEach((d) => {
+        batch.update(d.ref, { householdId: toHouseholdId });
+      });
+      await commitBatchWithRetry(batch);
+    }
+  }
+};
 
 export function HouseholdProvider({ children }) {
   const { currentUser, applyHouseholdId } = useAuth();
@@ -195,6 +235,24 @@ export function HouseholdProvider({ children }) {
       });
 
       clearLocalModeFlags(currentUser.uid);
+
+      // Pull the member's existing personal data into the household they just
+      // joined, mirroring createHouseholdAndJoin. Runs after the transaction so
+      // membership (and therefore canWrite -> isHouseholdMember) is in effect.
+      // Best-effort: a failure must not undo the successful join.
+      setIsMigratingData(true);
+      try {
+        await rescopeOwnedData({
+          uid: currentUser.uid,
+          fromHouseholdId: null,
+          toHouseholdId: householdId,
+        });
+      } catch (error) {
+        console.error(
+          "HouseholdContext: failed to migrate personal data into joined household.",
+          error,
+        );
+      }
 
       applyHouseholdId(householdId);
       localStorage.setItem(CONTEXT_MODE_KEY, "household");
@@ -393,6 +451,8 @@ export function HouseholdProvider({ children }) {
       return;
     }
 
+    const leavingUid = currentUser.uid;
+    const leftHouseholdId = currentUser.householdId;
     const userRef = doc(db, "users", currentUser.uid);
     const householdRef = doc(db, "households", currentUser.householdId);
 
@@ -457,6 +517,23 @@ export function HouseholdProvider({ children }) {
         { merge: true },
       );
     });
+
+    // Move this user's data back to personal scope so it doesn't stay stranded
+    // under a household they no longer belong to. Only the leaver's own docs are
+    // touched; any remaining members keep their data scoped to the surviving
+    // household. Failure here must not block the (already committed) leave.
+    try {
+      await rescopeOwnedData({
+        uid: leavingUid,
+        fromHouseholdId: leftHouseholdId,
+        toHouseholdId: null,
+      });
+    } catch (error) {
+      console.error(
+        "HouseholdContext: failed to re-scope data to personal after leaving.",
+        error,
+      );
+    }
 
     applyHouseholdId(null);
     setHousehold(null);
