@@ -318,11 +318,21 @@ const mergePurchasedIntoInventoryLocal = (currentInventory, purchasedItems) => {
   return { nextInventory, mergedCount, newBatchCount };
 };
 
-const filterByScope = (items, { contextMode, uid, householdId }) => {
+const filterByScope = (items, { uid, householdId }) => {
   if (!Array.isArray(items)) return [];
 
-  if (contextMode === "household" && householdId) {
-    return items.filter((item) => item?.householdId === householdId);
+  // Membership is the source of truth for which data a user may see — not the
+  // individual/household view toggle. A member who belongs to a household must
+  // always see the shared scope, otherwise a freshly-joined member (who owns no
+  // items yet) sees an empty Inventory/Shopping/Impact. We still include items
+  // the user personally owns so anything created before the householdId landed
+  // (or mid-migration) never disappears.
+  if (householdId) {
+    return items.filter((item) => {
+      if (item?.householdId === householdId) return true;
+      const owner = item?.ownerId ?? item?.userId;
+      return owner === uid;
+    });
   }
 
   if (!uid) return [];
@@ -336,7 +346,7 @@ const DataStoreContext = createContext(null);
 
 const useDataStoreState = () => {
   const { currentUser, isAuthReady } = useAuth();
-  const { household, isHouseholdReady, contextMode } = useHousehold();
+  const { household, isHouseholdReady } = useHousehold();
   const [inventoryItems, setInventoryItems] = useState([]);
   const [shoppingItems, setShoppingItems] = useState([]);
   const [impactHistory, setImpactHistory] = useState([]);
@@ -1305,18 +1315,21 @@ const useDataStoreState = () => {
   };
 
   const scopeUid = currentUser?.uid || null;
-  const scopeHouseholdId = household?.id || null;
+  // Use either the loaded household snapshot or the id already on the profile so
+  // a freshly-joined member isn't briefly filtered down to their (empty) owned
+  // scope while the household document is still loading.
+  const scopeHouseholdId = household?.id || currentUser?.householdId || null;
   const scopedInventoryItems = useMemo(
-    () => filterByScope(inventoryItems, { contextMode, uid: scopeUid, householdId: scopeHouseholdId }),
-    [inventoryItems, contextMode, scopeUid, scopeHouseholdId],
+    () => filterByScope(inventoryItems, { uid: scopeUid, householdId: scopeHouseholdId }),
+    [inventoryItems, scopeUid, scopeHouseholdId],
   );
   const scopedShoppingItems = useMemo(
-    () => filterByScope(shoppingItems, { contextMode, uid: scopeUid, householdId: scopeHouseholdId }),
-    [shoppingItems, contextMode, scopeUid, scopeHouseholdId],
+    () => filterByScope(shoppingItems, { uid: scopeUid, householdId: scopeHouseholdId }),
+    [shoppingItems, scopeUid, scopeHouseholdId],
   );
   const scopedImpactHistory = useMemo(
-    () => filterByScope(impactHistory, { contextMode, uid: scopeUid, householdId: scopeHouseholdId }),
-    [impactHistory, contextMode, scopeUid, scopeHouseholdId],
+    () => filterByScope(impactHistory, { uid: scopeUid, householdId: scopeHouseholdId }),
+    [impactHistory, scopeUid, scopeHouseholdId],
   );
 
   return {
