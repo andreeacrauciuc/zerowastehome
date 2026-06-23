@@ -60,16 +60,16 @@ export function useAccountSecurity({ setSettingsBusy }) {
 
   const handleChangePassword = async () => {
     if (!newPassword || newPassword.length < 6) {
-      showError("New password must be at least 6 characters.");
+      showError("New password must be at least 6 characters");
       return;
     }
     if (newPassword !== confirmPassword) {
-      showError("Passwords do not match. Please re-enter them.");
+      showError("Passwords do not match. Please re-enter them");
       return;
     }
 
     if (!auth.currentUser) {
-      showError("No authenticated user found.");
+      showError("No authenticated user found");
       return;
     }
 
@@ -78,9 +78,9 @@ export function useAccountSecurity({ setSettingsBusy }) {
       setNewPassword("");
       setConfirmPassword("");
       setIsPasswordModalOpen(false);
-      showSuccess("Password updated.");
+      showSuccess("Password updated");
     } catch (error) {
-      showError(toUserFacingErrorMessage(error, "Could not update your password. Please try again."));
+      showError(toUserFacingErrorMessage(error, "Could not update your password. Please try again"));
     }
   };
 
@@ -103,7 +103,7 @@ export function useAccountSecurity({ setSettingsBusy }) {
       try {
         await deleteDoc(doc(db, "users", userId));
       } catch (error) {
-        console.error("Account deletion: failed to delete user profile document.", error);
+        console.error("Account deletion: failed to delete user profile document", error);
       }
 
       await deleteUser(authUser);
@@ -115,12 +115,12 @@ export function useAccountSecurity({ setSettingsBusy }) {
 
       showSuccess(
         hadFailure
-          ? "Account deleted. Some data could not be removed and will be cleaned up automatically."
-          : "Account deleted successfully.",
+          ? "Account deleted. Some data could not be removed and will be cleaned up automatically"
+          : "Account deleted successfully",
       );
       navigate("/signin", { replace: true });
     } catch (error) {
-      showError(toUserFacingErrorMessage(error, "Could not delete your account. Please try again."));
+      showError(toUserFacingErrorMessage(error, "Could not delete your account. Please try again"));
     } finally {
       setSettingsBusy(false);
       setIsDeletingAccount(false);
@@ -131,7 +131,7 @@ export function useAccountSecurity({ setSettingsBusy }) {
     try {
       await logout();
     } catch {
-      showError("Could not sign out. Please try again.");
+      showError("Could not sign out. Please try again");
     }
   };
 

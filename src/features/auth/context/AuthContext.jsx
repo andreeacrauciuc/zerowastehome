@@ -220,7 +220,7 @@ export function AuthProvider({ children }) {
     async ({ fullName, email, password, householdInviteCode }) => {
       if (authRequestInFlightRef.current) {
         throw createFlowError(
-          "Authentication request already in progress.",
+          "Authentication request already in progress",
           "AUTH_REQUEST_IN_PROGRESS",
         );
       }
@@ -258,7 +258,7 @@ export function AuthProvider({ children }) {
           householdDoc = await resolveHouseholdByJoinCode(normalizedCode);
           if (!householdDoc) {
             throw createFlowError(
-              "Invalid household join code.",
+              "Invalid household join code",
               "AUTH_INVALID_JOIN_CODE",
             );
           }
@@ -284,7 +284,7 @@ export function AuthProvider({ children }) {
           await runTransaction(db, async (transaction) => {
             const householdSnap = await transaction.get(householdRef);
             if (!householdSnap.exists()) {
-              throw new Error("Household not found for this join code.");
+              throw new Error("Household not found for this join code");
             }
 
             transaction.set(
@@ -335,7 +335,7 @@ export function AuthProvider({ children }) {
 
         if (createdUser) {
           throw createFlowError(
-            "Your account could not be fully created. The signup was rolled back; please try again.",
+            "Your account could not be fully created. The signup was rolled back; please try again",
             "FIRESTORE_PROFILE_CREATE_FAILED",
           );
         }
@@ -353,7 +353,7 @@ export function AuthProvider({ children }) {
     async ({ email, password }) => {
       if (authRequestInFlightRef.current) {
         throw createFlowError(
-          "Authentication request already in progress.",
+          "Authentication request already in progress",
           "AUTH_REQUEST_IN_PROGRESS",
         );
       }
@@ -385,7 +385,7 @@ export function AuthProvider({ children }) {
           }
           throw createFlowError(
             error?.message ||
-              "Could not prepare your profile. Please try again.",
+              "Could not prepare your profile. Please try again",
             "FIRESTORE_PROFILE_REPAIR_FAILED",
           );
         }
@@ -411,7 +411,7 @@ export function AuthProvider({ children }) {
             }
             throw createFlowError(
               error?.message ||
-                "Could not prepare your profile. Please try again.",
+                "Could not prepare your profile. Please try again",
               "FIRESTORE_PROFILE_REPAIR_FAILED",
             );
           }
@@ -464,7 +464,7 @@ export function AuthProvider({ children }) {
           { merge: true },
         );
       } catch (error) {
-        console.error("AuthContext: failed to remove FCM token on logout.", error);
+        console.error("AuthContext: failed to remove FCM token on logout", error);
       }
     }
     clearActiveFcmToken();
@@ -520,7 +520,7 @@ export function AuthProvider({ children }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider.");
+    throw new Error("useAuth must be used within an AuthProvider");
   }
 
   return context;

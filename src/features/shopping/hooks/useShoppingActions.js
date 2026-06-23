@@ -54,10 +54,10 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
   const handleSaveItem = useCallback(async (fields, opts = {}) => {
     const { name, price, qty, unit, category, editingId } = fields;
     const trimmedName = String(name || "").trim();
-    if (!trimmedName) { showError("Item name is required."); return false; }
+    if (!trimmedName) { showError("Item name is required"); return false; }
 
     const parsedQty = Number(qty);
-    if (!Number.isFinite(parsedQty) || parsedQty <= 0) { showError("Quantity must be greater than 0."); return false; }
+    if (!Number.isFinite(parsedQty) || parsedQty <= 0) { showError("Quantity must be greater than 0"); return false; }
 
     if (!opts.bypassInventoryCheck) {
       const duplicateCheck = checkBeforeAdding({
@@ -90,7 +90,7 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
 
         if (duplicateCheck.isDuplicate && duplicateCheck.source === "shopping list") {
           const targetItem = duplicateCheck.matchedItem;
-          if (!targetItem?.id) { showError("Could not merge duplicate shopping items. Please try again."); return false; }
+          if (!targetItem?.id) { showError("Could not merge duplicate shopping items. Please try again"); return false; }
 
           const targetQty = Number(targetItem.quantity);
           const mergedQuantity = (Number.isFinite(targetQty) && targetQty > 0 ? targetQty : 0) + parsedQty;
@@ -99,9 +99,9 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
             unit, category,
             estimatedPrice: hasPrice ? parsedPrice : null,
           });
-          if (mergeResult?.blocked && mergeResult?.source === "inventory") { showError("Item already exists in inventory."); return false; }
+          if (mergeResult?.blocked && mergeResult?.source === "inventory") { showError("Item already exists in inventory"); return false; }
           await handleDeleteShoppingItem(editingId);
-          showSuccess("Duplicate item merged into existing shopping entry.");
+          showSuccess("Duplicate item merged into existing shopping entry");
           return true;
         }
 
@@ -109,21 +109,21 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
           name: trimmedName, quantity: parsedQty, unit, category,
           estimatedPrice: hasPrice ? parsedPrice : null,
         });
-        if (updateResult?.blocked && updateResult?.source === "inventory") { showError("Item already exists in inventory."); return false; }
-        showSuccess("Shopping item updated.");
+        if (updateResult?.blocked && updateResult?.source === "inventory") { showError("Item already exists in inventory"); return false; }
+        showSuccess("Shopping item updated");
       } else {
         const result = await handleAddShoppingItem({
           name: trimmedName, quantity: parsedQty, unit, category,
           estimatedPrice: hasPrice ? parsedPrice : null,
           checked: false,
         }, { bypassInventoryCheck: Boolean(opts.bypassInventoryCheck) });
-        if (result?.blocked && result?.source === "inventory") { showError("Item already exists in inventory."); return false; }
-        showSuccess(result?.merged ? "Item already existed. Quantities were combined." : "Shopping item added.");
+        if (result?.blocked && result?.source === "inventory") { showError("Item already exists in inventory"); return false; }
+        showSuccess(result?.merged ? "Item already existed. Quantities were combined" : "Shopping item added");
       }
       return true;
     } catch (error) {
-      console.error("Failed to save shopping item.", error);
-      showError("Could not save this item. Please try again.");
+      console.error("Failed to save shopping item", error);
+      showError("Could not save this item. Please try again");
       return false;
     }
   }, [items, inventory, handleAddShoppingItem, handleUpdateShoppingItem, handleDeleteShoppingItem]);
@@ -132,8 +132,8 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
     try {
       await handleToggleShoppingItem(item.id, item.checked);
     } catch (error) {
-      console.error("Failed to toggle shopping item.", error);
-      showError("Could not update this item. Please try again.");
+      console.error("Failed to toggle shopping item", error);
+      showError("Could not update this item. Please try again");
     }
   }, [handleToggleShoppingItem]);
 
@@ -148,10 +148,10 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
     setConfirmDeleteId(null);
     try {
       await handleDeleteShoppingItem(id);
-      showSuccess("Shopping item deleted.");
+      showSuccess("Shopping item deleted");
     } catch (error) {
-      console.error("Failed to delete shopping item.", error);
-      showError("Could not delete this item. Please try again.");
+      console.error("Failed to delete shopping item", error);
+      showError("Could not delete this item. Please try again");
     }
   }, [confirmDeleteId, handleDeleteShoppingItem]);
 
@@ -176,8 +176,8 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
         await Promise.all(ids.map((id) => handleDeleteShoppingItem(id)));
       }
     } catch (error) {
-      console.error("Failed to remove recipe items.", error);
-      showError("Could not remove these items. Please try again.");
+      console.error("Failed to remove recipe items", error);
+      showError("Could not remove these items. Please try again");
     }
   }, [confirmBulkRemoveRecipe, handleDeleteShoppingItems, handleDeleteShoppingItem]);
 
@@ -189,7 +189,7 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
     try {
       await handleDeleteShoppingItem(item.id);
     } catch (error) {
-      console.error("Failed to delete shopping item.", error);
+      console.error("Failed to delete shopping item", error);
       return;
     }
 
@@ -203,13 +203,13 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
         try {
           await handleActionFood(matchedInventoryItem.id, "eaten");
         } catch (error) {
-          console.error("Failed to record pantry swap in impact history.", error);
+          console.error("Failed to record pantry swap in impact history", error);
         }
       }
     }
 
     onSwapAccepted?.(saved);
-    showSuccess("Pantry swap accepted. Item removed from your shopping list.");
+    showSuccess("Pantry swap accepted. Item removed from your shopping list");
   }, [resolvePrice, inventory, handleDeleteShoppingItem, handleActionFood, onSwapAccepted]);
 
   const handleToggleSelectAllManual = useCallback(async () => {
@@ -218,8 +218,8 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
     try {
       await handleBatchUpdateShoppingItems(ids, { checked: !isAllManualSelected });
     } catch (error) {
-      console.error("Failed to update item selection.", error);
-      showError("Could not update item selection. Please try again.");
+      console.error("Failed to update item selection", error);
+      showError("Could not update item selection. Please try again");
     }
   }, [manualItems, isAllManualSelected, handleBatchUpdateShoppingItems]);
 
@@ -230,7 +230,7 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
 
   const openTransferModal = useCallback(() => {
     const currentChecked = items.filter((i) => i.checked);
-    if (currentChecked.length === 0) { showError("Please check at least one item to transfer."); return; }
+    if (currentChecked.length === 0) { showError("Please check at least one item to transfer"); return; }
     const initialDrafts = {};
     currentChecked.forEach((item) => {
       const resolved = resolvePrice(item);
@@ -260,7 +260,7 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
 
   const handleCheckoutTransfer = useCallback(async () => {
     const checked = items.filter((i) => i.checked);
-    if (checked.length === 0) { showError("Select at least one item to move."); return; }
+    if (checked.length === 0) { showError("Select at least one item to move"); return; }
 
     const itemsMissingExpiry = checked.filter((item) => {
       const draftExpiry = String(transferDrafts[item.id]?.expiry || "").trim();
@@ -301,10 +301,10 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
 
         if (mergedCount > 0 || newBatchCount > 0) {
           if (mergedCount > 0) {
-            showSuccess("Quantity updated for existing batch.");
+            showSuccess("Quantity updated for existing batch");
           }
           if (newBatchCount > 0) {
-            showSuccess("New batch added to preserve expiry date.");
+            showSuccess("New batch added to preserve expiry date");
           }
         } else {
           showSuccess(
@@ -319,9 +319,9 @@ export function useShoppingActions({ items, inventory, resolvePrice, onSwapAccep
         }
       }
     } catch (error) {
-      console.error("Failed to transfer items to inventory.", error);
+      console.error("Failed to transfer items to inventory", error);
       closeTransferModal();
-      showError("Could not move items to your inventory. Please try again.");
+      showError("Could not move items to your inventory. Please try again");
     }
   }, [items, transferDrafts, resolvePrice, handlePurchase, closeTransferModal]);
 

@@ -39,12 +39,12 @@ export function useProfileSettings({ setSettingsBusy }) {
   const handleSaveProfile = async () => {
     const safeName = fullName.trim();
     if (!safeName) {
-      showError("Name is required.");
+      showError("Name is required");
       return;
     }
 
     if (photoDataUrl && estimateBytes(photoDataUrl) > MAX_PHOTO_BYTES) {
-      showError("Profile photo is too large. Please upload a smaller image.");
+      showError("Profile photo is too large. Please upload a smaller image");
       return;
     }
 
@@ -57,10 +57,10 @@ export function useProfileSettings({ setSettingsBusy }) {
       patchCurrentUserCache({ fullName: safeName });
 
       await saveUserPreferences({ currency: preferredCurrency });
-      showSuccess("Profile and currency updated successfully.");
+      showSuccess("Profile and currency updated successfully");
     } catch (error) {
       showError(
-        toUserFacingErrorMessage(error, "Could not update your profile. Please try again."),
+        toUserFacingErrorMessage(error, "Could not update your profile. Please try again"),
       );
     } finally {
       setSettingsBusy(false);
@@ -71,18 +71,18 @@ export function useProfileSettings({ setSettingsBusy }) {
     const file = event.target.files?.[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
-      showError("Please select an image file.");
+      showError("Please select an image file");
       return;
     }
 
     buildCompressedPhotoDataUrl(file)
       .then((compressedDataUrl) => {
         setPhotoDataUrl(compressedDataUrl);
-        showSuccess("Photo optimized and ready to save.");
+        showSuccess("Photo optimized and ready to save");
       })
       .catch((error) => {
         showError(
-          toUserFacingErrorMessage(error, "Could not process the profile image. Please try again."),
+          toUserFacingErrorMessage(error, "Could not process the profile image. Please try again"),
         );
       })
       .finally(() => {

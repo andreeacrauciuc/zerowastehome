@@ -64,7 +64,7 @@ const FRIENDLY_ERROR_MAP = {
   "Household not found": "That household could not be found anymore",
   "You are not part of a household": "You need to join a household first",
   ALREADY_IN_HOUSEHOLD:
-    "You're already in a household. Leave it first, then create or join another.",
+    "You're already in a household. Leave it first, then create or join another",
   "Only the household admin can regenerate the join code":
     "Only the household admin can generate a new join code",
   "Could not generate a unique household code. Please try again":

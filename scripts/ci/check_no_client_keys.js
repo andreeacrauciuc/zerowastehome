@@ -36,9 +36,9 @@ function scan(dir) {
 scan(ROOT);
 
 if (found) {
-  console.error("\nScan FAILED — embedded keys detected.");
+  console.error("\nScan FAILED — embedded keys detected");
   // eslint-disable-next-line no-undef
   process.exit(1);
 } else {
-  console.log("Scan OK — no embedded keys found.");
+  console.log("Scan OK — no embedded keys found");
 }

@@ -182,18 +182,13 @@ const Shopping = () => {
           ref={listPaneRef}
           className={`shopping-main-pane shopping-main-column${listHighlight ? " is-view-highlight" : ""}`}
         >
-          {/* Mobile-only placement: the right pane (with its copy) is hidden
-              below 1024px, so render the weekly card here too where it's
-              visible. CSS ensures only one instance shows per breakpoint. */}
+
           {weeklySuggestionsNode && (
             <div className="weekly-suggestions-mobile-slot">
               {weeklySuggestionsNode}
             </div>
           )}
 
-          {/* Mobile-only copy of the summary. The right pane (with its own copy)
-              is hidden below 1024px, so render the summary here too where it's
-              visible. CSS shows exactly one instance per breakpoint. */}
           <div className="shopping-summary-mobile-slot">
             <ShoppingSummary
               totalItems={uncheckedItems.length}

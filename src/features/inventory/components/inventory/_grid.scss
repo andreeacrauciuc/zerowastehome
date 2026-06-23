@@ -26,8 +26,6 @@
   }
 }
 
-/* Staggered, transform-free reveal so it never fights the parallax-tilt
-   wrapper's own transform. */
 .fixed-items-grid .tilt-wrapper {
   animation: cardReveal 0.5s ease both;
 

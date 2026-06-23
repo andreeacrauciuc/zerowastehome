@@ -108,11 +108,6 @@ const chunk = (list, size) => {
 };
 
 /**
- * Update many documents in a collection, verifying each is in scope before
- * writing. Mirrors updateScopedDoc: a missing document is skipped, an
- * out-of-scope document aborts its chunk's transaction (DATA_SCOPE_MISMATCH),
- * and the active scope field/value is re-stamped on every write.
- *
  * @param {Array<{id: string, changes: object}>} updates
  */
 export const batchUpdateScopedDocs = async ({ db, collectionName, updates, householdId, ownerId, scopeField, scopeValue }) => {
@@ -147,10 +142,6 @@ export const batchUpdateScopedDocs = async ({ db, collectionName, updates, house
 };
 
 /**
- * Delete many documents in a collection, verifying each is in scope first.
- * Mirrors deleteScopedDoc: missing documents are skipped; an out-of-scope
- * document aborts its chunk's transaction.
- *
  * @param {string[]} ids
  */
 export const batchDeleteScopedDocs = async ({ db, collectionName, ids, householdId, ownerId, scopeField, scopeValue }) => {

@@ -51,7 +51,7 @@ export function useAddFoodForm({ initialData, onClose, onSave, onRequestClose })
       setValidationError("");
       onClose();
     } catch {
-      showError("Could not save item. Please try again.");
+      showError("Could not save item. Please try again");
     } finally {
       setIsSaving(false);
     }

@@ -26,11 +26,6 @@ export const useScopeRepair = ({ currentUser, household, useLocalData }) => {
             query(collection(db, col), where("ownerId", "==", uid))
           );
 
-          // Re-tag a doc when its householdId is missing/empty OR points at a
-          // household the owner is no longer in (e.g. they left/recreated a
-          // household, leaving data stranded under a now-deleted id). The owner
-          // is authoritative for their own docs, so this self-heals the scope
-          // for every household member the next time the owner opens the app.
           const docsNeedingRepair = allOwnerDocs.docs.filter((docSnap) => {
             const data = docSnap.data();
             const hId = data?.householdId;

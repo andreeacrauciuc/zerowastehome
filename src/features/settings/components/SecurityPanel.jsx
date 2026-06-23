@@ -39,8 +39,6 @@ function SecurityPanel({ setIsPasswordModalOpen, setDeleteConfirmOpen, onLogout 
         </div>
       </section>
 
-      {/* Durable, always-reachable sign-out point so it stays accessible
-          regardless of mobile navigation. */}
       <section className="settings-card" aria-label="Session">
         <div className="settings-card__head">
           <h3 className="settings-card__title">

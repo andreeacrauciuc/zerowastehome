@@ -20,15 +20,15 @@ const normalizeRecipe = (recipe) => ({
 const buildFetchErrorMessage = (err) => {
   const message = err?.message || "";
   if (message.includes("GROQ_API_KEY_MISSING")) {
-    return "Recipe generation is not configured. The Groq API key is missing on the server.";
+    return "Recipe generation is not configured. The Groq API key is missing on the server";
   }
   if (message.includes("GROQ_UNAUTHORIZED")) {
-    return "The Groq API rejected the request. The server's Groq API key may be invalid or expired.";
+    return "The Groq API rejected the request. The server's Groq API key may be invalid or expired";
   }
   if (message.includes("QUOTA_EXCEEDED")) {
     return t("common.tooManyRequests");
   }
-  return "Something went wrong. Please try again.";
+  return "Something went wrong. Please try again";
 };
 
 export function useFetchRecipes() {
@@ -69,7 +69,7 @@ export function useFetchRecipes() {
           const msg =
             result?.errorCode === "QUOTA_EXCEEDED"
               ? t("common.tooManyRequests")
-              : "Failed to generate recipe. Please try again.";
+              : "Failed to generate recipe. Please try again";
           showError(msg);
           break;
         }
@@ -104,10 +104,10 @@ export function useFetchRecipes() {
 
       if (generationIndex === 0) {
         if (collected.length === 0) {
-          showError("No recipes found. Try selecting different ingredients.");
+          showError("No recipes found. Try selecting different ingredients");
         }
       } else if (collected.length === 0) {
-        showError("No more unique recipes right now. Try changing selected ingredients.");
+        showError("No more unique recipes right now. Try changing selected ingredients");
       }
 
       return collected.length > 0;

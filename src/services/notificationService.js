@@ -99,7 +99,7 @@ const toSystemAlert = (event) => ({
   level: "info",
   type: "system",
   priority: 2,
-  message: event?.message || "New system activity.",
+  message: event?.message || "New system activity",
   item: null,
   event,
 });

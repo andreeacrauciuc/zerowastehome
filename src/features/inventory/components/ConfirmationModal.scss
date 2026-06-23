@@ -1,6 +1,3 @@
-/* Hover effects for ConfirmationModal action buttons. CSS :hover replaces the
-   former JS onMouseEnter/onMouseLeave DOM style manipulation (transform +
-   brightness), which is the React anti-pattern this stylesheet removes. */
 .confirmation-modal-btn {
   border: none;
   border-radius: 10px;

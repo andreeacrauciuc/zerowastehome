@@ -300,8 +300,6 @@
   }
 }
 
-/* "Generate more" append skeletons — same footprint as a real card so the grid
-   doesn't shift, with a soft shimmer to read as loading rather than empty. */
 .recipe-card-skeleton {
   pointer-events: none;
 
@@ -355,7 +353,6 @@
   color: rgba(40, 90, 72, 0.85);
 }
 
-/* ── Like button on recipe card image ─────────────────────────── */
 .recipe-like-btn {
   position: absolute;
   top: 0.55rem;
@@ -399,7 +396,6 @@
   filter: drop-shadow(0 1px 3px rgba(229, 57, 53, 0.45));
 }
 
-/* Ensure the card image wrapper is position:relative for the button overlay */
 .recipe-card .recipe-card-image {
   position: relative;
 }

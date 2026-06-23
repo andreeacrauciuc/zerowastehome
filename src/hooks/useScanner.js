@@ -63,7 +63,7 @@ export const useScanner = () => {
       });
     } catch (error) {
       showError(
-        toUserFacingErrorMessage(error, "Could not scan the barcode. Please try another image.")
+        toUserFacingErrorMessage(error, "Could not scan the barcode. Please try another image")
       );
     } finally {
       event.target.value = "";

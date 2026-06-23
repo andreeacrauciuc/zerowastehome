@@ -149,11 +149,11 @@ export const useNotifications = (items = [], impactHistory = []) => {
         localStorage.setItem(timestampKey, String(createdAtTs));
 
         new Notification(activeHouseholdId ? "Household Update" : "Your Update", {
-          body: newest.message || "New activity detected.",
+          body: newest.message || "New activity detected",
         });
       },
       (error) => {
-        console.error("useNotifications: householdEvents listener failed.", error);
+        console.error("useNotifications: householdEvents listener failed", error);
       }
     );
 

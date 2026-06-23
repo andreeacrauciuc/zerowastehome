@@ -62,7 +62,7 @@ export const parseQuantity = (rawValue) => {
   const raw = String(rawValue ?? "").trim();
   const parsed = Number(raw);
   if (raw === "" || !Number.isFinite(parsed) || parsed <= 0) {
-    return { error: "Quantity must be a number greater than 0." };
+    return { error: "Quantity must be a number greater than 0" };
   }
   return { value: parsed };
 };

@@ -1,14 +1,8 @@
-/* Badge tiles, unified with the Impact page glass-card design system.
-   No SCSS variables import: the Impact design tokens are CSS custom properties
-   defined on .impact-hub-shell (see Impact.scss), consumed here with fallbacks. */
-
 .badges-section {
   grid-column: 1 / -1;
   padding: 24px;
 }
 
-/* Lay the trophy icon beside the heading/subtitle. Scoped to this section so the
-   global .section-head (used elsewhere with its accent bar) is untouched. */
 .badges-section .section-head {
   display: flex;
   align-items: center;

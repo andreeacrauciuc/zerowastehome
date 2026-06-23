@@ -14,17 +14,17 @@ export const createFlowError = (message, code) =>
 
 export const validateSignupPayload = ({ fullName, email, password } = {}) => {
   if (!String(fullName || "").trim()) {
-    throw createFlowError("Full name is required.", "AUTH_VALIDATION_FAILED");
+    throw createFlowError("Full name is required", "AUTH_VALIDATION_FAILED");
   }
 
   const normalizedEmail = normalizeEmail(email);
   if (!EMAIL_REGEX.test(normalizedEmail)) {
-    throw createFlowError("Valid email is required.", "auth/invalid-email");
+    throw createFlowError("Valid email is required", "auth/invalid-email");
   }
 
   if (String(password || "").length < 6) {
     throw createFlowError(
-      "Password must be at least 6 characters.",
+      "Password must be at least 6 characters",
       "auth/weak-password",
     );
   }
@@ -35,12 +35,12 @@ export const validateSignupPayload = ({ fullName, email, password } = {}) => {
 export const validateLoginPayload = ({ email, password } = {}) => {
   const normalizedEmail = normalizeEmail(email);
   if (!EMAIL_REGEX.test(normalizedEmail)) {
-    throw createFlowError("Valid email is required.", "auth/invalid-email");
+    throw createFlowError("Valid email is required", "auth/invalid-email");
   }
 
   if (String(password || "").length < 6) {
     throw createFlowError(
-      "Password must be at least 6 characters.",
+      "Password must be at least 6 characters",
       "auth/weak-password",
     );
   }

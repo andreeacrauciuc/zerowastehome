@@ -20,7 +20,7 @@ export function useRecipeActions(inventoryItems) {
     const usedInventory = inferUsageFromIngredients(selectedRecipe, inventoryItems);
 
     if (usedInventory.length === 0) {
-      showError("This recipe does not include inventory usage data to deduct.");
+      showError("This recipe does not include inventory usage data to deduct");
       return;
     }
 
@@ -61,11 +61,11 @@ export function useRecipeActions(inventoryItems) {
       setIsCookingRecipe(true);
       setCookSuccess(false);
       await handleCookRecipe(usedInventory);
-      showSuccess("Inventory updated. Used quantities were deducted.");
+      showSuccess("Inventory updated. Used quantities were deducted");
       setCookSuccess(true);
     } catch (err) {
       showError(
-        toUserFacingErrorMessage(err, "Could not update inventory after cooking. Please try again."),
+        toUserFacingErrorMessage(err, "Could not update inventory after cooking. Please try again"),
       );
     } finally {
       setIsCookingRecipe(false);
@@ -81,7 +81,7 @@ export function useRecipeActions(inventoryItems) {
 
     const { missing, items } = buildMissingShoppingItems(selectedRecipe);
     if (missing.length === 0) {
-      showError("No missing ingredients found for this recipe.");
+      showError("No missing ingredients found for this recipe");
       return;
     }
 
@@ -104,7 +104,7 @@ export function useRecipeActions(inventoryItems) {
       showError(
         toUserFacingErrorMessage(
           err,
-          "Could not add missing ingredients to the shopping list. Please try again.",
+          "Could not add missing ingredients to the shopping list. Please try again",
         ),
       );
     } finally {

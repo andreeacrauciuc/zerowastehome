@@ -105,7 +105,7 @@ const estimateUnitPrice = (item) => {
   }
 
   console.warn(
-    "useDataStore: estimateUnitPrice found no usable price; moneySaved will treat this item as free.",
+    "useDataStore: estimateUnitPrice found no usable price; moneySaved will treat this item as free",
     { id: item?.id, name: item?.name },
   );
   return 0;
@@ -321,12 +321,6 @@ const mergePurchasedIntoInventoryLocal = (currentInventory, purchasedItems) => {
 const filterByScope = (items, { uid, householdId }) => {
   if (!Array.isArray(items)) return [];
 
-  // Membership is the source of truth for which data a user may see — not the
-  // individual/household view toggle. A member who belongs to a household must
-  // always see the shared scope, otherwise a freshly-joined member (who owns no
-  // items yet) sees an empty Inventory/Shopping/Impact. We still include items
-  // the user personally owns so anything created before the householdId landed
-  // (or mid-migration) never disappears.
   if (householdId) {
     return items.filter((item) => {
       if (item?.householdId === householdId) return true;
@@ -364,7 +358,7 @@ const useDataStoreState = () => {
   const clearUiModal = () => setUiModal(null);
 
   const notifyFallback = useCallback((message) => {
-    const safeMessage = String(message || "Action saved locally.");
+    const safeMessage = String(message || "Action saved locally");
     setUiModal({ title: "Cloud Sync Notice", message: safeMessage });
   }, []);
 
@@ -420,18 +414,18 @@ const useDataStoreState = () => {
 
   const ensureActiveScope = () => {
     if (!currentUser?.uid) {
-      notifyFallback("Sign in before saving data.");
+      notifyFallback("Sign in before saving data");
       return false;
     }
     if (currentUser?.householdId && !isHouseholdReady) {
-      notifyFallback("Please wait while your household data loads.");
+      notifyFallback("Please wait while your household data loads");
       return false;
     }
     if (!activeScopeId) {
       notifyFallback(
         isHouseholdMode
-          ? "Join or create a household before saving shared data."
-          : "Sign in before saving individual data."
+          ? "Join or create a household before saving shared data"
+          : "Sign in before saving individual data"
       );
       return false;
     }
@@ -528,10 +522,10 @@ const useDataStoreState = () => {
       localStorage.removeItem(STORAGE_KEYS.shopping);
       localStorage.removeItem(STORAGE_KEYS.impact);
       disableLocalData();
-      showSuccess("Connection restored. Data synced successfully.");
+      showSuccess("Connection restored. Data synced successfully");
       return true;
     } catch (error) {
-      console.error("useDataStore: failed to sync local data.", error);
+      console.error("useDataStore: failed to sync local data", error);
       notifyFallback(`Sync failed. Local data preserved. ${normalizeError(error)}`);
       return false;
     } finally {
@@ -620,11 +614,11 @@ const useDataStoreState = () => {
     try {
       const validation = validateInventoryItem(normalizedProduct);
       if (!validation?.isValid) {
-        notifyFallback(validation?.error || "Invalid item data. Please check and try again.");
+        notifyFallback(validation?.error || "Invalid item data. Please check and try again");
         return;
       }
     } catch {
-      notifyFallback("Invalid item data. Please check and try again.");
+      notifyFallback("Invalid item data. Please check and try again");
       return;
     }
 
@@ -691,7 +685,7 @@ const useDataStoreState = () => {
       });
       notifyFallback(
         isScopeNotReady
-          ? "Your session is still loading. Saved locally — it will sync automatically once you're connected."
+          ? "Your session is still loading. Saved locally — it will sync automatically once you're connected"
           : `Cloud save failed. Saved locally instead. ${normalizeError(error)}`
       );
     }
@@ -841,7 +835,7 @@ const useDataStoreState = () => {
         newBatchCount: result?.newBatchCount || 0,
       };
     } catch {
-      notifyFallback("Transfer failed, check your connection.");
+      notifyFallback("Transfer failed, check your connection");
       return false;
     }
   };
@@ -895,11 +889,11 @@ const useDataStoreState = () => {
     try {
       const validation = validateInventoryItem(payload);
       if (!validation?.isValid) {
-        notifyFallback(validation?.error || "Invalid shopping item. Please check and try again.");
+        notifyFallback(validation?.error || "Invalid shopping item. Please check and try again");
         return { merged: false, blocked: true };
       }
     } catch {
-      notifyFallback("Invalid shopping item. Please check and try again.");
+      notifyFallback("Invalid shopping item. Please check and try again");
       return { merged: false, blocked: true };
     }
 
@@ -964,7 +958,7 @@ const useDataStoreState = () => {
       return { merged: false };
     } catch (error) {
       if (error?.message?.startsWith("SCOPE_NOT_READY")) {
-        notifyFallback("Your session is still loading. Please wait a moment and try again.");
+        notifyFallback("Your session is still loading. Please wait a moment and try again");
         return { merged: false, blocked: true };
       }
       enableLocalData();
@@ -987,11 +981,11 @@ const useDataStoreState = () => {
     try {
       const validation = validateInventoryItem(payload);
       if (!validation?.isValid) {
-        notifyFallback(validation?.error || "Invalid shopping item. Please check and try again.");
+        notifyFallback(validation?.error || "Invalid shopping item. Please check and try again");
         return { merged: false, blocked: true };
       }
     } catch {
-      notifyFallback("Invalid shopping item. Please check and try again.");
+      notifyFallback("Invalid shopping item. Please check and try again");
       return { merged: false, blocked: true };
     }
 
@@ -1050,7 +1044,7 @@ const useDataStoreState = () => {
       if (error?.message?.startsWith("SCOPE_NOT_READY")) {
         enableLocalData();
         addShoppingItemLocal(payload);
-        notifyFallback("Your session is still loading. Saved locally — it will sync automatically once you're connected.");
+        notifyFallback("Your session is still loading. Saved locally — it will sync automatically once you're connected");
         return { merged: false };
       }
       throw error;
@@ -1080,7 +1074,7 @@ const useDataStoreState = () => {
     } catch (error) {
       if (error?.message?.startsWith("SCOPE_NOT_READY")) {
         setShoppingItems((prev) => prev.filter((item) => item.id !== optimisticId));
-        notifyFallback("Your session is still loading. Please wait a moment and try again.");
+        notifyFallback("Your session is still loading. Please wait a moment and try again");
         return { merged: false, blocked: true };
       }
       setShoppingItems((prev) => prev.filter((item) => item.id !== optimisticId));
@@ -1233,7 +1227,7 @@ const useDataStoreState = () => {
             pricePerUnit,
           });
         } catch {
-          // Price history best-effort write should not block item edits.
+           //Price history best-effort write should not block item edits
         }
       }
       return { blocked: false };
@@ -1315,9 +1309,6 @@ const useDataStoreState = () => {
   };
 
   const scopeUid = currentUser?.uid || null;
-  // Use either the loaded household snapshot or the id already on the profile so
-  // a freshly-joined member isn't briefly filtered down to their (empty) owned
-  // scope while the household document is still loading.
   const scopeHouseholdId = household?.id || currentUser?.householdId || null;
   const scopedInventoryItems = useMemo(
     () => filterByScope(inventoryItems, { uid: scopeUid, householdId: scopeHouseholdId }),

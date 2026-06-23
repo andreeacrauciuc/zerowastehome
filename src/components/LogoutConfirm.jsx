@@ -8,7 +8,7 @@ const LogoutConfirm = ({ isOpen, onCancel, onConfirm }) => {
     <div className="logout-modal-overlay" role="dialog" aria-modal="true">
       <div className="logout-modal">
         <h3>Log out?</h3>
-        <p>You can sign back in anytime.</p>
+        <p>You can sign back in anytime</p>
         <div className="logout-modal-actions">
           <button type="button" className="logout-cancel" onClick={onCancel}>
             Cancel
