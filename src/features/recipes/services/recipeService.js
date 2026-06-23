@@ -326,10 +326,10 @@ const buildLeftoverStorageTip = (ingredients, usedInventory, inventoryItems) => 
         .length;
 
     if (missingCount > 0) {
-        return "To reduce waste, prep only the quantities you need today and keep leftovers in sealed containers by ingredient type.";
+        return "To reduce waste, prep only the quantities you need today and keep leftovers in sealed containers by ingredient type";
     }
 
-    return "If you have any unused prepped ingredients, cool them quickly and store them in airtight containers so they can be reused safely tomorrow.";
+    return "If you have any unused prepped ingredients, cool them quickly and store them in airtight containers so they can be reused safely tomorrow";
 };
 
 const buildSustainabilityMetrics = (ingredients, usedInventory, inventoryItems) => {
@@ -444,7 +444,7 @@ const normalizeAiRecipe = (recipe, index, totalValueToSave, inventoryItems) => {
         servingsYield: Number(recipe?.servingsYield) || 2,
         ingredients,
         instructions:
-            instructions.length > 0 ? instructions : ["Cook the ingredients until done and serve warm."],
+            instructions.length > 0 ? instructions : ["Cook the ingredients until done and serve warm"],
         nutrition: normalizeNutrition(recipe?.nutrition),
         thumbnail: isLikelyFoodThumbnail(recipe?.thumbnail) ? recipe.thumbnail : null,
         ecoTip:
@@ -600,9 +600,9 @@ const buildFallbackRecipes = (
 
         const instructions = [
             `Prep ${chosen.map((item) => item.name).join(", ")} into bite-size pieces and heat a pan on medium heat.`,
-            "Cook the firmer ingredients first, then add the quick-cooking ones and stir for 6-8 minutes.",
-            "Season and adjust with a splash of water to keep the texture juicy, not dry.",
-            "Serve warm immediately and refrigerate leftovers in an airtight container.",
+            "Cook the firmer ingredients first, then add the quick-cooking ones and stir for 6-8 minutes",
+            "Season and adjust with a splash of water to keep the texture juicy, not dry",
+            "Serve warm immediately and refrigerate leftovers in an airtight container",
         ];
 
         const rawRecipe = {
@@ -612,8 +612,8 @@ const buildFallbackRecipes = (
             ingredients,
             instructions,
             nutrition: null,
-            ecoTip: "Cook ingredients with the nearest expiry date first to reduce waste.",
-            whyThisHelps: "This recipe uses items already in your fridge and limits extra shopping.",
+            ecoTip: "Cook ingredients with the nearest expiry date first to reduce waste",
+            whyThisHelps: "This recipe uses items already in your fridge and limits extra shopping",
             estimatedSavings: totalValueToSave,
             usedInventory: chosen.map((item) => ({
                 id: item.id,
@@ -638,7 +638,7 @@ const fetchJsonSafe = async (url) => {
         if (!response.ok) return null;
         return await response.json();
     } catch (error) {
-        console.error("recipeService: fetchJsonSafe failed.", error);
+        console.error("recipeService: fetchJsonSafe failed", error);
         return null;
     }
 };
@@ -828,7 +828,7 @@ const generateRecipesFromGroq = async (
     }));
 
     const systemPrompt =
-        "You are an experienced home cook and culinary expert. Your task is to generate realistic, delicious, and coherent recipes that a normal household would actually prepare and enjoy. Rules you must follow: (1) Only generate recipes where the combination of ingredients makes culinary sense — no bizarre pairings. (2) Every recipe must have at least 5 cooking steps with real culinary techniques (sauté, simmer, bake, etc.). (3) Cooking times must be realistic (minimum 10 minutes, maximum 90 minutes for home cooking). (4) Each recipe must be a real, named dish from an actual cuisine (Italian, Romanian, Asian, Mediterranean, etc.) — not a generic 'bowl' or 'mix'. (5) Ingredients must have realistic quantities (not '0.01 kg of pasta'). (6) If an inventory item has an unusual or unclear name, either skip it or use it only as a minor ingredient. Never build an entire recipe around an ingredient that doesn't make culinary sense.";
+        "You are an experienced home cook and culinary expert. Your task is to generate realistic, delicious, and coherent recipes that a normal household would actually prepare and enjoy. Rules you must follow: (1) Only generate recipes where the combination of ingredients makes culinary sense — no bizarre pairings. (2) Every recipe must have at least 5 cooking steps with real culinary techniques (sauté, simmer, bake, etc.). (3) Cooking times must be realistic (minimum 10 minutes, maximum 90 minutes for home cooking). (4) Each recipe must be a real, named dish from an actual cuisine (Italian, Romanian, Asian, Mediterranean, etc.) — not a generic 'bowl' or 'mix'. (5) Ingredients must have realistic quantities (not '0.01 kg of pasta'). (6) If an inventory item has an unusual or unclear name, either skip it or use it only as a minor ingredient. Never build an entire recipe around an ingredient that doesn't make culinary sense";
 
     const normalizedExcludedTitles = Array.isArray(excludedTitles)
         ? excludedTitles

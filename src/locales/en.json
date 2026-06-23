@@ -1,32 +1,32 @@
 {
   "common": {
-    "tooManyRequests": "Too many requests. Please wait a few seconds.",
+    "tooManyRequests": "Too many requests. Please wait a few seconds",
     "unknown": "Unknown"
   },
   "inventory": {
-    "emptyTitle": "Your fridge is empty.",
+    "emptyTitle": "Your fridge is empty",
     "emptyBody": "Add your first item!"
   },
   "recipes": {
-    "emptyFridgeTitle": "Your fridge is empty.",
-    "emptyFridgeBody": "Add your first item to get recipe recommendations.",
-    "noMatchFallback": "No recipes matched your fridge items. Try clearing filters or generating new ones."
+    "emptyFridgeTitle": "Your fridge is empty",
+    "emptyFridgeBody": "Add your first item to get recipe recommendations",
+    "noMatchFallback": "No recipes matched your fridge items. Try clearing filters or generating new ones"
   },
   "shopping": {
     "unknownPrice": "Unknown price",
     "alreadyInFridge": "Already in fridge, are you sure?",
     "addSuggestion": "Add suggestion",
-    "potentialSaving": "Potential saving: {value}."
+    "potentialSaving": "Potential saving: {value}"
   },
   "notifications": {
-    "expiryDescription": "You receive alerts when items are expired or close to expiring.",
+    "expiryDescription": "You receive alerts when items are expired or close to expiring",
     "noteLabel": "Note:",
-    "noteBody": "Without Firebase, alerts are shown only while the app is open."
+    "noteBody": "Without Firebase, alerts are shown only while the app is open"
   },
   "events": {
-    "addedItem": "{actor} added {item}.",
-    "completedShopping": "{actor} completed shopping for {count} item(s).",
-    "addedToShopping": "{actor} added {item} to the shopping list.",
-    "inventoryAction": "{actor} marked {item} as {type}."
+    "addedItem": "{actor} added {item}",
+    "completedShopping": "{actor} completed shopping for {count} item(s)",
+    "addedToShopping": "{actor} added {item} to the shopping list",
+    "inventoryAction": "{actor} marked {item} as {type}"
   }
 }

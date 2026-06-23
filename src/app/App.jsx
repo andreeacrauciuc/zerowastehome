@@ -57,9 +57,6 @@ function App() {
             </Route>
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/signin" element={<SignInForm />} />
-            {/* Resolve "/" by auth state directly (authed -> /home, else
-                -> /signin) instead of always sending to /home and letting
-                RequireAuth bounce unauthenticated users back to /signin. */}
             <Route path="/" element={<NotFoundRedirect />} />
             <Route path="*" element={<NotFoundRedirect />} />
           </Routes>

@@ -47,7 +47,6 @@ canvas {
     max-width: 100%;
 }
 
-/* Shared page title used across the app (matches recipe page typography) */
 .page-title {
     font-family: $font-primary-serif;
     font-size: clamp(1.78rem, 3.2vw, 2.55rem);
@@ -58,7 +57,7 @@ canvas {
     color: inherit;
 
     span {
-        color: #408a71; /* recipe accent color */
+        color: #408a71; 
         font-weight: 700;
         text-decoration: underline;
         text-decoration-thickness: 4px;
@@ -73,8 +72,6 @@ textarea {
     font: inherit;
 }
 
-/* Shared accessible info tooltip — works on hover, keyboard focus, and tap.
-   Replaces native `title` tooltips which never appear on touch devices. */
 .info-tooltip {
     position: relative;
     display: inline-flex;
@@ -107,8 +104,6 @@ textarea {
     }
 }
 
-/* Rendered in a portal on document.body and positioned via inline top/left,
-   so it can never be clipped by an ancestor's `overflow: hidden`. */
 .info-tooltip-bubble {
     position: fixed;
     z-index: 1000;
@@ -140,9 +135,6 @@ textarea {
     }
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   AUTH CONTAINER (Login / Register)
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .app-container {
     background-color: #355B3E;
     display: flex;

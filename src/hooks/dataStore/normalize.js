@@ -1,26 +1,26 @@
 const FIREBASE_ERROR_MESSAGES = {
-  "auth/session-expired": "Your session has expired. Please sign in again.",
-  "auth/user-token-expired": "Your session has expired. Please sign in again.",
-  "auth/invalid-user-token": "Invalid authentication token. Please sign in again.",
+  "auth/session-expired": "Your session has expired. Please sign in again",
+  "auth/user-token-expired": "Your session has expired. Please sign in again",
+  "auth/invalid-user-token": "Invalid authentication token. Please sign in again",
   "permission-denied":
-    "You do not have permission to perform this action. Please reload the page.",
+    "You do not have permission to perform this action. Please reload the page",
   DATA_SCOPE_MISMATCH:
-    "Your session or group access has changed. Please reload the page.",
+    "Your session or group access has changed. Please reload the page",
   unavailable:
-    "Service temporarily unavailable. Please check your internet connection.",
-  "not-found": "The requested data was not found.",
-  "already-exists": "This item already exists.",
-  "resource-exhausted": "Usage limit reached. Please try again later.",
+    "Service temporarily unavailable. Please check your internet connection",
+  "not-found": "The requested data was not found",
+  "already-exists": "This item already exists",
+  "resource-exhausted": "Usage limit reached. Please try again later",
   "failed-precondition":
-    "This operation cannot be performed in the current state. Please reload the page.",
-  unauthenticated: "You are not authenticated. Please sign in.",
-  cancelled: "The operation was cancelled.",
+    "This operation cannot be performed in the current state. Please reload the page",
+  unauthenticated: "You are not authenticated. Please sign in",
+  cancelled: "The operation was cancelled",
   "deadline-exceeded":
-    "The connection took too long. Please check your internet and try again.",
-  "network-request-failed": "Network error. Please check your internet connection.",
-  "storage/unauthorized": "You do not have permission to access this file.",
-  "storage/object-not-found": "File not found.",
-  "functions/internal": "An internal error occurred. Please try again.",
+    "The connection took too long. Please check your internet and try again",
+  "network-request-failed": "Network error. Please check your internet connection",
+  "storage/unauthorized": "You do not have permission to access this file",
+  "storage/object-not-found": "File not found",
+  "functions/internal": "An internal error occurred. Please try again",
 };
 
 export const normalizeError = (error) => {

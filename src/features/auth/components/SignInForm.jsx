@@ -67,10 +67,10 @@ function SignInForm() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!formData.email || !emailRegex.test(formData.email)) {
-      newErrors.email = "Valid email is required.";
+      newErrors.email = "Valid email is required";
     }
     if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters.";
+      newErrors.password = "Password must be at least 6 characters";
     }
 
     return newErrors;
@@ -96,7 +96,7 @@ function SignInForm() {
 
         navigate("/home");
       } catch (error) {
-        setAuthError(toUserFacingErrorMessage(error, "Could not sign you in. Please try again."));
+        setAuthError(toUserFacingErrorMessage(error, "Could not sign you in. Please try again"));
       }
     }
   };
@@ -109,7 +109,7 @@ function SignInForm() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email || !emailRegex.test(email)) {
-      setErrors((prev) => ({ ...prev, email: "Enter your email to reset your password." }));
+      setErrors((prev) => ({ ...prev, email: "Enter your email to reset your password" }));
       setAuthError("");
       return;
     }
@@ -123,17 +123,17 @@ function SignInForm() {
       });
       await sendPasswordResetEmail(auth, email);
       setAuthError("");
-      setResetSuccess("If an account exists for that email, a password reset link is on its way.");
+      setResetSuccess("If an account exists for that email, a password reset link is on its way");
     } catch (error) {
       setResetSuccess("");
 
       if (error?.code === "auth/invalid-email") {
         setAuthError("");
-        setErrors((prev) => ({ ...prev, email: "The email address is not valid." }));
+        setErrors((prev) => ({ ...prev, email: "The email address is not valid" }));
         return;
       }
 
-      setAuthError("Unable to send reset email right now. Please try again.");
+      setAuthError("Unable to send reset email right now. Please try again");
     } finally {
       setIsResettingPassword(false);
     }

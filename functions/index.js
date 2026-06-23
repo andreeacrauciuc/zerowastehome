@@ -143,7 +143,7 @@ exports.checkExpiringItems = onSchedule(
       const message = {
         tokens,
         notification: {
-          title: "Use it before you lose it 🥗",
+          title: "Use it before you lose it!",
           body,
         },
         data: {

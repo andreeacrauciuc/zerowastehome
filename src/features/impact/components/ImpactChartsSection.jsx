@@ -48,7 +48,7 @@ const ImpactChartsSection = ({ analytics }) => {
       <div className="section-head">
         <h3>
           <span className="impact-word impact-word--saved">Saved</span> vs <span className="impact-word impact-word--wasted">wasted</span>
-          <TooltipInfo text="Money you saved by eating food in time (green) versus money lost to waste (orange), tracked over the selected period." />
+          <TooltipInfo text="Money you saved by eating food in time (green) versus money lost to waste (orange), tracked over the selected period" />
         </h3>
         <p>See what you saved in green and what you wasted in orange over time</p>
       </div>
@@ -64,7 +64,7 @@ const ImpactChartsSection = ({ analytics }) => {
             </span>
             <p className="trend-empty-title">No data available</p>
             <p className="trend-empty-desc">
-              There isn&apos;t enough data for the selected period yet.
+              There isn&apos;t enough data for the selected period yet
             </p>
           </div>
         ) : (

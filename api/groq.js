@@ -38,7 +38,7 @@ export default async function handler(req, res) {
   if (!body || typeof body !== "object" || !Array.isArray(body.messages)) {
     return res
       .status(400)
-      .json({ error: "Invalid request body: expected { model, messages }." });
+      .json({ error: "Invalid request body: expected { model, messages }" });
   }
 
   try {
@@ -56,13 +56,13 @@ export default async function handler(req, res) {
     try {
       data = text ? JSON.parse(text) : {};
     } catch {
-      data = { error: "Upstream returned a non-JSON response.", raw: text.slice(0, 500) };
+      data = { error: "Upstream returned a non-JSON response", raw: text.slice(0, 500) };
     }
 
     return res.status(response.status).json(data);
   } catch (error) {
     // error
-    console.error("api/groq: failed to reach Groq API.", error);
+    console.error("api/groq: failed to reach Groq API", error);
     return res
       .status(502)
       .json({ error: "Failed to reach Groq API", detail: String(error?.message || error) });

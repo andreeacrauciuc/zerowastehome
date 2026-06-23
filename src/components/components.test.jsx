@@ -25,11 +25,11 @@ describe('Component Tests - Common UI Components', () => {
     it('should render children when there is no error', () => {
       render(
         <ErrorBoundary>
-          <div>Test Content</div>
+          <div>Test content</div>
         </ErrorBoundary>
       );
 
-      expect(screen.getByText('Test Content')).toBeInTheDocument();
+      expect(screen.getByText('Test content')).toBeInTheDocument();
     });
 
     it('should render error message when child throws', () => {
@@ -53,11 +53,11 @@ describe('Component Tests - Common UI Components', () => {
     it('should have a reset mechanism', () => {
       render(
         <ErrorBoundary>
-          <div>Test Content</div>
+          <div>Test content</div>
         </ErrorBoundary>
       );
 
-      expect(screen.getByText('Test Content')).toBeInTheDocument();
+      expect(screen.getByText('Test content')).toBeInTheDocument();
     });
   });
 
@@ -67,14 +67,14 @@ describe('Component Tests - Common UI Components', () => {
         <MemoryRouter initialEntries={['/protected']}>
           <Routes>
             <Route element={<RequireAuth />}>
-              <Route path="/protected" element={<div>Protected Content</div>} />
+              <Route path="/protected" element={<div>Protected content</div>} />
             </Route>
-            <Route path="/signin" element={<div>Sign In</div>} />
+            <Route path="/signin" element={<div>Sign in</div>} />
           </Routes>
         </MemoryRouter>
       );
 
-      expect(screen.getByText('Protected Content')).toBeInTheDocument();
+      expect(screen.getByText('Protected content')).toBeInTheDocument();
     });
 
     it('should redirect to login when not authenticated', () => {
@@ -89,14 +89,14 @@ describe('Component Tests - Common UI Components', () => {
         <MemoryRouter initialEntries={['/protected']}>
           <Routes>
             <Route element={<RequireAuth />}>
-              <Route path="/protected" element={<div>Protected Content</div>} />
+              <Route path="/protected" element={<div>Protected content</div>} />
             </Route>
-            <Route path="/signin" element={<div>Sign In</div>} />
+            <Route path="/signin" element={<div>Sign in</div>} />
           </Routes>
         </MemoryRouter>
       );
 
-      expect(screen.getByText('Sign In')).toBeInTheDocument();
+      expect(screen.getByText('Sign in')).toBeInTheDocument();
     });
 
     it('should handle loading state', async () => {
@@ -111,9 +111,9 @@ describe('Component Tests - Common UI Components', () => {
         <MemoryRouter initialEntries={['/protected']}>
           <Routes>
             <Route element={<RequireAuth />}>
-              <Route path="/protected" element={<div>Protected Content</div>} />
+              <Route path="/protected" element={<div>Protected content</div>} />
             </Route>
-            <Route path="/signin" element={<div>Sign In</div>} />
+            <Route path="/signin" element={<div>Sign in</div>} />
           </Routes>
         </MemoryRouter>
       );

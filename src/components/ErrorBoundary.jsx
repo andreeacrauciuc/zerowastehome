@@ -21,7 +21,7 @@ class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
     console.error("ErrorBoundary caught an error:", error, errorInfo);
     this.setState({ errorInfo });
-    showError("Something went wrong while loading this page. Please reload and try again.");
+    showError("Something went wrong while loading this page. Please reload and try again");
   }
 
   handleReload = () => {
@@ -77,9 +77,9 @@ class ErrorBoundary extends React.Component {
                 e.currentTarget.style.display = "none";
               }}
             />
-            <h2 className="error-boundary-title">Something went wrong.</h2>
+            <h2 className="error-boundary-title">Something went wrong</h2>
             <p className="error-boundary-text">
-              An unexpected error occurred. Please reload the page.
+              An unexpected error occurred. Please reload the page!
             </p>
 
             <div className="error-boundary-actions">

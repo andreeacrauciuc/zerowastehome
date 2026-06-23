@@ -15,6 +15,6 @@ export const patchCurrentUserCache = (changes) => {
 };
 
 export const updateUserDocument = async (userId, changes) => {
-  if (!userId) throw new Error("No authenticated user found.");
+  if (!userId) throw new Error("No authenticated user found");
   await setDoc(doc(db, "users", userId), changes, { merge: true });
 };

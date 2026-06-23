@@ -201,8 +201,6 @@ const RecipeList = ({
             );
           })}
 
-          {/* Append-style skeletons for "Generate more": they extend the grid
-              below the existing cards instead of replacing or hiding them. */}
           {isLoadingMore
             ? Array.from({ length: MORE_PLACEHOLDER_COUNT }).map((_, index) => (
                 <article

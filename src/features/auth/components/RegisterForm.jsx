@@ -93,7 +93,7 @@ function RegisterForm() {
       const code = formData.householdInviteCode.trim().toUpperCase();
       if (!/^[A-HJ-NP-Z2-9]{6}$/.test(code)) {
         newErrors.householdInviteCode =
-          "Invite code must be 6 characters (letters and numbers). Check the code from your household admin.";
+          "Invite code must be 6 characters (letters and numbers). Check the code from your household admin";
       }
     }
 
@@ -112,7 +112,7 @@ function RegisterForm() {
         await signup(formData);
         navigate("/home");
       } catch (error) {
-        setAuthError(toUserFacingErrorMessage(error, "Could not create your account. Please try again."));
+        setAuthError(toUserFacingErrorMessage(error, "Could not create your account. Please try again"));
       }
     }
   };
@@ -240,7 +240,7 @@ function RegisterForm() {
                 />
                 <InfoTooltip
                   label="What is a household invite code?"
-                  text="Ask your household admin for this code. You can also join a household from Settings after registration."
+                  text="Ask your household admin for this code. You can also join a household from Settings after registration"
                 />
               </div>
               {errors.householdInviteCode && (

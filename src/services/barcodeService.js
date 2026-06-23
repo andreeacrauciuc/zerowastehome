@@ -235,7 +235,7 @@ export async function decodeBarcodeFromFile(file) {
     return zxingResult;
   }
 
-  throw new Error("No barcode detected. Keep only one barcode in frame, close-up, good light.");
+  throw new Error("No barcode detected. Keep only one barcode in frame, close-up, good light");
 }
 
 export async function fetchProductByBarcode(barcode) {
@@ -270,7 +270,7 @@ export async function fetchProductByBarcode(barcode) {
 
           if (!name) {
             foundWithoutName = true;
-            throw new Error("Found barcode but product name is missing.");
+            throw new Error("Found barcode but product name is missing");
           }
 
           return {
@@ -298,7 +298,7 @@ export async function fetchProductByBarcode(barcode) {
 
           if (!name) {
             foundWithoutName = true;
-            throw new Error("Found barcode but product name is missing.");
+            throw new Error("Found barcode but product name is missing");
           }
 
           return {
@@ -315,10 +315,10 @@ export async function fetchProductByBarcode(barcode) {
 
   if (foundWithoutName) {
     throw new Error(
-      "Product was found but has no name in any language. Please enter the product name manually."
+      "Product was found but has no name in any language. Please enter the product name manually"
     );
   }
   throw new Error(
-    "Product not found in OpenFoodFacts (RO/world). Try another product or enter manually."
+    "Product not found in OpenFoodFacts (RO/world). Try another product or enter manually"
   );
 }

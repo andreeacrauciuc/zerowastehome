@@ -179,7 +179,7 @@ function TransferModal({
                 onClick={onConfirm}
                 disabled={isPurchasing}
               >
-                {isPurchasing ? "Transferring..." : "Confirm & Transfer"}
+                {isPurchasing ? "Transferring..." : "Confirm & transfer"}
               </button>
             </div>
           </MotionDiv>

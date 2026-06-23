@@ -63,7 +63,7 @@ const FoodCard = ({ item, currencyConfig, consumingIds = new Set(), onMarkEaten,
                           {' '}(est.)
                           <InfoTooltip
                             label="What does estimated price mean?"
-                            text="Estimated price based on category average. Add a real price to improve savings accuracy."
+                            text="Estimated price based on category average. Add a real price to improve savings accuracy"
                           />
                         </>
                       ) : null}

@@ -60,15 +60,15 @@ const parsePrice = (raw) => {
   let normalized = compact;
 
   const hasComma = compact.includes(",");
-  const hasDot = compact.includes(".");
+  const hasDot = compact.includes("");
 
   if (hasComma && hasDot) {
     normalized =
-      compact.lastIndexOf(",") > compact.lastIndexOf(".")
-        ? compact.replace(/\./g, "").replace(",", ".")
+      compact.lastIndexOf(",") > compact.lastIndexOf("")
+        ? compact.replace(/\./g, "").replace(",", "")
         : compact.replace(/,/g, "");
   } else if (hasComma) {
-    normalized = compact.replace(/\./g, "").replace(",", ".");
+    normalized = compact.replace(/\./g, "").replace(",", "");
   }
 
   const value = Number.parseFloat(normalized);

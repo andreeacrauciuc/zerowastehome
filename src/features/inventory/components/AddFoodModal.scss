@@ -203,11 +203,6 @@ $green-eco: #10b981;
       }
     }
 
-    /* Coin/currency badge sits immediately after the "Price" label text
-       (left-aligned), not pushed to the far right. flex + gap keeps the spacing
-       consistent; flex-shrink: 0 on the tag prevents wrapping/squashing even at
-       320px. The label keeps the same bottom margin as sibling field labels so
-       it aligns vertically with them across the row. */
     .input-group label.price-label {
       display: inline-flex;
       align-items: center;

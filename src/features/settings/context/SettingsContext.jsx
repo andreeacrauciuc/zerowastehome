@@ -110,7 +110,7 @@ export const SettingsProvider = ({ children }) => {
       );
       Promise.resolve().then(() => setUserPreferences(normalizeUserPreferences(cached)));
     } catch (error) {
-      console.error("SettingsContext: failed to read cached preferences.", error);
+      console.error("SettingsContext: failed to read cached preferences", error);
       Promise.resolve().then(() => setUserPreferences(DEFAULT_USER_PREFERENCES));
     }
 
@@ -129,7 +129,7 @@ export const SettingsProvider = ({ children }) => {
         }
       })
       .catch((error) => {
-        console.error("SettingsContext: failed to load preferences.", error);
+        console.error("SettingsContext: failed to load preferences", error);
       })
       .finally(() => {
         if (isActive) setIsSettingsReady(true);
@@ -143,7 +143,7 @@ export const SettingsProvider = ({ children }) => {
   const saveUserPreferences = useCallback(
     async (partial) => {
       if (!currentUser?.uid) {
-        throw new Error("No authenticated user.");
+        throw new Error("No authenticated user");
       }
       const partialChanges = partial || {};
 
@@ -213,7 +213,7 @@ export const SettingsProvider = ({ children }) => {
       try {
         await updateDoc(doc(db, "users", currentUser.uid), fieldUpdates);
       } catch (error) {
-        console.error("SettingsContext: failed to save preferences.", error);
+        console.error("SettingsContext: failed to save preferences", error);
         setUserPreferences((prev) => {
           const reverted = normalizeUserPreferences({
             ...prev,

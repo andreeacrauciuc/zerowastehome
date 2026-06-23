@@ -97,7 +97,7 @@ export const useFirestoreListeners = ({
     const fallbackToLocal = (error) => {
       if (hasFallenBack) return;
       hasFallenBack = true;
-      console.error("useDataStore: Firestore listener failed, switching to local mode.", error);
+      console.error("useDataStore: Firestore listener failed, switching to local mode", error);
       enableLocalData();
       notifyFallback(`Cloud sync unavailable. Showing local data. ${normalizeError(error)}`);
       setIsLoading(false);
@@ -171,7 +171,7 @@ export const useFirestoreListeners = ({
         writeLocal(STORAGE_KEYS.impact, next);
       });
     } catch (error) {
-      console.error("useDataStore: failed to attach listeners.", error);
+      console.error("useDataStore: failed to attach listeners", error);
       fallbackToLocal(error);
     }
 

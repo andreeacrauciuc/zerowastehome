@@ -84,7 +84,7 @@ export const resolveHouseholdByJoinCode = async (code) => {
   } catch (error) {
     if (isPermissionDeniedError(error)) {
       throw new Error(
-        "Household join code lookup is not allowed by Firestore rules.",
+        "Household join code lookup is not allowed by Firestore rules",
       );
     }
     throw error;
@@ -108,7 +108,7 @@ export const resolveHouseholdByJoinCode = async (code) => {
   } catch (error) {
     if (isPermissionDeniedError(error)) {
       throw new Error(
-        "Household join code lookup is not allowed by Firestore rules.",
+        "Household join code lookup is not allowed by Firestore rules",
       );
     }
     throw error;
@@ -130,7 +130,7 @@ export const getUniqueJoinCode = async () => {
   }
 
   throw new Error(
-    "Could not generate a unique household code. Please try again.",
+    "Could not generate a unique household code. Please try again",
   );
 };
 

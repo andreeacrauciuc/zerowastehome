@@ -12,7 +12,7 @@ const loadImage = (file) =>
     };
     image.onerror = () => {
       URL.revokeObjectURL(url);
-      reject(new Error("Could not load image."));
+      reject(new Error("Could not load image"));
     };
     image.src = url;
   });
@@ -34,7 +34,7 @@ export const buildCompressedPhotoDataUrl = async (file) => {
 
   const context = canvas.getContext("2d");
   if (!context) {
-    throw new Error("Could not prepare image compression.");
+    throw new Error("Could not prepare image compression");
   }
 
   context.drawImage(image, 0, 0, width, height);
@@ -49,7 +49,7 @@ export const buildCompressedPhotoDataUrl = async (file) => {
 
   if (estimateBytes(dataUrl) > MAX_PHOTO_BYTES) {
     throw new Error(
-      "Image is still too large after compression. Please use a smaller image.",
+      "Image is still too large after compression. Please use a smaller image",
     );
   }
 

@@ -41,7 +41,7 @@ const RequireAuth = () => {
           <h1 className="page-title">We hit a session <span>problem</span></h1>
           <p>
             Your sign-in session is out of sync. Resetting the session will take you back
-            to sign in.
+            to sign in
           </p>
           <button type="button" onClick={handleReset}>
             Reset session

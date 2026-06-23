@@ -17,10 +17,6 @@
   }
 }
 
-/* Empty state rendered in place of the AreaChart when there is no trend data
-   for the selected period. Fills the same 300px .trend-chart-wrap so the card
-   height is identical to the populated state (no layout shift). Centered both
-   axes, theme-aware, and responsive. */
 .trend-empty-state {
   position: absolute;
   inset: 0;

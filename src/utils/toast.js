@@ -11,6 +11,6 @@ export const showError = (message) => {
 };
 
 export const showSuccess = (message) => {
-  toast.success(normalizeMessage(message, "Done successfully."));
+  toast.success(normalizeMessage(message, "Done successfully"));
 };
 

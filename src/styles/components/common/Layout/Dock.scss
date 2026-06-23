@@ -87,14 +87,7 @@
   }
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   MOBILE DOCK â€” fixed horizontal bottom navigation bar.
-   Only rendered visually at â‰¤768px (where the sidebar hides). The
-   z-index sits below the Shopping page mobile checkout bar (z-index: 100)
-   so it never overlaps it.
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .dock-root.mobile-dock {
-  /* Hidden by default (desktop / tablet keeps the sidebar). */
   display: none;
 }
 
@@ -158,8 +151,6 @@
         font-size: 22px;
       }
 
-      /* Turn the desktop hover-tooltip label into a static caption beneath
-         the icon, so the dock reads as a normal mobile tab bar. */
       .dock-item-label {
         position: static;
         transform: none;

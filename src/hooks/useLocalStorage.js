@@ -12,7 +12,7 @@ const readValue = (key, defaultValue) => {
     }
     return JSON.parse(storedValue);
   } catch (error) {
-    console.error("useLocalStorage: failed to read stored value.", error);
+    console.error("useLocalStorage: failed to read stored value", error);
     return typeof defaultValue === "function" ? defaultValue() : defaultValue;
   }
 };
@@ -28,7 +28,7 @@ export const useLocalStorage = (key, defaultValue) => {
       try {
         window.localStorage.setItem(key, JSON.stringify(resolvedValue));
       } catch (error) {
-        console.error("useLocalStorage: failed to write stored value.", error);
+        console.error("useLocalStorage: failed to write stored value", error);
       }
 
       return resolvedValue;

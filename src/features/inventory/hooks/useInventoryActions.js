@@ -45,7 +45,7 @@ export function useInventoryActions() {
       await handleActionFood(discardingItem.id, "wasted");
       showSuccess(`${itemName} moved to waste history.`);
     } catch (error) {
-      showError(toUserFacingErrorMessage(error, "Could not move item to waste history. Please try again."));
+      showError(toUserFacingErrorMessage(error, "Could not move item to waste history. Please try again"));
     } finally {
       closeDiscardModal();
     }
@@ -65,7 +65,7 @@ export function useInventoryActions() {
       await handleActionFood(itemId, "eaten");
       showSuccess(`${itemName} marked as eaten.`);
     } catch (error) {
-      showError(toUserFacingErrorMessage(error, "Could not mark item as eaten. Please try again."));
+      showError(toUserFacingErrorMessage(error, "Could not mark item as eaten. Please try again"));
     } finally {
       setConsumingIds((prev) => { const next = new Set(prev); next.delete(itemId); return next; });
     }
@@ -78,7 +78,7 @@ export function useInventoryActions() {
       await handleActionFood(itemId, "eaten");
       showSuccess(`${itemName} marked as eaten successfully.`);
     } catch (error) {
-      showError(toUserFacingErrorMessage(error, "Could not mark item as eaten. Please try again."));
+      showError(toUserFacingErrorMessage(error, "Could not mark item as eaten. Please try again"));
     }
   }, [handleActionFood, inventoryItems]);
 
@@ -112,8 +112,8 @@ export function useInventoryActions() {
 
   const handleSaveScannedItem = useCallback(async () => {
     const safeName = String(scannerForm?.name || "").trim();
-    if (!safeName) { showError("Name is required."); return; }
-    if (!scannerForm?.expiry) { showError("Expiry Date is required."); return; }
+    if (!safeName) { showError("Name is required"); return; }
+    if (!scannerForm?.expiry) { showError("Expiry Date is required"); return; }
 
     const parsedPrice = Number(scannerForm?.price);
     const hasPrice =

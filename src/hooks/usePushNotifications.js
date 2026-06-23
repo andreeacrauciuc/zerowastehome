@@ -16,16 +16,7 @@ const registerMessagingServiceWorker = async () => {
 };
 
 /**
- * FCM web-push hook. Safe to call once in an authenticated layout — it never
- * blocks render, degrades gracefully where FCM is unsupported, and only ever
- * ADDS the device token to the user's profile (arrayUnion), never touching
- * existing auth/inventory write logic.
- *
  * @param {{ autoRegister?: boolean }} [options]
- *   autoRegister (default true): if Notification permission is already granted,
- *   silently fetch + save the token on mount. The browser permission PROMPT is
- *   only ever shown by the returned requestPermissionAndRegister() action, which
- *   you should wire to an explicit user gesture (a button), per best practice.
  */
 export function usePushNotifications({ autoRegister = true } = {}) {
   const { currentUser } = useAuth();
@@ -59,7 +50,7 @@ export function usePushNotifications({ autoRegister = true } = {}) {
     if (typeof Notification === "undefined") return null;
     if (Notification.permission !== "granted") return null;
     if (!VAPID_KEY) {
-      setError(new Error("Missing VITE_FIREBASE_VAPID_KEY."));
+      setError(new Error("Missing VITE_FIREBASE_VAPID_KEY"));
       return null;
     }
 

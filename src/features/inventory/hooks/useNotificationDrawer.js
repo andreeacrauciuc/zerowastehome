@@ -179,8 +179,8 @@ export const useNotificationDrawer = ({ notifications, onConsume, onAddToList })
       );
       showError(
         failed.length === results.length
-          ? "Could not update these notifications. Please try again."
-          : "Some notifications could not be updated. Please try again."
+          ? "Could not update these notifications. Please try again"
+          : "Some notifications could not be updated. Please try again"
       );
     }
   }, [exitingIds, isProcessingBulk, resolveNotification, selectedVisibleNotifications]);

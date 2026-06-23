@@ -54,7 +54,7 @@ export function useNotificationSettings() {
 
   const handleToggleAlerts = async () => {
     if (!("Notification" in window)) {
-      showError("This browser does not support notifications.");
+      showError("This browser does not support notifications");
       setPermission("unsupported");
       return;
     }
@@ -65,7 +65,7 @@ export function useNotificationSettings() {
       const perm = await requestPermissionAndRegister();
       setPermission(perm);
       if (perm !== "granted") {
-        showError("Notification permission was not granted.");
+        showError("Notification permission was not granted");
         return;
       }
     }
@@ -78,7 +78,7 @@ export function useNotificationSettings() {
       showSuccess(`Alerts ${next ? "enabled" : "disabled"}.`);
     } catch (error) {
       setAlertsEnabled(previous);
-      showError(toUserFacingErrorMessage(error, "Could not update alerts. Please try again."));
+      showError(toUserFacingErrorMessage(error, "Could not update alerts. Please try again"));
     }
   };
 
@@ -100,7 +100,7 @@ export function useNotificationSettings() {
       showSuccess(`Expiry reminders ${next ? "enabled" : "disabled"}.`);
     } catch (error) {
       setNotifyExpiryReminders(previous);
-      showError(toUserFacingErrorMessage(error, "Could not update reminders. Please try again."));
+      showError(toUserFacingErrorMessage(error, "Could not update reminders. Please try again"));
     }
   };
 
@@ -122,7 +122,7 @@ export function useNotificationSettings() {
       showSuccess(`Stock alerts ${next ? "enabled" : "disabled"}.`);
     } catch (error) {
       setNotifyStockAlerts(previous);
-      showError(toUserFacingErrorMessage(error, "Could not update stock alerts. Please try again."));
+      showError(toUserFacingErrorMessage(error, "Could not update stock alerts. Please try again"));
     }
   };
 
@@ -166,21 +166,21 @@ export function useNotificationSettings() {
       showSuccess(`Silent hours ${next ? "enabled" : "disabled"}.`);
     } catch (error) {
       setSilentHoursEnabled(previous);
-      showError(toUserFacingErrorMessage(error, "Could not update silent hours. Please try again."));
+      showError(toUserFacingErrorMessage(error, "Could not update silent hours. Please try again"));
     }
   };
 
   const handleSaveSilentHoursRange = async () => {
     if (!silentHoursStart || !silentHoursEnd) {
-      showError("Please select both start and end times.");
+      showError("Please select both start and end times");
       return;
     }
 
     try {
       await saveUserPreferences(buildPreferences());
-      showSuccess("Silent hours updated.");
+      showSuccess("Silent hours updated");
     } catch (error) {
-      showError(toUserFacingErrorMessage(error, "Could not update silent hours. Please try again."));
+      showError(toUserFacingErrorMessage(error, "Could not update silent hours. Please try again"));
     }
   };
 

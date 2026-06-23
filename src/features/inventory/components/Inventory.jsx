@@ -175,7 +175,7 @@ function Inventory() {
           try {
             await handleSaveItem(data, editingItem);
           } catch (error) {
-            showError(toUserFacingErrorMessage(error, "Could not save item. Please try again."));
+            showError(toUserFacingErrorMessage(error, "Could not save item. Please try again"));
           }
         }}
       />

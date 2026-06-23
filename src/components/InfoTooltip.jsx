@@ -2,15 +2,6 @@ import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 
-/**
- * Accessible info tooltip that works on hover, keyboard focus, AND tap.
- *
- * The native `title` attribute it replaces never appears on touch devices and
- * is unreliable on hover. The bubble is rendered in a portal on document.body
- * so it can never be clipped by an ancestor with `overflow: hidden` (e.g. the
- * inventory card frame). Position is computed from the trigger's rect and the
- * bubble flips above/below depending on available space.
- */
 function InfoTooltip({ label, text }) {
   const [open, setOpen] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0, placement: "top" });
