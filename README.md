@@ -138,6 +138,7 @@ npm run lint && npm run test:run && npm run ci:check-keys && npm run build
 
 ## Project Structure
 
+```text
 .
 ├── api/
 │   └── groq.js                 # Vercel Serverless Function: Groq proxy
@@ -176,8 +177,9 @@ npm run lint && npm run test:run && npm run ci:check-keys && npm run build
 ├── vite.config.js              # Vite, PWA plugin, dev proxy
 └── .github/workflows/
     └── quality-checks.yml      # CI pipeline
-    
-    ---
+```
+
+---
 
 ## Local Setup
 
