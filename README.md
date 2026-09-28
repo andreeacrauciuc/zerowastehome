@@ -1,12 +1,8 @@
-<div align="center">
-
 # ZeroWasteHome
 
-[🚀 See the live app](https://link-ul-tau-aici.com) | [📝 Read the documentation](#)
+A full-stack React + Firebase Progressive Web App for tracking household food inventory, reducing food waste, and quantifying the financial and environmental impact of what gets eaten versus thrown away.
 
----
-
-### A production-grade React + Firebase PWA for tracking food inventory, cutting household waste, and quantifying its financial & environmental impact.
+[Live Demo](https://zerowastehome.vercel.app) · [Report a Bug](https://github.com/andreeacrauciuc/zerowastehome/issues)
 
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
@@ -16,214 +12,226 @@
 [![CI](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?logo=githubactions&logoColor=white)](./.github/workflows/quality-checks.yml)
 [![PWA](https://img.shields.io/badge/PWA-Offline_Ready-5A0FC8?logo=pwa&logoColor=white)](./vite.config.js)
 
-</div>
+---
+
+## Overview
+
+ZeroWasteHome tracks what a household buys, eats, and throws away, then turns that data into something actionable. It supports multi-member households with a real-time shared inventory, AI-generated recipes based on what is actually in the pantry, a shopping list that transfers purchases into inventory in one step, and an analytics dashboard that expresses savings in money, kilograms, and CO₂.
+
+The project runs against real Firebase infrastructure with no mock data layer: Firestore security rules, real-time listeners, transactional writes, and a scheduled Cloud Function for push notifications.
 
 ---
 
-![ZeroWasteHome Dashboard](./assets/impact.png)
+## Application Preview
+
+<p align="center">
+  <img src="./src/assets/impact.png" alt="Impact analytics dashboard" width="100%" />
+  <br />
+  <em>Impact analytics dashboard: lifetime savings, CO₂ prevented, kitchen-health score, and saved-vs-wasted trend.</em>
+</p>
+
+| | |
+|:---:|:---:|
+| <img src="./src/assets/inventory1.png" alt="Smart Inventory and Barcode Scanner" width="100%" /> | <img src="./src/assets/recipes.png" alt="AI Recipe Generator" width="100%" /> |
+| **Smart Inventory & Barcode Scanner**<br />Expiry-aware cards, sorting, and category filters. | **AI Recipe Generator (Groq Llama 3.3)**<br />Recipes built from current pantry contents. |
+| <img src="./src/assets/shoppinglist.png" alt="Smart Shopping List and One-Tap Checkout" width="100%" /> | <img src="./src/assets/household.png" alt="Shared Household and Real-Time Sync" width="100%" /> |
+| **Smart Shopping List & One-Tap Checkout**<br />Purchased items move into inventory atomically. 
 
 ---
 
-## 📖 Overview
+## Features
 
-**ZeroWasteHome** tracks what you buy, what you eat, and what you throw away — then turns that data into actionable insight. It supports multi-member households with real-time shared inventory, AI-generated recipes built from your actual pantry, smart shopping with one-tap transfer into inventory, and an analytics hub that quantifies savings in money, kilograms, and CO₂.
-
-It is built as a **lab-in-production** project: it runs on real Firebase infrastructure with Firestore security rules, real-time listeners, scoped transactional writes, and a scheduled Cloud Function for push notifications — there is no mock data layer.
-
----
-
-## ✨ Key Features
-
-- **📦 Smart Inventory** — Add items manually or by **barcode scan** (ZXing); track expiry dates, quantities, and units; sort by urgency; filter by category. Cards visually escalate as items approach expiry.
-- **🍳 AI Recipe Generation** — Generate recipes from your current pantry contents using the **Groq LLM** (Llama 3.3 70B), routed through a secure serverless proxy. Includes ingredient matching, cost estimates, eco-scores, and smart pantry swaps.
-- **🛒 Smart Shopping List** — Build and check off a shopping list, then **transfer purchased items directly into inventory** in a single atomic operation. Pantry-swap suggestions reduce duplicate purchases.
-- **📊 Impact Analytics Hub** — An animated dashboard: lifetime savings counter, CO₂ prevented, a kitchen-health radial score, saved-vs-wasted trend chart, top loss categories, and a full event timeline.
-- **🏠 Households** — Create or join a shared household via a 6-character join code; inventory, shopping, and impact data sync in real time across all members.
-- **🔔 Push Notifications** — A scheduled Firebase Cloud Function sends FCM expiry reminders, with per-user **silent-hours** support and automatic cleanup of stale device tokens.
-- **⚙️ Settings** — Profile and avatar management, currency selection, granular notification preferences, and full household management.
-- **📲 Installable PWA** — Offline-ready with a service worker, Firestore network-first runtime caching, and an install prompt.
+- **Smart inventory.** Add items manually or by barcode scan (ZXing). Track expiry dates, quantities, and units; sort by urgency; filter by category. Cards visually escalate as items approach expiry.
+- **AI recipe generation.** Recipes are generated from current pantry contents using Groq (Llama 3.3 70B) through a serverless proxy. Results include ingredient matching, cost estimates, eco-scores, and pantry-swap suggestions.
+- **Smart shopping list.** Build and check off a list, then transfer purchased items into inventory in a single atomic operation. Pantry-swap suggestions reduce duplicate purchases.
+- **Impact analytics.** Lifetime savings counter, CO₂ prevented, a kitchen-health score, saved-vs-wasted trend chart, top loss categories, and an event timeline.
+- **Households.** Create or join a shared household with a 6-character join code. Inventory, shopping, and impact data sync in real time across members.
+- **Push notifications.** A scheduled Cloud Function sends FCM expiry reminders with per-user silent hours and automatic cleanup of stale device tokens.
+- **Settings.** Profile and avatar management, currency selection, notification preferences, and household management.
+- **Installable PWA.** Service worker, Firestore network-first runtime caching, and an install prompt.
 
 ---
 
-## 🏛️ Architecture & Engineering Excellence
+## Key Engineering Decisions
 
-This project is deliberately structured to demonstrate scalable, maintainable frontend architecture.
+### Self-healing data scope
 
-### Feature-Sliced Design (FSD)
-The codebase is organized by **business domain**, not by file type. Each feature is a self-contained slice owning its own components, hooks, services, utils, constants, and styles:
+Household membership changes (joining, leaving, switching between personal and shared view) are a classic source of orphaned data: documents written under a `householdId` the user no longer belongs to become invisible to everyone. The data layer addresses this in two places:
 
-```
-src/
-├── app/                  # Router, provider tree, top-level shell
-├── components/           # Cross-cutting shared UI (ErrorBoundary, modals, avatar)
-├── features/
-│   ├── auth/             # Auth context, sign-in/register, FCM token registration
-│   ├── household/        # Household context, join/leave/transaction flows
-│   ├── inventory/        # Inventory, FoodCard, AddFoodModal, barcode scanner
-│   ├── recipes/          # AI recipe generation, ingredient selector, services/
-│   ├── shopping/         # Shopping list, checkout, pantry-swap logic
-│   ├── impact/           # Analytics engine + chart sub-components
-│   └── settings/         # Profile, household, notification & currency panels
-├── hooks/                # App-wide hooks (useDataStore — central Firestore layer)
-├── services/             # Firebase-facing services (barcode, FCM, data writes)
-├── firebase/             # Firebase app initialisation
-└── styles/               # Global tokens; feature styles are colocated per-component
-```
+- **`hooks/dataStore/useFirestoreListeners.js`** attaches `onSnapshot` listeners scoped to either the user's household or their own UID. Scope is resolved only after auth is ready, which avoids race conditions on refresh.
+- **`hooks/dataStore/useScopeRepair.js`** detects documents whose `householdId` no longer matches the user's actual membership and repairs them, so data is not stranded when users join or leave a household.
 
-### Headless UI — logic lives in hooks
-Components are kept **"dumb" and presentational**. All state machines, side effects, API calls, and derived data live in **21+ custom hooks** (e.g. `useDataStore`, `useNotificationDrawer`, `useAddFoodForm`, `useImpactAnalytics`, `useShoppingActions`). This makes UI trivial to reason about and the logic independently testable.
+Two related rules support this:
 
-### Component-colocated SCSS
-Following a single, consistent convention, **every component's stylesheet sits next to it** (`Inventory.jsx` ↔ `Inventory.scss`) — 51 colocated style files across the features. Large stylesheets are split into domain partials and re-exported through a barrel, with shared design tokens as SCSS variables and CSS custom properties. **Zero inline styles** in JSX (except genuinely dynamic runtime values).
+- **Read scope is separate from write scope.** Writes always use the user's real membership, never the current view mode, so items are not written into the wrong scope.
+- **Transactional writes.** Checkout, archiving, and household join/leave run inside `runTransaction`. The join flow re-reads the household document before committing.
 
-### Robust data layer
-- **Single listener, scoped queries.** `useDataStore` attaches `onSnapshot` listeners scoped to the user's household *or* their own UID, resolving scope only after auth is ready to avoid refresh race conditions.
-- **Read scope vs. write scope.** Writes always use the user's real membership, never the view-mode household — so items are never orphaned.
-- **Transactional integrity.** Checkout, archiving, and household join/leave run inside `runTransaction` for atomicity; the join flow re-reads the household doc before committing.
-- **Local-mode fallback.** If a Firestore query is rejected during an auth edge case, the app degrades to `localStorage` with a toast rather than crashing.
+If a Firestore query is rejected during an auth edge case, the app degrades to `localStorage` with a toast instead of crashing.
+
+### API keys stay on the server
+
+The Groq key is never shipped to the browser. All AI calls go through **`api/groq.js`**, a Vercel Serverless Function that accepts POST only, validates the request body, attaches `GROQ_API_KEY` from the server environment, forwards the request to Groq, and returns the response.
+
+Locally, `vite.config.js` provides an equivalent `/api/groq` dev proxy so development behaves like production. The variable is deliberately declared without a `VITE_` prefix so Vite can never bundle it into the client.
+
+### Row-level security in Firestore
+
+`firestore.rules` requires `request.auth != null` on every operation. A document is accessible only to its `ownerId` or to a verified member of its `householdId`. Membership is verified inside the rule with a `get()` on the household document rather than by trusting a field sent by the client.
+
+### Scheduled expiry notifications
+
+`checkExpiringItems` (`functions/index.js`) is a Firebase v2 scheduled function that runs daily at 09:00 (Europe/Bucharest). It:
+
+1. Queries inventory for items expiring in 2 days.
+2. Groups them by household or individual owner and fans out to all member UIDs.
+3. Skips users who are inside their configured silent hours (timezone-aware).
+4. Sends a multicast push via `sendEachForMulticast`.
+5. Inspects the response for unregistered or invalid tokens and removes them with `arrayRemove`.
+
+### Logic in hooks, presentational components
+
+State, side effects, API calls, and derived data live in custom hooks (for example `useDataStore`, `useAddFoodForm`, `useNotificationDrawer`, `useImpactAnalytics`, `useShoppingActions`). Components stay mostly presentational, which keeps the logic testable without rendering UI.
+
+### Styling architecture
+
+Styling is modular SCSS combining several approaches:
+
+- Component-colocated stylesheets (`Inventory.jsx` next to `Inventory.scss`).
+- Domain partials for larger stylesheets (`_animations.scss`, `_grid.scss`, `_header.scss`).
+- CSS Modules where scoping matters (`ToggleSwitch.module.scss`, `SideBar.module.scss`).
+- Global design tokens in `src/styles/`, exposed as SCSS variables and CSS custom properties.
 
 ---
 
-## 🔐 DevSecOps & CI/CD
+## CI/CD
 
-Security and automation are treated as first-class engineering concerns.
-
-### 🔑 Serverless API-key proxy
-The Groq LLM key is **never shipped to the browser**. All AI calls hit a server-side proxy that injects the key from the environment:
-
-- **`api/groq.js`** — a **Vercel Serverless Function**: POST-only, validates the request body, attaches the `GROQ_API_KEY` server-side, forwards to Groq, and returns the response. The key stays on the server.
-- **Vite dev proxy** — locally, `vite.config.js` mirrors this with a `/api/groq` proxy so the dev experience matches production without exposing the key.
-
-The key is intentionally declared **without** a `VITE_` prefix, guaranteeing Vite never bundles it into the client.
-
-### 🕵️ Custom secret-scanning CI gate
-**`scripts/ci/check_no_client_keys.js`** recursively scans `src/` and **fails the build** if any client-exposed secret name (e.g. `VITE_GROQ_API_KEY`, `VITE_OCR_SPACE_API_KEY`, `VITE_UNSPLASH_KEY`) appears in source — a guardrail against accidentally promoting a server secret to the client bundle.
-
-### ⚙️ Automated quality pipeline
-The **GitHub Actions** workflow (`.github/workflows/quality-checks.yml`) runs on every push and PR to `main` / `develop` (Node 20):
+The GitHub Actions workflow (`.github/workflows/quality-checks.yml`) runs on every push and pull request to `main` and `develop` (Node 20).
 
 | Step | Tool | Gate |
 |------|------|------|
-| Lint | ESLint 9 (flat config, React Hooks rules) | ❌ Blocking |
+| Lint | ESLint 9 (flat config, React Hooks rules) | Blocking |
 | Unit tests | Vitest + Testing Library | Reported |
-| Coverage | Vitest v8 coverage → **Codecov** | Reported |
-| Build | Vite production build | ❌ Blocking |
-| Secret scan | `check_no_client_keys.js` | ❌ Blocking |
+| Coverage | Vitest v8 coverage, uploaded to Codecov | Reported |
+| Build | Vite production build | Blocking |
+| Secret scan | `scripts/ci/check_no_client_keys.js` | Blocking |
 
-> Run the full gate locally before pushing:
-> ```bash
-> npm run lint && npm run test:run && npm run ci:check-keys && npm run build
-> ```
+The secret scan recursively scans `src/` and fails the build if a client-exposed secret name (`VITE_GROQ_API_KEY`, `VITE_OCR_SPACE_API_KEY`, `VITE_UNSPLASH_KEY`) appears in source. It exists to prevent a server-side secret from being accidentally promoted into the client bundle.
 
----
+Run the same checks locally before pushing:
 
-## ☁️ Backend & Cloud
-
-### Firebase
-| Service | Usage |
-|---------|-------|
-| **Authentication** | Email/password; every Firestore operation requires `request.auth != null` |
-| **Firestore** | Real-time inventory/shopping/impact data with per-user & per-household row-level rules |
-| **Cloud Messaging (FCM)** | Web push for expiry reminders |
-| **Storage** | Asset storage |
-
-**Row-level access control** is enforced in `firestore.rules`: each document is accessible only by its `ownerId` or a verified member of its `householdId` — verified inside the rule via a `get()` on the household document, never by trusting a client field.
-
-### Scheduled Cloud Function — `checkExpiringItems`
-A **Firebase v2 scheduled function** (`functions/index.js`) runs as a daily cron (`every day 09:00`, Europe/Bucharest):
-
-1. Queries inventory for items expiring in **2 days**.
-2. Groups them by household or individual owner and fans out to all member UIDs.
-3. Respects each user's configured **silent hours** (timezone-aware).
-4. Sends a multicast FCM push via `sendEachForMulticast`.
-5. **Self-heals** by detecting unregistered/invalid device tokens in the response and removing them with `arrayRemove`.
+```bash
+npm run lint && npm run test:run && npm run ci:check-keys && npm run build
+```
 
 ---
 
-## 🚀 Local Setup & Development
+## Project Structure
+
+.
+├── api/
+│   └── groq.js                 # Vercel Serverless Function: Groq proxy
+├── functions/
+│   └── index.js                # Firebase Cloud Functions (checkExpiringItems)
+├── scripts/
+│   └── ci/
+│       └── check_no_client_keys.js   # CI secret-scanning gate
+├── public/                     # Static assets, PWA icons
+├── src/
+│   ├── app/                    # Router, provider tree, top-level shell
+│   ├── assets/                 # Images and static resources
+│   ├── components/             # Shared UI (ErrorBoundary, modals, avatar)
+│   ├── constants/              # App-wide constants
+│   ├── features/
+│   │   ├── auth/               # Auth context, sign-in/register, FCM token registration
+│   │   ├── household/          # Household context, join/leave flows
+│   │   ├── impact/             # Analytics engine and chart components
+│   │   ├── inventory/          # Inventory, FoodCard, AddFoodModal, barcode scanner
+│   │   ├── recipes/            # AI recipe generation and ingredient selection
+│   │   ├── settings/           # Profile, household, notification, currency panels
+│   │   └── shopping/           # Shopping list, checkout, pantry-swap logic
+│   ├── firebase/               # Firebase app initialisation
+│   ├── hooks/
+│   │   ├── dataStore/
+│   │   │   ├── useFirestoreListeners.js   # Scoped onSnapshot listeners
+│   │   │   └── useScopeRepair.js          # Repairs stranded householdId data
+│   │   └── ...                 # App-wide hooks (e.g. useDataStore)
+│   ├── layouts/                # Page and shell layouts
+│   ├── locales/                # Translation resources
+│   ├── services/               # Firebase-facing services (barcode, FCM, data writes)
+│   ├── styles/                 # Global design tokens and shared partials
+│   ├── test/                   # Test setup and shared test utilities
+│   └── utils/                  # Pure helper functions
+├── firestore.rules             # Row-level access control
+├── vite.config.js              # Vite, PWA plugin, dev proxy
+└── .github/workflows/
+    └── quality-checks.yml      # CI pipeline
+    
+    ---
+
+## Local Setup
 
 ### Prerequisites
-- **Node.js 20** and npm
-- A **Firebase project** with Firestore, Authentication (Email/Password), Storage, and Cloud Messaging enabled
 
-### 1. Clone & install
+- Node.js 20 and npm
+- A Firebase project with Firestore, Authentication (Email/Password), Storage, and Cloud Messaging enabled
+
+### 1. Clone and install
+
 ```bash
-git clone https://github.com/your-username/ZeroWasteHome.git
-cd ZeroWasteHome
+git clone https://github.com/andreeacrauciuc/zerowastehome.git
+cd zerowastehome
 npm install
 ```
 
 ### 2. Configure environment
-Copy the template and fill in your values:
+
 ```bash
 cp .env.example .env
 ```
 
 | Variable | Required | Notes |
 |----------|:--------:|-------|
-| `VITE_FIREBASE_API_KEY` | ✅ | Firebase Web API key (public — safe to expose) |
-| `VITE_FIREBASE_AUTH_DOMAIN` | ✅ | `project.firebaseapp.com` |
-| `VITE_FIREBASE_PROJECT_ID` | ✅ | Firebase project ID |
-| `VITE_FIREBASE_STORAGE_BUCKET` | ✅ | Firebase Storage bucket |
-| `VITE_FIREBASE_MESSAGING_SENDER_ID` | ✅ | FCM sender ID |
-| `VITE_FIREBASE_APP_ID` | ✅ | Firebase App ID |
-| `VITE_FIREBASE_VAPID_KEY` | ✅ | Web Push (FCM) VAPID key |
-| `GROQ_API_KEY` | ✅ | **Server-side only** (no `VITE_` prefix) — used by the dev proxy & serverless function |
-| `VITE_GROQ_MODEL` | ➖ | Defaults to `llama-3.3-70b-versatile` |
-| `VITE_UNSPLASH_KEY` | ➖ | Food imagery |
-| `VITE_RECIPE_BATCH_SIZE` | ➖ | Recipes per generation |
+| `VITE_FIREBASE_API_KEY` | Yes | Firebase Web API key (public; safe to expose) |
+| `VITE_FIREBASE_AUTH_DOMAIN` | Yes | `<project>.firebaseapp.com` |
+| `VITE_FIREBASE_PROJECT_ID` | Yes | Firebase project ID |
+| `VITE_FIREBASE_STORAGE_BUCKET` | Yes | Firebase Storage bucket |
+| `VITE_FIREBASE_MESSAGING_SENDER_ID` | Yes | FCM sender ID |
+| `VITE_FIREBASE_APP_ID` | Yes | Firebase App ID |
+| `VITE_FIREBASE_VAPID_KEY` | Yes | Web Push (FCM) VAPID key |
+| `GROQ_API_KEY` | Yes | **Server-side only** (no `VITE_` prefix). Read by the dev proxy and the serverless function. |
+| `VITE_GROQ_MODEL` | No | Defaults to `llama-3.3-70b-versatile` |
+| `VITE_RECIPE_BATCH_SIZE` | No | Number of recipes per generation |
 
-> 🔒 **On Firebase keys:** Web API keys are *not* secrets — they identify the project in the browser and are protected by Firestore Security Rules. Groq and Unsplash keys **are** secrets and must stay server-side.
+> **On keys:** Firebase web API keys are not secrets. They identify the project in the browser and are protected by Firestore Security Rules. The Groq key is a secret and must stay server-side; the CI secret scan enforces this.
 
 ### 3. Deploy Firestore rules
+
 ```bash
 firebase deploy --only firestore:rules
 ```
-The app relies on these rules for access control and will not behave correctly without them.
+
+The app depends on these rules for access control and will not behave correctly without them.
 
 ### 4. Run
+
 ```bash
 npm run dev        # http://localhost:5173
-
 npm run build      # production build
 npm run preview    # preview the built output
 ```
 
-### Useful scripts
+### Scripts
+
 ```bash
 npm run lint           # ESLint
-npm run test           # Vitest (watch)
+npm run test           # Vitest (watch mode)
 npm run test:run       # Vitest (single run, used in CI)
-npm run test:coverage  # coverage report
-npm run ci:check-keys  # secret scan
+npm run test:coverage  # Coverage report
+npm run ci:check-keys  # Secret scan
 ```
 
 ---
 
-## 🧰 Tech Stack
+## Deployment
 
-| Layer | Technology |
-|-------|------------|
-| Framework | **React 19** |
-| Build / Dev | **Vite 7**, `vite-plugin-pwa` |
-| Styling | **SCSS** — component-colocated, design tokens, CSS custom properties |
-| Routing | React Router 7 |
-| Animation | Framer Motion 12 |
-| Charts | Recharts 3 |
-| Icons | Lucide React |
-| Backend | **Firebase 12** — Auth, Firestore, Messaging, Storage |
-| Cloud | Firebase Cloud Functions (v2 scheduler) |
-| AI | **Groq** (Llama 3.3 70B) via serverless proxy |
-| Barcode | ZXing Browser / Library |
-| Testing | **Vitest 4** + Testing Library + jsdom |
-| Linting | ESLint 9 (flat config) |
-| CI/CD | GitHub Actions + Codecov |
-| Hosting | Vercel (SPA + serverless functions) |
-
----
-
-<div align="center">
-
-*Built with React, Firebase, and a genuine interest in reducing household food waste.* 
-
-</div>
+The frontend and `api/groq.js` are deployed together on Vercel. Set `GROQ_API_KEY` in the Vercel project's environment variables, along with the `VITE_FIREBASE_*` values. Firestore rules and the Cloud Function are deployed through the Firebase CLI.
