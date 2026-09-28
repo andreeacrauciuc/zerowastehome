@@ -30,12 +30,23 @@ The project runs against real Firebase infrastructure with no mock data layer: F
   <em>Impact analytics dashboard: lifetime savings, CO₂ prevented, kitchen-health score, and saved-vs-wasted trend.</em>
 </p>
 
-| | |
-|:---:|:---:|
-| <img src="./src/assets/inventory1.png" alt="Smart Inventory and Barcode Scanner" width="100%" /> | <img src="./src/assets/recipes.png" alt="AI Recipe Generator" width="100%" /> |
-| **Smart Inventory & Barcode Scanner**<br />Expiry-aware cards, sorting, and category filters. | **AI Recipe Generator (Groq Llama 3.3)**<br />Recipes built from current pantry contents. |
-| <img src="./src/assets/shoppinglist.png" alt="Smart Shopping List and One-Tap Checkout" width="100%" /> | <img src="./src/assets/household.png" alt="Shared Household and Real-Time Sync" width="100%" /> |
-| **Smart Shopping List & One-Tap Checkout**<br />Purchased items move into inventory atomically. 
+<p align="center">
+  <img src="./src/assets/inventory1.png" alt="Smart Inventory and Barcode Scanner" width="100%" />
+  <br />
+  <em>Smart Inventory &amp; Barcode Scanner: expiry-aware cards, sorting, and category filters.</em>
+</p>
+
+<p align="center">
+  <img src="./src/assets/recipes.png" alt="AI Recipe Generator" width="100%" />
+  <br />
+  <em>AI Recipe Generator (Groq Llama 3.3): recipes built from current pantry contents.</em>
+</p>
+
+<p align="center">
+  <img src="./src/assets/shoppinglist.png" alt="Smart Shopping List and One-Tap Checkout" width="100%" />
+  <br />
+  <em>Smart Shopping List &amp; One-Tap Checkout: purchased items move into inventory atomically.</em>
+</p>
 
 ---
 
